@@ -31,6 +31,7 @@ public:
     void addItem(QString dir);
     void remItem(QString dir);
     void remItemByID(int id);
+    void remItemByName(QString name);
     QList<CanvasObject*> getItems();
     void updateLayers();
 
@@ -45,6 +46,8 @@ private slots:
     void on_actionRemove_Selected_triggered();
     void contextMenuRequested(QPoint point);
 
+    void on_actionRename_Item_triggered();
+
 private:
     Ui::RoomCanvas *ui;
     QThread* thread;
@@ -53,5 +56,8 @@ private:
     Layers* layers;
     bool attemptingUpdate = false;
     bool updatingSelection = false;
+
+protected:
+    void keyPressEvent(QKeyEvent *event) override;
 };
 #endif // ROOMCANVAS_H

@@ -18,12 +18,15 @@ public:
     QString getFilePath();
     int getID();
     int setID(int id);
+    QString getName();
+    QString setName(QString name);
 
 private:
     int frame = 0;
     QString filePath;
     QList<QPixmap> frames;
     int id = 0;
+    QString name = "";
 };
 
 #endif // CANVASOBJECT_H

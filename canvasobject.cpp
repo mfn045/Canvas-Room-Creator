@@ -33,6 +33,16 @@ CanvasObject::CanvasObject(QString filePath) {
 
 }
 
+QString CanvasObject::getName(){
+    return this->name;
+}
+
+QString CanvasObject::setName(QString name){
+    this->name=name;
+    return this->name;
+}
+
+
 int CanvasObject::getID(){
     return this->id;
 }

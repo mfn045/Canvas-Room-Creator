@@ -6,22 +6,21 @@ RoomCanvas::RoomCanvas(QWidget *parent)
     , ui(new Ui::RoomCanvas)
 {
     ui->setupUi(this);
+    ui->centralwidget->setContextMenuPolicy(Qt::CustomContextMenu);
+    connect(ui->centralwidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
 
     ui->canvas->setAcceptDrops(true);
     ui->canvas->setRenderHint(QPainter::LosslessImageRendering);
     ui->canvas->setRenderHint(QPainter::Antialiasing);
     ui->canvas->setRenderHint(QPainter::SmoothPixmapTransform);
     ui->canvas->setSizePolicy(QSizePolicy(QSizePolicy::Policy::Fixed,QSizePolicy::Policy::Fixed));
-    ui->canvas->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(ui->canvas,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
 
     layers=new Layers();
-    layers->setContextMenuPolicy(Qt::CustomContextMenu);
-    connect(layers,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
-    ui->layerArea->addWidget(layers);
 
     connect(layers,SIGNAL(dropped()),this,SLOT(updateItems()));
     connect(layers,SIGNAL(itemSelectionChanged()),this,SLOT(changeGraphicsSelection()));
+    ui->centralwidget->layout()->addWidget(layers);
+
 
     scene = new QGraphicsScene();
     QRectF f;
@@ -49,7 +48,9 @@ void RoomCanvas::contextMenuRequested(QPoint point){
     QMenu* menu = new QMenu(this);
     menu->addAction(ui->actionMove_Selected);
     menu->addAction(ui->actionRemove_Selected);
-
+    menu->addAction(ui->actionRename_Item);
+    qDebug() << ui->centralwidget->mapToGlobal(point);
+    qDebug() << point;
     menu->popup(ui->centralwidget->mapToGlobal(point));
 }
 
@@ -62,9 +63,16 @@ void RoomCanvas::changeLayersSelection(){
             for(int i = 0; i < layers->invisibleRootItem()->childCount(); i++){
                 QTreeWidgetItem* selectedTreeItem = layers->invisibleRootItem()->child(i);
                 QString layerID = selectedTreeItem->text(1);
-                if(layerID.replace("Layer ", "").toInt() == obj->getID()){
-                    selectedTreeItem->setSelected(true);
+                if(obj->getName().isEmpty()){
+                    if(layerID.replace("Layer ", "").toInt() == obj->getID()){
+                        selectedTreeItem->setSelected(true);
+                    }
+                }else{
+                    if(layerID == obj->getName()){
+                        selectedTreeItem->setSelected(true);
+                    }
                 }
+
             }
         }
     }
@@ -78,8 +86,14 @@ void RoomCanvas::changeGraphicsSelection(){
     for(CanvasObject* obj : items){
         for(QTreeWidgetItem* selectedTreeItem : layers->selectedItems()){
             QString layerID = selectedTreeItem->text(1);
-            if(layerID.replace("Layer ", "").toInt() == obj->getID()){
-                obj->setSelected(true);
+            if(obj->getName().isEmpty()){
+                if(layerID.replace("Layer ", "").toInt() == obj->getID()){
+                    obj->setSelected(true);
+                }
+            }else{
+                if(layerID == obj->getName()){
+                    obj->setSelected(true);
+                }
             }
         }
     }
@@ -100,7 +114,11 @@ void RoomCanvas::updateLayers(){
     for(CanvasObject* obj : items){
         QTreeWidgetItem* item = new QTreeWidgetItem();
         item->setIcon(0,QIcon(obj->getFrames().at(0)));
-        item->setText(1,"Layer " + QString::number(obj->getID()));
+        if(obj->getName().isEmpty()){
+            item->setText(1,"Layer " + QString::number(obj->getID()));
+        }else{
+            item->setText(1,obj->getName());
+        }
         item->setFlags(item->flags() ^ Qt::ItemIsDropEnabled);
         layers->insertTopLevelItem(0,item);
     }
@@ -117,10 +135,17 @@ void RoomCanvas::updateItems(){
         QTreeWidgetItem* item = layers->invisibleRootItem()->child(i);
         QString layerID = item->text(1);
         for(CanvasObject* obj : items){
-            if(layerID.replace("Layer ","").toInt() == obj->getID()){
-                qDebug() << "updated " << i;
-                updatedItems.append(obj);
-                updated = true;
+            if(obj->getName().isEmpty()){
+                if(layerID.replace("Layer ","").toInt() == obj->getID()){
+                    qDebug() << "updated " << i;
+                    updatedItems.append(obj);
+                    updated = true;
+                }
+            }else{
+                if(obj->getName() == layerID){
+                    updatedItems.append(obj);
+                    updated = true;
+                }
             }
         }
     }
@@ -191,6 +216,24 @@ void RoomCanvas::remItemByID(int id){
     updateLayers();
 }
 
+void RoomCanvas::remItemByName(QString name){
+    if(layers->invisibleRootItem() == nullptr) return;
+    QList<CanvasObject*> updatedItems;
+    for(CanvasObject* obj : items){
+        if(obj->getName() != name){
+            updatedItems.append(obj);
+        }
+    }
+    items = updatedItems;
+    for(QGraphicsItem* item : scene->items()){
+        if(!updatedItems.contains(item)){
+            scene->removeItem(item);
+        }
+    }
+    scene->update();
+    updateLayers();
+}
+
 void RoomCanvas::on_importSpriteFile_triggered()
 {
     QString dir = QFileDialog::getExistingDirectory(this,"Select a sprite directory");
@@ -211,7 +254,7 @@ void RoomCanvas::on_actionMove_Selected_triggered()
 {
     QList<QGraphicsItem*> selectedItems = scene->selectedItems();
     if(selectedItems.isEmpty()){
-        QMessageBox mb;
+        QMessageBox mb(this);
         mb.setText("You have not selected any layer!");
         mb.addButton(QMessageBox::Ok);
         mb.setDefaultButton(QMessageBox::Ok);
@@ -246,8 +289,72 @@ void RoomCanvas::on_editDimensionsAction_triggered()
 
 void RoomCanvas::on_actionRemove_Selected_triggered()
 {
-    for(QGraphicsItem* item : scene->selectedItems()){
-        remItemByID(((CanvasObject*)item)->getID());
+    QList<QGraphicsItem*> selectedItems = scene->selectedItems();
+    if(selectedItems.isEmpty()){
+        QMessageBox mb(this);
+        mb.setText("You have not selected any layer!");
+        mb.addButton(QMessageBox::Ok);
+        mb.setDefaultButton(QMessageBox::Ok);
+        mb.exec();
+        return;
+    }
+    QMessageBox mb(this);
+    mb.setText("Are you sure you would like to delete the selected items?");
+    mb.addButton(QMessageBox::StandardButton::Yes);
+    mb.addButton(QMessageBox::StandardButton::Cancel);
+    mb.setDefaultButton(QMessageBox::StandardButton::Cancel);
+    int ret = mb.exec();
+    if(ret == QMessageBox::StandardButton::Yes){
+        for(QGraphicsItem* item : scene->selectedItems()){
+            remItemByID(((CanvasObject*)item)->getID());
+        }
+    }
+}
+
+void RoomCanvas::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_Delete){
+        QList<QGraphicsItem*> selectedItems = scene->selectedItems();
+        if(selectedItems.isEmpty()){
+            QMessageBox mb(this);
+            mb.setText("You have not selected any layer!");
+            mb.addButton(QMessageBox::Ok);
+            mb.setDefaultButton(QMessageBox::Ok);
+            mb.exec();
+            return;
+        }
+        QMessageBox mb(this);
+        mb.setText("Are you sure you would like to delete the selected items?");
+        mb.addButton(QMessageBox::StandardButton::Yes);
+        mb.addButton(QMessageBox::StandardButton::Cancel);
+        mb.setDefaultButton(QMessageBox::StandardButton::Cancel);
+        int ret = mb.exec();
+        if(ret == QMessageBox::StandardButton::Yes){
+            for(QGraphicsItem* item : scene->selectedItems()){
+                remItemByID(((CanvasObject*)item)->getID());
+            }
+        }
+    }
+}
+
+void RoomCanvas::on_actionRename_Item_triggered()
+{
+    QList<QGraphicsItem*> selectedItems = scene->selectedItems();
+    if(selectedItems.isEmpty()){
+        QMessageBox mb(this);
+        mb.setText("You have not selected any layer!");
+        mb.addButton(QMessageBox::Ok);
+        mb.setDefaultButton(QMessageBox::Ok);
+        mb.exec();
+        return;
+    }
+    QInputDialog dialog;
+    QString name = dialog.getText(this,"Rename Item","What would you like to rename the item to?");
+    if(!name.isEmpty()){
+        for(QGraphicsItem* item : selectedItems){
+            CanvasObject* obj = (CanvasObject*)item;
+            obj->setName(name);
+        }
+        updateLayers();
     }
 }
 
