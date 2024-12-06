@@ -4,18 +4,32 @@
 
 CanvasObject::CanvasObject(CanvasObject* obj){
     CanvasObject(obj->getFilePath());
-    setFrame(obj->getCurrentFrame());
 }
 
 CanvasObject::CanvasObject(QString filePath) {
+    objectProperties = new PROPERTIES();
     setFlag(GraphicsItemFlag::ItemIsMovable);
     setFlag(GraphicsItemFlag::ItemIsSelectable);
     setFlag(GraphicsItemFlag::ItemSendsGeometryChanges);
     setPos(QPointF(100,100));
+    initFrames(filePath);
+    setCurrentFrames();
+    setFrame(getCurrentFrame());
+
+}
+
+void CanvasObject::initFrames(QString filePath,DIRECTION direction,STATE state){
+    PROPERTIES* properties = new PROPERTIES();
+    properties->currentDirection=direction;
+    properties->currentState=state;
+
     this->filePath = filePath;
+    QList<QPixmap>* pixmaps = new QList<QPixmap>();
     if(filePath.contains(".png") || filePath.contains(".svg")){
         qDebug() << filePath;
-        frames.append(QPixmap(filePath));
+        pixmaps->append(QPixmap(filePath));
+        frames.insert(properties,pixmaps);
+
     }else{
         QDir directory(filePath,"*.png",QDir::SortFlag::Name);
         qDebug() << directory;
@@ -25,12 +39,10 @@ CanvasObject::CanvasObject(QString filePath) {
         std::sort(list.begin(), list.end(), collator);
 
         for(QString fileName : list){
-            frames.append(QPixmap(filePath + "/" + fileName));
+            pixmaps->append(QPixmap(filePath + "/" + fileName));
         }
+        frames.insert(properties,pixmaps);
     }
-    setFrame(0);
-    qDebug() << frames;
-
 }
 
 QString CanvasObject::getName(){
@@ -56,35 +68,60 @@ QString CanvasObject::getFilePath(){
     return this->filePath;
 }
 
+QList<QPixmap>* CanvasObject::setCurrentFrames(DIRECTION direction,STATE state){
+    for(PROPERTIES* properties : frames.keys()){
+        if(properties->currentDirection == direction && properties->currentState == state){
+            this->currentFrames = frames.value(properties);
+        }
+    }
+}
+
+
+QList<QPixmap>* CanvasObject::getCurrentFrames(DIRECTION direction,STATE state){
+    return this->currentFrames;
+}
 
 int CanvasObject::getCurrentFrame(){
-    return this->frame;
+    return this->currentFrame;
 }
 
-void CanvasObject::nextFrame(){
-    if(frame < frames.size()-1){
-        frame++;
-        setPixmap(frames.at(frame));
+bool CanvasObject::isFramePaused(){
+    if(framePauses.contains(currentFrame)){
+        return true;
+    }
+    return false;
+}
+
+void CanvasObject::nextFrame(bool loop, bool force){
+    if(currentFrames == nullptr) return;
+    if(framePauses.contains(currentFrame) && !force) return;
+    if(currentFrame < currentFrames->size()-1){
+        currentFrame++;
+        setPixmap(currentFrames->at(currentFrame));
     }else{
-        frame=0;
-        setPixmap(frames.at(frame));
+        currentFrame=0;
+        setPixmap(currentFrames->at(currentFrame));
     }
 }
 
 
-void CanvasObject::setFrame(int frame){
-    if(frame < frames.size() && frame >= 0){
-        this->frame = frame;
-        setPixmap(frames.at(frame));
+void CanvasObject::setFrame(int currentFrame){
+    if(currentFrames == nullptr) return;
+    if(currentFrame < currentFrames->size() && currentFrame >= 0){
+        this->currentFrame = currentFrame;
+        setPixmap(currentFrames->at(currentFrame));
     }
 }
-void CanvasObject::prevFrame(){
-    if(frame > 0){
-        frame--;
-        setPixmap(frames.at(frame));
+void CanvasObject::prevFrame(bool loop, bool force){
+    if(currentFrames == nullptr) return;
+    if(framePauses.contains(currentFrame) && !force) return;
+    if(currentFrame > 0){
+        currentFrame--;
+        setPixmap(currentFrames->at(currentFrame));
+    }else{
+        if(loop){
+            currentFrame=currentFrames->size()-1;
+            setPixmap(currentFrames->at(currentFrame));
+        }
     }
-}
-
-QList<QPixmap> CanvasObject::getFrames(){
-    return this->frames;
 }

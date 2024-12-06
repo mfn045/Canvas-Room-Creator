@@ -14,11 +14,13 @@ RoomCanvas::RoomCanvas(QWidget *parent)
     ui->canvas->setRenderHint(QPainter::Antialiasing);
     ui->canvas->setRenderHint(QPainter::SmoothPixmapTransform);
     ui->canvas->setSizePolicy(QSizePolicy(QSizePolicy::Policy::Fixed,QSizePolicy::Policy::Fixed));
+    ui->canvas->setMouseTracking(true);
 
     layers=new Layers();
 
     connect(layers,SIGNAL(dropped()),this,SLOT(updateItems()));
     connect(layers,SIGNAL(itemSelectionChanged()),this,SLOT(changeGraphicsSelection()));
+
     ui->centralwidget->layout()->addWidget(layers);
 
 
@@ -103,7 +105,7 @@ void RoomCanvas::changeGraphicsSelection(){
 void RoomCanvas::nextFrame(){
     if(attemptingUpdate) return;
     for(CanvasObject* obj : items){
-        if(obj->getFrames().size() >= 2){
+        if(obj->getCurrentFrames() != nullptr && obj->getCurrentFrames()->size() >= 2){
             obj->nextFrame();
         }
     }
@@ -112,8 +114,9 @@ void RoomCanvas::nextFrame(){
 void RoomCanvas::updateLayers(){
     layers->clear();
     for(CanvasObject* obj : items){
+        if(obj->getCurrentFrames() == nullptr) continue;
         QTreeWidgetItem* item = new QTreeWidgetItem();
-        item->setIcon(0,QIcon(obj->getFrames().at(0)));
+        item->setIcon(0,QIcon(obj->getCurrentFrames()->at(0)));
         if(obj->getName().isEmpty()){
             item->setText(1,"Layer " + QString::number(obj->getID()));
         }else{
@@ -134,16 +137,17 @@ void RoomCanvas::updateItems(){
     for(int i = 0; i < layers->invisibleRootItem()->childCount(); i++){
         QTreeWidgetItem* item = layers->invisibleRootItem()->child(i);
         QString layerID = item->text(1);
+        qDebug() << layerID;
         for(CanvasObject* obj : items){
             if(obj->getName().isEmpty()){
                 if(layerID.replace("Layer ","").toInt() == obj->getID()){
                     qDebug() << "updated " << i;
-                    updatedItems.append(obj);
+                    updatedItems.push_front(obj);
                     updated = true;
                 }
             }else{
                 if(obj->getName() == layerID){
-                    updatedItems.append(obj);
+                    updatedItems.push_front(obj);
                     updated = true;
                 }
             }
@@ -158,9 +162,9 @@ void RoomCanvas::updateItems(){
         scene->removeItem(item);
     }
     scene->update();
-    for(CanvasObject* obj : items){
-        qDebug() << "Item added " << obj->getID();
-        scene->addItem(obj);
+    for(int i = 0; i <= items.size()-1; i++){
+        qDebug() << "Item added " << items.at(i)->getID();
+        scene->addItem(items.at(i));
     }
     scene->update();
     attemptingUpdate = false;
@@ -175,7 +179,8 @@ void RoomCanvas::addItem(QString dir){
     CanvasObject* item = new CanvasObject(dir);
     item->setCursor(Qt::PointingHandCursor);
     items.append(item);
-    item->setID(items.size());
+    item->setID(id_increment);
+    id_increment++;
     scene->addItem(item);
     updateLayers();
 }
@@ -255,6 +260,7 @@ void RoomCanvas::on_actionMove_Selected_triggered()
     QList<QGraphicsItem*> selectedItems = scene->selectedItems();
     if(selectedItems.isEmpty()){
         QMessageBox mb(this);
+        mb.setWindowTitle("Move Item");
         mb.setText("You have not selected any layer!");
         mb.addButton(QMessageBox::Ok);
         mb.setDefaultButton(QMessageBox::Ok);
@@ -292,6 +298,7 @@ void RoomCanvas::on_actionRemove_Selected_triggered()
     QList<QGraphicsItem*> selectedItems = scene->selectedItems();
     if(selectedItems.isEmpty()){
         QMessageBox mb(this);
+        mb.setWindowTitle("Remove Item");
         mb.setText("You have not selected any layer!");
         mb.addButton(QMessageBox::Ok);
         mb.setDefaultButton(QMessageBox::Ok);
@@ -312,28 +319,53 @@ void RoomCanvas::on_actionRemove_Selected_triggered()
 }
 
 void RoomCanvas::keyPressEvent(QKeyEvent *event){
-    if(event->key() == Qt::Key_Delete){
-        QList<QGraphicsItem*> selectedItems = scene->selectedItems();
-        if(selectedItems.isEmpty()){
-            QMessageBox mb(this);
-            mb.setText("You have not selected any layer!");
-            mb.addButton(QMessageBox::Ok);
-            mb.setDefaultButton(QMessageBox::Ok);
-            mb.exec();
-            return;
-        }
-        QMessageBox mb(this);
-        mb.setText("Are you sure you would like to delete the selected items?");
-        mb.addButton(QMessageBox::StandardButton::Yes);
-        mb.addButton(QMessageBox::StandardButton::Cancel);
-        mb.setDefaultButton(QMessageBox::StandardButton::Cancel);
-        int ret = mb.exec();
-        if(ret == QMessageBox::StandardButton::Yes){
-            for(QGraphicsItem* item : scene->selectedItems()){
-                remItemByID(((CanvasObject*)item)->getID());
-            }
+    Qt::Key key = static_cast<Qt::Key>(event->key());
+    pressedKeys.push_back(key);
+    if(pressedKeys.size()>=3){
+        pressedKeys.pop_front();
+    }
+    qDebug() << pressedKeys;
+    if(pressedKeys.contains(Qt::Key_Control) && pressedKeys.contains(Qt::Key_Delete)){
+        ui->actionRemove_Selected->trigger();
+        pressedKeys.clear();
+    }
+    else if(pressedKeys.contains(Qt::Key_Control) && pressedKeys.contains(Qt::Key_M)){
+        ui->actionMove_Selected->trigger();
+        pressedKeys.clear();
+    }
+    else if(pressedKeys.contains(Qt::Key_Control) && pressedKeys.contains(Qt::Key_A)){
+        for(QGraphicsItem* item : scene->selectedItems()){
+            QPointF pos = item->pos();
+            pos.setX(pos.x()-1);
+            item->setPos(pos);
         }
     }
+    else if(pressedKeys.contains(Qt::Key_Control) && pressedKeys.contains(Qt::Key_D)){
+        for(QGraphicsItem* item : scene->selectedItems()){
+            QPointF pos = item->pos();
+            pos.setX(pos.x()+1);
+            item->setPos(pos);
+        }
+    }
+    else if(pressedKeys.contains(Qt::Key_Control) && pressedKeys.contains(Qt::Key_W)){
+        for(QGraphicsItem* item : scene->selectedItems()){
+            QPointF pos = item->pos();
+            pos.setY(pos.y()-1);
+            item->setPos(pos);
+        }
+    }
+    else if(pressedKeys.contains(Qt::Key_Control) && pressedKeys.contains(Qt::Key_S)){
+        for(QGraphicsItem* item : scene->selectedItems()){
+            QPointF pos = item->pos();
+            pos.setY(pos.y()+1);
+            item->setPos(pos);
+        }
+    }
+}
+
+void RoomCanvas::keyReleaseEvent(QKeyEvent *event){
+    Qt::Key key = static_cast<Qt::Key>(event->key());
+    pressedKeys.removeAll(key);
 }
 
 void RoomCanvas::on_actionRename_Item_triggered()
@@ -341,6 +373,7 @@ void RoomCanvas::on_actionRename_Item_triggered()
     QList<QGraphicsItem*> selectedItems = scene->selectedItems();
     if(selectedItems.isEmpty()){
         QMessageBox mb(this);
+        mb.setWindowTitle("Rename Item");
         mb.setText("You have not selected any layer!");
         mb.addButton(QMessageBox::Ok);
         mb.setDefaultButton(QMessageBox::Ok);

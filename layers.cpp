@@ -16,6 +16,7 @@ Layers::Layers(QWidget* parent) {
 
 
 void Layers::dropEvent(QDropEvent *event){
+    QTreeWidget::dropEvent(event);
     emit dropped();
-    return QTreeWidget::dropEvent(event);
+    return;
 }

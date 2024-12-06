@@ -56,8 +56,11 @@ private:
     Layers* layers;
     bool attemptingUpdate = false;
     bool updatingSelection = false;
+    QList<Qt::Key> pressedKeys;
+    int id_increment = 0;
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
+    void keyReleaseEvent(QKeyEvent *event) override;
 };
 #endif // ROOMCANVAS_H
