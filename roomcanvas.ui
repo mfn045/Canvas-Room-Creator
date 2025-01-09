@@ -14,37 +14,7 @@
    <string>RoomCanvas</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QHBoxLayout" name="horizontalLayout">
-    <item>
-     <widget class="QGraphicsView" name="canvas">
-      <property name="sizePolicy">
-       <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
-        <horstretch>0</horstretch>
-        <verstretch>0</verstretch>
-       </sizepolicy>
-      </property>
-      <property name="font">
-       <font>
-        <stylestrategy>PreferAntialias</stylestrategy>
-       </font>
-      </property>
-      <property name="styleSheet">
-       <string notr="true">QGraphicsView#canvas{
-border: 1px solid red;
-}</string>
-      </property>
-      <property name="horizontalScrollBarPolicy">
-       <enum>Qt::ScrollBarAlwaysOff</enum>
-      </property>
-      <property name="sizeAdjustPolicy">
-       <enum>QAbstractScrollArea::AdjustToContents</enum>
-      </property>
-      <property name="transformationAnchor">
-       <enum>QGraphicsView::NoAnchor</enum>
-      </property>
-     </widget>
-    </item>
-   </layout>
+   <layout class="QHBoxLayout" name="horizontalLayout"/>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
@@ -60,7 +30,6 @@ border: 1px solid red;
      <string>File</string>
     </property>
     <addaction name="infoAction"/>
-    <addaction name="importSpriteFile"/>
     <addaction name="actionImport_Sprite"/>
    </widget>
    <widget class="QMenu" name="editMenu">
@@ -71,6 +40,7 @@ border: 1px solid red;
     <addaction name="actionMove_Selected"/>
     <addaction name="actionRename_Item"/>
     <addaction name="actionRemove_Selected"/>
+    <addaction name="actionScale_Selected"/>
    </widget>
    <addaction name="fileMenu"/>
    <addaction name="editMenu"/>
@@ -84,11 +54,6 @@ border: 1px solid red;
   <action name="editDimensionsAction">
    <property name="text">
     <string>Canvas Dimensions</string>
-   </property>
-  </action>
-  <action name="importSpriteFile">
-   <property name="text">
-    <string>Import Sprite File</string>
    </property>
   </action>
   <action name="actionMove_Selected">
@@ -112,6 +77,35 @@ border: 1px solid red;
   <action name="actionRename_Item">
    <property name="text">
     <string>Rename Selected</string>
+   </property>
+  </action>
+  <action name="actionAdd_child_sprite_file_to_selected">
+   <property name="text">
+    <string>Add child sprite to selected</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionScale_Selected">
+   <property name="text">
+    <string>Scale Selected</string>
+   </property>
+  </action>
+  <action name="actionObject_Properties">
+   <property name="text">
+    <string>Object Properties</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
+   </property>
+  </action>
+  <action name="actionSet_origin">
+   <property name="text">
+    <string>Set origin</string>
+   </property>
+   <property name="menuRole">
+    <enum>QAction::NoRole</enum>
    </property>
   </action>
  </widget>

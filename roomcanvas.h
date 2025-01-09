@@ -3,16 +3,18 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
-#include <QGraphicsScene>
-#include <QGraphicsPixmapItem>
+#include "widgets/scene.h"
 #include <QThread>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QAbstractButton>
 #include <QSizePolicy>
 #include <QMenu>
-#include "layers.h"
+#include "widgets/layers.h"
+#include "widgets/canvas.h"
 #include "canvasobject.h"
 #include <QInputDialog>
+#include <QMouseEvent>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -29,11 +31,14 @@ public:
     ~RoomCanvas();
     Q_INVOKABLE void nextFrame();
     void addItem(QString dir);
-    void remItem(QString dir);
-    void remItemByID(int id);
-    void remItemByName(QString name);
-    QList<CanvasObject*> getItems();
+    void remItemByCanvasObject(CanvasObject* canvasObj);
+    //QList<CanvasObject*>& getItems();
+    QString getFilePath();
+    //void setDialogFilePaths(PropertiesDialog& dialog, CanvasObject* obj, STATE state);
     void updateLayers();
+
+    Scene* getScene();
+    Canvas* getCanvas();
 
 private slots:
     void on_importSpriteFile_triggered();
@@ -46,21 +51,38 @@ private slots:
     void on_actionRemove_Selected_triggered();
     void contextMenuRequested(QPoint point);
 
+    void mouseTracker(QPoint pos);
     void on_actionRename_Item_triggered();
+
+    void on_actionAdd_child_sprite_to_selected_triggered();
+
+    void on_actionAdd_child_sprite_file_to_selected_triggered();
+
+    void on_actionScale_Selected_triggered();
+
+    void on_actionObject_Properties_triggered();
+
+    void on_actionSet_origin_triggered();
 
 private:
     Ui::RoomCanvas *ui;
     QThread* thread;
-    QList<CanvasObject*> items;
-    QGraphicsScene* scene;
+    //QList<CanvasObject*> items;
+    Scene* scene;
+    Canvas* canvas;
     Layers* layers;
     bool attemptingUpdate = false;
     bool updatingSelection = false;
     QList<Qt::Key> pressedKeys;
     int id_increment = 0;
+    QGraphicsItem* selectingOrigin = nullptr;
 
 protected:
     void keyPressEvent(QKeyEvent *event) override;
     void keyReleaseEvent(QKeyEvent *event) override;
+    void mousePressEvent(QMouseEvent *event) override;
+
+signals:
+    void keyPressed(int key);
 };
 #endif // ROOMCANVAS_H

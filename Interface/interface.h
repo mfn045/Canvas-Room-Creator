@@ -1,0 +1,32 @@
+#ifndef INTERFACE_H
+#define INTERFACE_H
+#include "../widgets/scene.h"
+#include <QFontDatabase>
+#include "../Objects/Penguin/penguin.h"
+#include "MenuBar/menubar.h"
+#include "News/news.h"
+#include "Mail/mail.h"
+#include "Map/map.h"
+#include "Friend_Requests/friend_requests.h"
+#include "SvgGridContainer/gridcontainer.h"
+#include "ChatHistory/chathistory.h"
+
+
+class Interface
+{
+public:
+    static Interface* getInstance();
+    Scene* getScene();
+    Scene* setScene(Scene* scene);
+
+    bool loadFonts();
+    bool loadPenguin();
+    bool loadHUD();
+
+private:
+    Interface() = default;
+    static Interface* instance;
+    Scene* scene = nullptr;
+};
+
+#endif // INTERFACE_H

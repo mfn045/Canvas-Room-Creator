@@ -11,6 +11,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Svg)
+find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
+find_package(Qt6 REQUIRED COMPONENTS Xml)
+find_package(Qt6 REQUIRED COMPONENTS Core)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -23,9 +27,44 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Clubpenguin-Room-Creator
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        canvasobject.h canvasobject.cpp
-        layers.h layers.cpp
+        canvasobject.h
+        canvasobject.cpp
+        widgets/layers.h
+        widgets/layers.cpp
         resources.qrc
+        widgets/canvas.h
+        widgets/canvas.cpp
+        Dialogs/propertiesdialog.h Dialogs/propertiesdialog.cpp Dialogs/propertiesdialog.ui
+        Objects/Penguin/penguin.h Objects/Penguin/penguin.cpp
+        Interface/MenuBar/menubar.h Interface/MenuBar/menubar.cpp
+        Interface/Buttons/AbstractButton/abstractbutton.h Interface/Buttons/AbstractButton/abstractbutton.cpp
+        Interface/Buttons/BlueCircleButton/bluecirclebutton.h Interface/Buttons/BlueCircleButton/bluecirclebutton.cpp
+        Interface/Map/map.h Interface/Map/map.cpp
+        Interface/News/news.h Interface/News/news.cpp
+        Interface/Moderator/moderator.h Interface/Moderator/moderator.cpp
+        Interface/Mail/mail.h Interface/Mail/mail.cpp
+        Interface/Friend_Requests/friend_requests.h Interface/Friend_Requests/friend_requests.cpp
+        Interface/TextBox/textbox.h Interface/TextBox/textbox.cpp
+        Interface/ChatBubble/chatbubble.h Interface/ChatBubble/chatbubble.cpp
+        Interface/Dialogs/abstractdialog.h Interface/Dialogs/abstractdialog.cpp
+        widgets/scene.h widgets/scene.cpp
+        Interface/Buttons/OrangeButton/orangebutton.h Interface/Buttons/OrangeButton/orangebutton.cpp
+        Interface/Buttons/BlueButton/bluebutton.h Interface/Buttons/BlueButton/bluebutton.cpp
+        Interface/Dialogs/YesNoDialog/yesnodialog.h Interface/Dialogs/YesNoDialog/yesnodialog.cpp
+        Interface/TextLabel/textlabel.h Interface/TextLabel/textlabel.cpp
+        Interface/TextLabel/textlabelinput.h Interface/TextLabel/textlabelinput.cpp
+        Interface/ChatHistory/chathistory.h Interface/ChatHistory/chathistory.cpp
+        Interface/Buttons/BlueRectButton/bluerectbutton.h Interface/Buttons/BlueRectButton/bluerectbutton.cpp
+        Interface/ChatHistory/chathistory_message.h Interface/ChatHistory/chathistory_message.cpp
+
+
+        Interface/SvgGridContainer/gridcontainer.h Interface/SvgGridContainer/gridcontainer.cpp
+        Interface/Buttons/WhiteSquareButton/whitesquarebutton.h Interface/Buttons/WhiteSquareButton/whitesquarebutton.cpp
+        Interface/interface.h Interface/interface.cpp
+        Interface/Notification/notification.h Interface/Notification/notification.cpp
+        Interface/PlayerCard/playercard.h Interface/PlayerCard/playercard.cpp
+        Interface/DialogGrid/dialoggrid.h Interface/DialogGrid/dialoggrid.cpp
+
 
     )
 # Define target properties for Android with Qt 6 as:
@@ -47,6 +86,10 @@ else()
 endif()
 
 target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::Svg)
+target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::SvgWidgets)
+target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::Xml)
+target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::Core)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
