@@ -4,6 +4,7 @@
 #include "../../canvasobject.h"
 #include "../../widgets/scene.h"
 #include "../Buttons/BlueRectButton/bluerectbutton.h"
+#include "../SvgGridContainer/gridcontainer.h"
 #include "../TextLabel/textlabel.h"
 #include "chathistory_message.h"
 

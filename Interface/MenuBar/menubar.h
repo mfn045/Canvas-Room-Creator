@@ -5,7 +5,7 @@
 #include <QGraphicsScene>
 #include <QGraphicsTextItem>
 #include "../../widgets/scene.h"
-#include "../Buttons/BlueCircleButton/bluecirclebutton.h"
+#include "../Buttons/CircleButton/circlebutton.h"
 #include "../../canvasobject.h"
 #include "../TextBox/textbox.h"
 #include "../SvgGridContainer/gridcontainer.h"
@@ -16,21 +16,21 @@ class MenuBar : public CanvasObject
 public:
     explicit MenuBar(Scene *parent = nullptr);
 
-    BlueCircleButton* getSendChatButton();
+    CircleButton* getSendChatButton();
 
     TextBox* getChatInput();
 
 private:
-    BlueCircleButton* puffleTricks_Button = nullptr;
-    BlueCircleButton* safeChat_Button = nullptr;
-    BlueCircleButton* emoticons_Button = nullptr;
-    BlueCircleButton* penguinState_Button = nullptr;
-    BlueCircleButton* snowBall_Button = nullptr;
-    BlueCircleButton* sendChat_Button = nullptr;
-    BlueCircleButton* playerCard_Button = nullptr;
-    BlueCircleButton* friends_Button = nullptr;
-    BlueCircleButton* igloo_Button = nullptr;
-    BlueCircleButton* settings_Button = nullptr;
+    CircleButton* puffleTricks_Button = nullptr;
+    CircleButton* safeChat_Button = nullptr;
+    CircleButton* emoticons_Button = nullptr;
+    CircleButton* penguinState_Button = nullptr;
+    CircleButton* snowBall_Button = nullptr;
+    CircleButton* sendChat_Button = nullptr;
+    CircleButton* playerCard_Button = nullptr;
+    CircleButton* friends_Button = nullptr;
+    CircleButton* igloo_Button = nullptr;
+    CircleButton* settings_Button = nullptr;
     CanvasObject* chat = nullptr;
     TextBox* chatInput = nullptr;
 

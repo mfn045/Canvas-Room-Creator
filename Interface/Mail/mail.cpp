@@ -4,7 +4,6 @@ Mail::Mail(CanvasObject* parent) : AbstractButton(parent) {
     QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_up.svg";
     QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_over.svg";
     QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_down.svg";
-    hide();
     setIsHoverable(true);
     setIsClickable(true);
 

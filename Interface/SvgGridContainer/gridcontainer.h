@@ -37,12 +37,20 @@ public:
     explicit GridContainer(QRectF parentRect = QRectF(0,0,0,0));
 
     CanvasObject* addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
+    QGraphicsItem* addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
 
     int setHorizontalSpacing(int horizontalSpacing);
     int getHorizontalSpacing();
 
     int setVerticalSpacing(int verticalSpacing);
     int getVerticalSpacing();
+
+
+    HorizontalAlignment setHorizontalAlignment(HorizontalAlignment hAlignment);
+    HorizontalAlignment getHorizontalAlignment();
+
+    VerticalAlignment setVerticalAlignment(VerticalAlignment vAlignment);
+    VerticalAlignment getVerticalAlignment();
 
     void setMargins(float top, float right, float bottom, float left);
     float setTopMargin(float top);
@@ -54,14 +62,22 @@ public:
     float setLeftMargin(float left);
     float getLeftMargin();
 
-    float getWidth();
-    float getHeight();
+    float setMaxWidth(int column, float maxWidth);
+    float getMaxWidth(int column);
+    float setMaxHeight(int row, float maxHeight);
+    float getMaxHeight(int row);
+
+    float getWidth() const;
+    float getHeight() const;
 
     void updateMaximums();
 
     bool locationOccupied(int row, int col);
 
     void updateLayout(); // Updates the position of the whole layout from the QMap
+
+    QRectF boundingRect() const override;
+
 
 private:
     int lastRow = 0; // Check how big is the grid based on the items highest row
@@ -83,7 +99,7 @@ private:
     VerticalAlignment verticalAlignment = VerticalAlignment::TOP;
     HorizontalAlignment horizontalAlignment = HorizontalAlignment::LEFT;
 
-    QMap<CELL_PROPERTIES*,CanvasObject*> map; // The location position of each canvasobject to update the layout.
+    QMap<CELL_PROPERTIES*,QGraphicsItem*> map; // The location position of each canvasobject to update the layout.
 };
 
 #endif // GRIDCONTAINER_H

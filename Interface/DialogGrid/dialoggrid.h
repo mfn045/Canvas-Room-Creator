@@ -23,11 +23,14 @@ public:
     int getCol();
     int setCol(int col);
 
-    float getGridSize();
-    float setGridSize(float size);
+    float getGridSizeX();
+    float getGridSizeY();
+    void setGridSize(float gridSize_X, float gridSize_Y);
 
     float getWidth();
+    float setWidth(float width);
     float getHeight();
+    float setHeight(float height);
 
     float getScale();
     float setScale(float scale);
@@ -68,9 +71,10 @@ private:
     int row = 0;
     int col = 0;
 
-    float gridSize = 0;
+    float gridSize_X = 0;
+    float gridSize_Y = 0;
 
-    float scale = 1;
+    QTransform gridTransform;
 };
 
 #endif // DIALOGGRID_H

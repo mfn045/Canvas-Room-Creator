@@ -10,7 +10,10 @@ ChatHistory_Message::ChatHistory_Message(CanvasObject* parent) : CanvasObject() 
     initFrames(properties->filePath, properties);
     setCurrentFrames(properties);
     setFrame(0);
-    setScale(-1);
+
+    emptyProperties = new PROPERTIES();
+    emptyProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chathistory/chathistory_nonhighlight.svg";
+    initFrames(emptyProperties->filePath, emptyProperties);
 
 
     setIsClickable(true);
@@ -19,6 +22,7 @@ ChatHistory_Message::ChatHistory_Message(CanvasObject* parent) : CanvasObject() 
     connect(this,&CanvasObject::hoverLeave,this,&ChatHistory_Message::hoverLeaveReceiver);
 
     textLabel = new TextLabel(this);
+    textLabel->setAcceptHoverEvents(false);
     textLabel->getInput()->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
     textLabel->getInput()->setMaximumSize(QSize(boundingRect().width(),boundingRect().height()));
     textLabel->getInput()->setMinimumSize(QSize(boundingRect().width(),boundingRect().height()));

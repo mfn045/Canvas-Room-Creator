@@ -38,7 +38,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Objects/Penguin/penguin.h Objects/Penguin/penguin.cpp
         Interface/MenuBar/menubar.h Interface/MenuBar/menubar.cpp
         Interface/Buttons/AbstractButton/abstractbutton.h Interface/Buttons/AbstractButton/abstractbutton.cpp
-        Interface/Buttons/BlueCircleButton/bluecirclebutton.h Interface/Buttons/BlueCircleButton/bluecirclebutton.cpp
+        Interface/Buttons/CircleButton/circlebutton.h Interface/Buttons/CircleButton/circlebutton.cpp
         Interface/Map/map.h Interface/Map/map.cpp
         Interface/News/news.h Interface/News/news.cpp
         Interface/Moderator/moderator.h Interface/Moderator/moderator.cpp
@@ -64,6 +64,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Interface/Notification/notification.h Interface/Notification/notification.cpp
         Interface/PlayerCard/playercard.h Interface/PlayerCard/playercard.cpp
         Interface/DialogGrid/dialoggrid.h Interface/DialogGrid/dialoggrid.cpp
+        Interface/Buttons/CircleButton/circlebutton.h
 
 
     )

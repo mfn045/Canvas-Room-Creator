@@ -12,6 +12,7 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
     setPos(QPointF(boundingRect().width()+centerX,boundingRect().height()+centerY));
 
     historyBox = new CanvasObject();
+    historyBox->setScale(-1);
     historyBox->setFlag(GraphicsItemFlag::ItemStacksBehindParent);
     historyBox->setParentItem(this);
     PROPERTIES* properties = new PROPERTIES();
@@ -20,22 +21,25 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
     historyBox->setCurrentFrames(properties);
     historyBox->setFrame(0);
 
-    double chatHistory_centerX = (historyBox->boundingRect().width()-boundingRect().width())/2;
+    double chatHistory_centerX = -(historyBox->boundingRect().width()-boundingRect().width())/2;
     QPointF historyPos = historyBox->pos();
     historyPos.setX(historyPos.x()-chatHistory_centerX);
-    historyPos.setY(historyPos.y()+boundingRect().height()-5);
+    historyPos.setY(historyPos.y()+boundingRect().height()-5+historyBox->boundingRect().height());
     historyBox->setPos(historyPos);
 
     maxHeight = historyBox->boundingRect().height();
 
-    int msgSpacer = 5;
+    GridContainer* container = new GridContainer(historyBox);
+    container->setVerticalSpacing(5);
+    container->setHorizontalAlignment(GridContainer::HorizontalAlignment::RIGHT);
+
     for(int i = 0; i < 15; i++){
         ChatHistory_Message* msg = new ChatHistory_Message(historyBox);
-        int centerX = (historyBox->boundingRect().width()-msg->boundingRect().width())/2;
-        msg->setPos(QPointF(historyBox->boundingRect().width()-centerX,historyBox->boundingRect().height()-(2*msgSpacer)-((msg->boundingRect().height()+msgSpacer)*i)));
+        container->addGridItem(msg,i,0);
         msg->remHighlight();
         pastMessages.push_back(msg);
     }
+    container->updateLayout();
 
     for(int i = 0; i < 30; i++){
         addMessage("Message (" + QString::number(i) + ")");

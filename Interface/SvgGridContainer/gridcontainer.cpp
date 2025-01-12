@@ -21,6 +21,29 @@ bool GridContainer::locationOccupied(int row, int col){
     return false;
 }
 
+
+float GridContainer::setMaxWidth(int column, float maxWidth){
+    if(!(this->maxWidth.size() >= column)) return -1;
+    this->maxWidth[column] = maxWidth;
+    return this->maxWidth[column];
+}
+
+float GridContainer::getMaxWidth(int column){
+    if(!(maxWidth.size() >= column)) return -1;
+    return maxWidth[column];
+}
+
+float GridContainer::setMaxHeight(int row, float maxHeight){
+    if(!(this->maxHeight.size() >= row)) return -1;
+    this->maxHeight[row] = maxHeight;
+    return this->maxHeight[row];
+}
+
+float GridContainer::getMaxHeight(int row){
+    if(!(maxHeight.size() >= row)) return -1;
+    return maxHeight[row];
+}
+
 void GridContainer::updateMaximums(){
     maxWidth.resize(lastColumn+1);
     maxHeight.resize(lastRow+1);
@@ -82,6 +105,32 @@ void GridContainer::updateMaximums(){
             }
         }
     }
+}
+
+QGraphicsItem* GridContainer::addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
+    if(locationOccupied(row,col)) return nullptr;
+    qDebug() << "Added Item";
+    CELL_PROPERTIES* cellP = new CELL_PROPERTIES();
+    cellP->row = row;
+    cellP->col = col;
+    cellP->horizontalSpan = horizontalSpan;
+    cellP->verticalSpan = verticalSpan;
+    map.insert(cellP,gridItem);
+    gridItem->setParentItem(this);
+
+    if(lastRow < row){
+        lastRow = row;
+    }
+    if(lastColumn < col){
+        lastColumn = col;
+    }
+    qDebug() << "Updated last variables : " << lastRow << lastColumn;
+    updateMaximums();
+    return gridItem;
+}
+
+QRectF GridContainer::boundingRect() const {
+    return QRect(0,0,getWidth(),getHeight());
 }
 
 CanvasObject* GridContainer::addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
@@ -326,6 +375,41 @@ void GridContainer::updateLayout(){
         }
         x = leftMargin;
     }
+    int posX = 0;
+    int posY = 0;
+    if(verticalAlignment == VerticalAlignment::CENTER){
+        posY = (parentItem()->sceneBoundingRect().height()-getHeight())/2;
+    }else if(verticalAlignment == VerticalAlignment::BOTTOM){
+        posY = (parentItem()->sceneBoundingRect().height()-getHeight());
+    } else if(verticalAlignment == VerticalAlignment::TOP){
+        posY = 0;
+    }
+    if(horizontalAlignment == HorizontalAlignment::CENTER){
+        posX = (parentItem()->sceneBoundingRect().width()-getWidth())/2;
+    }else if(horizontalAlignment == HorizontalAlignment::RIGHT){
+        posX = (parentItem()->sceneBoundingRect().width()-getWidth());
+    } else if(horizontalAlignment == HorizontalAlignment::LEFT){
+        posX = 0;
+    }
+    setPos(QPointF(posX,posY));
+}
+
+GridContainer::HorizontalAlignment GridContainer::setHorizontalAlignment(HorizontalAlignment hAlignment){
+    this->horizontalAlignment = hAlignment;
+    return this->horizontalAlignment;
+}
+
+GridContainer::HorizontalAlignment GridContainer::getHorizontalAlignment(){
+    return this->horizontalAlignment;
+}
+
+GridContainer::VerticalAlignment GridContainer::setVerticalAlignment(VerticalAlignment vAlignment){
+    this->verticalAlignment=vAlignment;
+    return this->verticalAlignment;
+}
+
+GridContainer::VerticalAlignment GridContainer::getVerticalAlignment(){
+    return this->verticalAlignment;
 }
 
 void GridContainer::setMargins(float top, float right, float bottom, float left){
@@ -363,27 +447,36 @@ float GridContainer::getLeftMargin(){
     return this->leftMargin;
 }
 
-float GridContainer::getWidth(){
+float GridContainer::getWidth() const{
     float width = 0;
+    if(leftMargin != 0){
+        width+=leftMargin;
+    }
     for(float w : maxWidth){
         width += w;
     }
     if(maxWidth.size() > 1){
         width += horizontalSpacing*(maxWidth.size()-1);
     }
+    if(rightMargin != 0){
+        width+=rightMargin;
+    }
     return width;
 }
 
-float GridContainer::getHeight(){
+float GridContainer::getHeight() const{
     float height = 0;
+    if(topMargin != 0){
+        height+=topMargin;
+    }
     for(float h : maxHeight){
         height += h;
-        qDebug() << "added height";
     }
-    qDebug() << "checking";
     if(maxHeight.size() > 1){
-        qDebug() << "Yep";
         height += verticalSpacing*(maxHeight.size()-1);
+    }
+    if(bottomMargin != 0){
+        height+=bottomMargin;
     }
     return height;
 }

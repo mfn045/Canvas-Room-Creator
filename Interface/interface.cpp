@@ -123,7 +123,6 @@ bool Interface::loadHUD(){
         }
     });*/
     container->updateLayout();
-    mail->animationIn();
     return true;
 }
 

@@ -4,14 +4,39 @@ DialogGrid::DialogGrid(Scene* parent, TYPE type) {
     if(parent != nullptr){
         this->scene = parent;
     }
-
-    setGridSize(43*scale);
+    gridTransform = QTransform(1,0,0,1,0,0);
+    setGridSize(43.85,43.85);
     setType(type);
 
 }
 
 
-float DialogGrid::getScale(){
+float DialogGrid::setWidth(float width){
+    int colRequired = round(width/getGridSizeX());
+    double scaleRequired = width/(getGridSizeX()*colRequired);
+    qDebug() << " WIDTH HISSSAJDASKDJAS " << colRequired << width << getGridSizeX() << scaleRequired << getGridSizeX()*scaleRequired;
+    setCol(colRequired);
+    gridTransform.setMatrix(scaleRequired,gridTransform.m12(),gridTransform.m13(),
+                            gridTransform.m21(),gridTransform.m22(),gridTransform.m23(),
+                            gridTransform.m31(),gridTransform.m32(),gridTransform.m33());
+    //setTransform(gridTransform);
+    setGridSize(scaleRequired*getGridSizeX(),getGridSizeY());
+    return width;
+}
+
+float DialogGrid::setHeight(float height){
+    int rowRequired = round(height/getGridSizeY());
+    double scaleRequired = height/(getGridSizeY()*rowRequired);
+    setRow(rowRequired);
+    gridTransform.setMatrix(gridTransform.m11(),gridTransform.m12(),gridTransform.m13(),
+                            gridTransform.m21(),scaleRequired,gridTransform.m23(),
+                            gridTransform.m31(),gridTransform.m32(),gridTransform.m33());
+    //setTransform(gridTransform);
+    setGridSize(getGridSizeX(),scaleRequired*getGridSizeY());
+    return height;
+}
+
+/*float DialogGrid::getScale(){
     return this->scale;
 }
 
@@ -19,15 +44,19 @@ float DialogGrid::setScale(float scale){
     this->scale = scale;
     setGridSize(43*scale);
     return this->scale;
+}*/
+
+float DialogGrid::getGridSizeX(){
+    return this->gridSize_X;
+}
+float DialogGrid::getGridSizeY(){
+    return this->gridSize_Y;
 }
 
-float DialogGrid::getGridSize(){
-    return this->gridSize;
-}
-
-float DialogGrid::setGridSize(float gridSize){
-    this->gridSize = gridSize;
-    return this->gridSize;
+void DialogGrid::setGridSize(float gridSize_X, float gridSize_Y){
+    this->gridSize_X = gridSize_X;
+    this->gridSize_Y = gridSize_Y;
+    return;
 }
 
 
@@ -138,13 +167,14 @@ bool DialogGrid::init(){
                 top_left->setFrame(0);
                 top_left->setParentItem(this);
                 top_left->setZValue(0);
-                top_left->setScale(scale);
-                top_left->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                top_left->setTransform(gridTransform);
+                top_left->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                qDebug() << "TOP LEFT SIZE " << top_left->transform() << top_left->sceneTransform() << top_left->sceneBoundingRect() << top_left->boundingRect();
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else if(j == 0 && k != 0 && k != col-1){
                 // TOP
@@ -156,13 +186,13 @@ bool DialogGrid::init(){
                 top->setFrame(0);
                 top->setParentItem(this);
                 top->setZValue(0);
-                top->setScale(scale);
-                top->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                top->setTransform(gridTransform);
+                top->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else if(j == 0 && k == col-1){
                 // TOP RIGHT
@@ -174,13 +204,13 @@ bool DialogGrid::init(){
                 top_right->setFrame(0);
                 top_right->setParentItem(this);
                 top_right->setZValue(0);
-                top_right->setScale(scale);
-                top_right->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                top_right->setTransform(gridTransform);
+                top_right->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else if(k == 0 && j != 0 && j != row-1){
                 // LEFT
@@ -192,13 +222,13 @@ bool DialogGrid::init(){
                 left->setFrame(0);
                 left->setParentItem(this);
                 left->setZValue(0);
-                left->setScale(scale);
-                left->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                left->setTransform(gridTransform);
+                left->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else if(k == col-1 && j != 0 && j != row-1){
                 // RIGHT
@@ -210,13 +240,13 @@ bool DialogGrid::init(){
                 right->setFrame(0);
                 right->setParentItem(this);
                 right->setZValue(0);
-                right->setScale(scale);
-                right->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                right->setTransform(gridTransform);
+                right->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else if(j == row-1 && k == 0){
                 // BOTTOM LEFT
@@ -228,13 +258,13 @@ bool DialogGrid::init(){
                 bottom_left->setFrame(0);
                 bottom_left->setParentItem(this);
                 bottom_left->setZValue(0);
-                bottom_left->setScale(scale);
-                bottom_left->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                bottom_left->setTransform(gridTransform);
+                bottom_left->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else if(j == row-1 && k != 0 && k != col-1){
                 // BOTTOM
@@ -246,13 +276,13 @@ bool DialogGrid::init(){
                 bottom->setFrame(0);
                 bottom->setParentItem(this);
                 bottom->setZValue(0);
-                bottom->setScale(scale);
-                bottom->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                bottom->setTransform(gridTransform);
+                bottom->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else if(j == row-1 && k == col-1){
                 // BOTTOM RIGHT
@@ -264,13 +294,13 @@ bool DialogGrid::init(){
                 bottom_right->setFrame(0);
                 bottom_right->setParentItem(this);
                 bottom_right->setZValue(0);
-                bottom_right->setScale(scale);
-                bottom_right->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                bottom_right->setTransform(gridTransform);
+                bottom_right->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             } else {
                 // CENTER
@@ -282,13 +312,13 @@ bool DialogGrid::init(){
                 center->setFrame(0);
                 center->setParentItem(this);
                 center->setZValue(0);
-                center->setScale(scale);
-                center->setPos(QPointF(gridSize*k,gridSize*j));
-                if(gridSize*k > farthest_x){
-                    farthest_x = gridSize*k;
+                center->setTransform(gridTransform);
+                center->setPos(QPointF(gridSize_X*k,gridSize_Y*j));
+                if(gridSize_X*k > farthest_x){
+                    farthest_x = gridSize_X*k;
                 }
-                if(gridSize*j > farthest_y){
-                    farthest_y = gridSize*j;
+                if(gridSize_Y*j > farthest_y){
+                    farthest_y = gridSize_Y*j;
                 }
             }
         }
@@ -298,9 +328,9 @@ bool DialogGrid::init(){
 }
 
 float DialogGrid::getWidth(){
-    return gridSize*col;
+    return gridSize_X*col;
 }
 
 float DialogGrid::getHeight(){
-    return gridSize*row;
+    return gridSize_Y*row;
 }

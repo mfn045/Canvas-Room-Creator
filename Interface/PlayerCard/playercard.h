@@ -2,7 +2,8 @@
 #define PLAYERCARD_H
 
 #include "../Buttons/BlueRectButton/bluerectbutton.h"
-#include "../Buttons/BlueCircleButton/bluecirclebutton.h"
+#include "../Buttons/CircleButton/circlebutton.h"
+#include "../Buttons/WhiteSquareButton/whitesquarebutton.h"
 #include "../../widgets/scene.h"
 #include "../DialogGrid/dialoggrid.h"
 #include "../SvgGridContainer/gridcontainer.h"
