@@ -11,6 +11,7 @@
 #include <QObject>
 #include "../../canvasobject.h"
 #include "../../widgets/scene.h"
+#include "clothes.h"
 #include "../../Interface/ChatBubble/chatbubble.h"
 
 class Penguin : public CanvasObject
@@ -36,11 +37,14 @@ public:
         WAVING
     };
 
-    enum MEMBER {
-        BAND_0,
-        BAND_1,
-        BAND_2,
-        BAND_3
+    enum BADGE {
+        NONE,
+        PLAYER,
+        MEMBER_0,
+        MEMBER_1,
+        MEMBER_2,
+        MEMBER_3,
+        MEMBER_4
     };
 
     struct PENGUINPROPERTIES : public PROPERTIES {
@@ -70,12 +74,19 @@ public:
 
 private:
     QThread* thread = nullptr;
+
     double velocity = 0;
+
     DIRECTION currentDirection = DIRECTION::S;
     STATE currentState = STATE::STANDING;
+
     Scene* parent = nullptr;
-    MEMBER memberType = MEMBER::BAND_0;
+
+    BADGE memberType = BADGE::PLAYER;
+
     ChatBubble* bubble = nullptr;
+
+    Clothes clothes;
 
 public slots:
     void animationDone() override;

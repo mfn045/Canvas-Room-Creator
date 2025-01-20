@@ -14,7 +14,7 @@ class ChatHistory : public BlueRectButton
 public:
     explicit ChatHistory(Scene* parent = nullptr);
 
-    ChatHistory_Message* addMessage(QString msg){
+    void addMessage(QString msg){
         if(historyBox != nullptr){
             QString storedMessage = msg;
             for(int i = pastMessages.size()-1; i >= 0; i--){
@@ -24,6 +24,7 @@ public:
                 storedMessage = oldLabel;
             }
         }
+        return;
     }
 
 protected:

@@ -5,7 +5,7 @@ DialogGrid::DialogGrid(Scene* parent, TYPE type) {
         this->scene = parent;
     }
     gridTransform = QTransform(1,0,0,1,0,0);
-    setGridSize(43.85,43.85);
+    setGridSize(43.5,43.5);
     setType(type);
 
 }
@@ -327,10 +327,15 @@ bool DialogGrid::init(){
     return true;
 }
 
-float DialogGrid::getWidth(){
+
+QRectF DialogGrid::boundingRect() const {
+    return QRect(pos().x(),pos().y(),getWidth(),getHeight());
+}
+
+float DialogGrid::getWidth() const{
     return gridSize_X*col;
 }
 
-float DialogGrid::getHeight(){
+float DialogGrid::getHeight() const{
     return gridSize_Y*row;
 }

@@ -154,8 +154,8 @@ bool CanvasObject::setIsMouseTrackable(bool mouseTrackable){
 }
 
 void CanvasObject::paint(QPainter *painter,
-           const QStyleOptionGraphicsItem *option,
-           QWidget *widget){
+                         const QStyleOptionGraphicsItem *option,
+                         QWidget *widget){
     QStyleOptionGraphicsItem opts(*option);
 
     opts.state &= ~QStyle::State_Selected;
@@ -324,9 +324,9 @@ void CanvasObject::nextFrame(bool loop, bool force){
             for(QGraphicsItem* child : children){
                 if(auto obj = dynamic_cast<CanvasObject*>(child)){
                     if(currentFrame < obj->currentFrames.size()) {
-                    obj->currentFrame = currentFrame;
-                    obj->renderer()->load(*obj->currentFrames.at(currentFrame));
-                    obj->setElementId("");
+                        obj->currentFrame = currentFrame;
+                        obj->renderer()->load(*obj->currentFrames.at(currentFrame));
+                        obj->setElementId("");
                     }
                 }
             }
@@ -342,9 +342,9 @@ void CanvasObject::nextFrame(bool loop, bool force){
                 for(QGraphicsItem* child : children){
                     if(auto obj = dynamic_cast<CanvasObject*>(child)){
                         if(currentFrame < obj->currentFrames.size()) {
-                        obj->currentFrame = currentFrame;
-                        obj->renderer()->load(*obj->currentFrames.at(currentFrame));
-                        obj->setElementId("");
+                            obj->currentFrame = currentFrame;
+                            obj->renderer()->load(*obj->currentFrames.at(currentFrame));
+                            obj->setElementId("");
                         }
                     }
                 }

@@ -48,10 +48,11 @@ void GridContainer::updateMaximums(){
     maxWidth.resize(lastColumn+1);
     maxHeight.resize(lastRow+1);
     for(auto i = map.begin(); i != map.end(); i++){
+        QRectF itemBoundingRect = i.value()->boundingRect();//(i.value()->boundingRect()*i.value()->sceneTransform()).boundingRect();
         if(i.value()){
             if(i.key()->horizontalSpan != 0 && i.key()->horizontalSpan > 1){
                 qDebug() << "Yep spanned horizontally";
-                double horizontalWidth = i.value()->boundingRect().width()/i.key()->horizontalSpan;
+                double horizontalWidth = itemBoundingRect.width()/i.key()->horizontalSpan;
                 for(int c = i.key()->col; c <= i.key()->col+(i.key()->horizontalSpan-1); c++){
                     qDebug() << c << c+(i.key()->horizontalSpan-1);
                     if(maxWidth.size() > c)
@@ -68,17 +69,17 @@ void GridContainer::updateMaximums(){
                 qDebug() << "Nope no horizontal span";
                 if(maxWidth.size() > i.key()->col)
                 {
-                    if(maxWidth[i.key()->col] < i.value()->boundingRect().width()){
-                        maxWidth[i.key()->col] = i.value()->boundingRect().width();
+                    if(maxWidth[i.key()->col] < itemBoundingRect.width()){
+                        maxWidth[i.key()->col] = itemBoundingRect.width();
                     }
                 }else{
                     maxWidth.resize(i.key()->col+1);
-                    maxWidth[i.key()->col] = i.value()->boundingRect().width();
+                    maxWidth[i.key()->col] = itemBoundingRect.width();
                 }
             }
             if(i.key()->verticalSpan != 0 && i.key()->verticalSpan > 1){
                 qDebug() << "Yep spanned vertically";
-                double verticalHeight = i.value()->boundingRect().height()/i.key()->verticalSpan;
+                double verticalHeight = itemBoundingRect.height()/i.key()->verticalSpan;
                 for(int r = i.key()->row; r <= i.key()->row+(i.key()->verticalSpan-1); r++){
                     qDebug() << r << r+(i.key()->verticalSpan-1);
                     if(maxHeight.size() > r)
@@ -95,19 +96,33 @@ void GridContainer::updateMaximums(){
                 qDebug() << "Nope spanned vertically";
                 if(maxHeight.size() > i.key()->row)
                 {
-                    if(maxHeight[i.key()->row] < i.value()->boundingRect().height()){
-                        maxHeight[i.key()->row] = i.value()->boundingRect().height();
+                    if(maxHeight[i.key()->row] < itemBoundingRect.height()){
+                        maxHeight[i.key()->row] = itemBoundingRect.height();
                     }
                 }else{
                     maxHeight.resize(i.key()->row+1);
-                    maxHeight[i.key()->row] = i.value()->boundingRect().height();
+                    maxHeight[i.key()->row] = itemBoundingRect.height();
                 }
             }
         }
     }
 }
 
-QGraphicsItem* GridContainer::addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
+
+GridContainer::CELL_PROPERTIES* GridContainer::getCellProperties(CanvasObject* object){
+    return map.key(object);
+}
+
+GridContainer::CELL_PROPERTIES* GridContainer::getCellProperties(int row, int column){
+    for(auto i = map.begin(); i != map.end(); i++){
+        if(i.key()->col == column && i.key()->row == row){
+            return i.key();
+        }
+    }
+    return nullptr;
+}
+
+GridContainer::CELL_PROPERTIES* GridContainer::addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
     if(locationOccupied(row,col)) return nullptr;
     qDebug() << "Added Item";
     CELL_PROPERTIES* cellP = new CELL_PROPERTIES();
@@ -118,22 +133,22 @@ QGraphicsItem* GridContainer::addGridItem(QGraphicsItem* gridItem, int row, int 
     map.insert(cellP,gridItem);
     gridItem->setParentItem(this);
 
-    if(lastRow < row){
-        lastRow = row;
+    if(lastRow < row+(verticalSpan-1)){
+        lastRow = row+(verticalSpan-1);
     }
-    if(lastColumn < col){
-        lastColumn = col;
+    if(lastColumn < col+(horizontalSpan-1)){
+        lastColumn = col+(horizontalSpan-1);
     }
     qDebug() << "Updated last variables : " << lastRow << lastColumn;
     updateMaximums();
-    return gridItem;
+    return cellP;
 }
 
 QRectF GridContainer::boundingRect() const {
     return QRect(0,0,getWidth(),getHeight());
 }
 
-CanvasObject* GridContainer::addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
+GridContainer::CELL_PROPERTIES* GridContainer::addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
     if(locationOccupied(row,col)) return nullptr;
     qDebug() << "Added Item";
     CELL_PROPERTIES* cellP = new CELL_PROPERTIES();
@@ -152,7 +167,7 @@ CanvasObject* GridContainer::addGridItem(CanvasObject* gridItem, int row, int co
     }
     qDebug() << "Updated last variables : " << lastRow << lastColumn;
     updateMaximums();
-    return gridItem;
+    return cellP;
 }
 
 int GridContainer::setHorizontalSpacing(int horizontalSpacing){
@@ -179,8 +194,9 @@ void GridContainer::updateLayout(){
     int gridMaxWidth = 0;
     int gridMaxHeight = 0;
     if(parentItem()){
-        gridMaxWidth = parentItem()->boundingRect().width();
-        gridMaxHeight = parentItem()->boundingRect().height();
+        QRectF parentBoundingRect = parentItem()->boundingRect();
+        gridMaxWidth = parentBoundingRect.width();
+        gridMaxHeight = parentBoundingRect.height();
         qDebug() << "Parent rect bounding width : " << gridMaxWidth;
         qDebug() << "Parent rect bounding height : " << gridMaxWidth;
     }else if(!parentRect.isNull()){
@@ -251,7 +267,7 @@ void GridContainer::updateLayout(){
                     int offsetY = 0;
                     int offsetX = 0;
                     QRectF itemBoundingRect = (i.value()->boundingRect()*i.value()->sceneTransform()).boundingRect();
-                    if(maxHeight[r] != 0 && maxHeight[r] != itemBoundingRect.height() || i.key()->verticalSpan != 1){
+                    if(maxHeight[r] != 0 && maxHeight[r] != itemBoundingRect.height() || i.key()->verticalSpan != 1){ // TO FIX
                         qDebug() << "Its not the height of the cell..." << (maxHeight[r] != 0) << (maxHeight[r] != itemBoundingRect.height()) << (i.key()->verticalSpan != 1);
                         if(i.key()->verticalAlignment == VerticalAlignment::CENTER){
                             if(i.key()->verticalSpan != 0 && i.key()->verticalSpan > 1){
@@ -378,20 +394,39 @@ void GridContainer::updateLayout(){
     int posX = 0;
     int posY = 0;
     if(verticalAlignment == VerticalAlignment::CENTER){
-        posY = (parentItem()->sceneBoundingRect().height()-getHeight())/2;
+        if(parentItem()){
+            posY = (parentItem()->sceneBoundingRect().height()-getHeight())/2;
+        }else if(!parentRect.isNull()){
+            posY = (parentRect.height()-getHeight())/2;
+        }
     }else if(verticalAlignment == VerticalAlignment::BOTTOM){
-        posY = (parentItem()->sceneBoundingRect().height()-getHeight());
+        if(parentItem()){
+            posY = (parentItem()->sceneBoundingRect().height()-getHeight());
+        }else if(!parentRect.isNull()){
+            posY = (parentRect.height()-getHeight());
+        }
     } else if(verticalAlignment == VerticalAlignment::TOP){
-        posY = 0;
+        posY = topMargin;
     }
     if(horizontalAlignment == HorizontalAlignment::CENTER){
-        posX = (parentItem()->sceneBoundingRect().width()-getWidth())/2;
+        if(parentItem()){
+            posX = (parentItem()->sceneBoundingRect().width()-getWidth())/2;
+            qDebug() << "CENTER HORIZONTAL ALIGNMENT : " << parentItem()->sceneBoundingRect().width() << parentItem()->boundingRect().width() << getWidth() << posX;
+        }else if(!parentRect.isNull()){
+            posX = (parentRect.width()-getWidth())/2;
+        }
     }else if(horizontalAlignment == HorizontalAlignment::RIGHT){
-        posX = (parentItem()->sceneBoundingRect().width()-getWidth());
+        if(parentItem()){
+            posX = (parentItem()->sceneBoundingRect().width()-getWidth());
+        }else if(!parentRect.isNull()){
+            posX = (parentRect.width()-getWidth());
+        }
     } else if(horizontalAlignment == HorizontalAlignment::LEFT){
-        posX = 0;
+        posX = leftMargin;
     }
+    qDebug() << "FINAL POSITION :: " << pos();
     setPos(QPointF(posX,posY));
+    qDebug() << "FINAL POSITION :: " << pos();
 }
 
 GridContainer::HorizontalAlignment GridContainer::setHorizontalAlignment(HorizontalAlignment hAlignment){

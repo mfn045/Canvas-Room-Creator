@@ -5,6 +5,7 @@ Penguin::Penguin(Scene* parent) : parent(parent) {
     connect(parent,SIGNAL(mouseMoved(QPointF)),this,SLOT(sceneMouseMoved(QPointF)));
     connect(parent,SIGNAL(mousePressed(QPointF)),this,SLOT(sceneMousePressed(QPointF)));
     setFlag(GraphicsItemFlag::ItemIsSelectable);
+
     initializeFrames("C:/Users/mfn45/OneDrive/Desktop/Penguin_States_Updated/Standing/South/penguin.svg",DIRECTION::S,STATE::STANDING);
     initializeFrames("C:/Users/mfn45/OneDrive/Desktop/Penguin_States_Updated/Standing/South_West/penguin.svg",DIRECTION::SW,STATE::STANDING);
     initializeFrames("C:/Users/mfn45/OneDrive/Desktop/Penguin_States_Updated/Standing/West/penguin.svg",DIRECTION::W,STATE::STANDING);

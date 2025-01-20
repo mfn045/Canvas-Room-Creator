@@ -15,6 +15,7 @@ find_package(Qt6 REQUIRED COMPONENTS Svg)
 find_package(Qt6 REQUIRED COMPONENTS SvgWidgets)
 find_package(Qt6 REQUIRED COMPONENTS Xml)
 find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
 
 set(PROJECT_SOURCES
         main.cpp
@@ -65,6 +66,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Interface/PlayerCard/playercard.h Interface/PlayerCard/playercard.cpp
         Interface/DialogGrid/dialoggrid.h Interface/DialogGrid/dialoggrid.cpp
         Interface/Buttons/CircleButton/circlebutton.h
+        widgets/openglwidget.h widgets/openglwidget.cpp
+        Objects/Penguin/clothes.h Objects/Penguin/clothes.cpp
+        Objects/Badge/badge.h Objects/Badge/badge.cpp
+        Objects/MaskedCanvasObject/maskedcanvasobject.h Objects/MaskedCanvasObject/maskedcanvasobject.cpp
 
 
     )
@@ -91,6 +96,7 @@ target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::Svg)
 target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::SvgWidgets)
 target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::Xml)
 target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::Core)
+target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::OpenGLWidgets)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an

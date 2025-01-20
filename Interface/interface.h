@@ -10,6 +10,7 @@
 #include "Friend_Requests/friend_requests.h"
 #include "SvgGridContainer/gridcontainer.h"
 #include "ChatHistory/chathistory.h"
+#include "PlayerCard/playercard.h"
 
 
 class Interface
@@ -27,6 +28,7 @@ private:
     Interface() = default;
     static Interface* instance;
     Scene* scene = nullptr;
+    PlayerCard* playercard = nullptr;
 };
 
 #endif // INTERFACE_H

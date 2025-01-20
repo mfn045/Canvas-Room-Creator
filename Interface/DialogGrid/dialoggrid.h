@@ -27,9 +27,9 @@ public:
     float getGridSizeY();
     void setGridSize(float gridSize_X, float gridSize_Y);
 
-    float getWidth();
+    float getWidth() const;
     float setWidth(float width);
-    float getHeight();
+    float getHeight() const;
     float setHeight(float height);
 
     float getScale();
@@ -40,6 +40,8 @@ public:
     Scene* getScene();
 
     bool init();
+
+    QRectF boundingRect() const override;
 
 private:
     CanvasObject* top = nullptr;

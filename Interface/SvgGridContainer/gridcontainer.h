@@ -36,14 +36,17 @@ public:
     explicit GridContainer(CanvasObject* parent = nullptr);
     explicit GridContainer(QRectF parentRect = QRectF(0,0,0,0));
 
-    CanvasObject* addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
-    QGraphicsItem* addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
+    CELL_PROPERTIES* addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
+    CELL_PROPERTIES* addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
 
     int setHorizontalSpacing(int horizontalSpacing);
     int getHorizontalSpacing();
 
     int setVerticalSpacing(int verticalSpacing);
     int getVerticalSpacing();
+
+    CELL_PROPERTIES* getCellProperties(CanvasObject* object);
+    CELL_PROPERTIES* getCellProperties(int row, int column);
 
 
     HorizontalAlignment setHorizontalAlignment(HorizontalAlignment hAlignment);
@@ -86,7 +89,7 @@ private:
     QList<float> maxWidth; // Maximum width measured through each colum to set all subsequent rows of the same column with the same width.
     QList<float> maxHeight; // Maximum height measued through each row to set all subsequent columns of the same row with the same height.
 
-    QRectF parentRect;
+    QRectF parentRect = QRectF(0,0,0,0);
 
     int horizontalSpacing = 0;
     int verticalSpacing = 0;

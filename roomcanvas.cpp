@@ -11,7 +11,7 @@ RoomCanvas::RoomCanvas(QWidget *parent)
     connect(ui->centralwidget,SIGNAL(customContextMenuRequested(QPoint)),this,SLOT(contextMenuRequested(QPoint)));
 
     canvas = new Canvas();
-    canvas->setStyleSheet("border: 1px solid red;");
+
     connect(canvas,&Canvas::canvasDropped,[&](QPointF pos){
         QList<QGraphicsItem*> selected = scene->selectedItems();
         if(selected.size() >= 1){
@@ -22,6 +22,7 @@ RoomCanvas::RoomCanvas(QWidget *parent)
             }
         }
     });
+
     ui->centralwidget->layout()->addWidget(canvas);
 
     layers=new Layers();

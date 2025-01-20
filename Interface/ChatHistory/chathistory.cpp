@@ -21,9 +21,9 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
     historyBox->setCurrentFrames(properties);
     historyBox->setFrame(0);
 
-    double chatHistory_centerX = -(historyBox->boundingRect().width()-boundingRect().width())/2;
+    double chatHistory_centerX = ((historyBox->boundingRect().width()-boundingRect().width())/2)+boundingRect().width();
     QPointF historyPos = historyBox->pos();
-    historyPos.setX(historyPos.x()-chatHistory_centerX);
+    historyPos.setX(chatHistory_centerX);
     historyPos.setY(historyPos.y()+boundingRect().height()-5+historyBox->boundingRect().height());
     historyBox->setPos(historyPos);
 
@@ -31,7 +31,8 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
 
     GridContainer* container = new GridContainer(historyBox);
     container->setVerticalSpacing(5);
-    container->setHorizontalAlignment(GridContainer::HorizontalAlignment::RIGHT);
+    container->setHorizontalAlignment(GridContainer::HorizontalAlignment::CENTER);
+    container->setVerticalAlignment(GridContainer::VerticalAlignment::CENTER);
 
     for(int i = 0; i < 15; i++){
         ChatHistory_Message* msg = new ChatHistory_Message(historyBox);

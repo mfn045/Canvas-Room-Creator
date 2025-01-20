@@ -68,6 +68,8 @@ bool Interface::loadHUD(){
     //w.update();
 
     GridContainer* container = new GridContainer(scene->sceneRect());
+    //container->setHorizontalAlignment(GridContainer::HorizontalAlignment::CENTER);
+    //container->setVerticalAlignment(GridContainer::VerticalAlignment::CENTER);
     container->setHorizontalSpacing(15);
     container->setVerticalSpacing(15);
     qDebug() << scene->sceneRect();
@@ -101,13 +103,15 @@ bool Interface::loadHUD(){
     //w.update();
 
 
+    Map* map2 = new Map();
+    container->addGridItem(map2,0,4);
+
     Map* map = new Map();
     container->addGridItem(map,2,0);
 
-    Map* map2 = new Map();
-    container->addGridItem(map2,0,4);
+    /*
     Map* map3 = new Map();
-    container->addGridItem(map3,0,5);
+    container->addGridItem(map3,0,5);*/
     //map->setPos(QPointF(35,scene->sceneRect().height()-map->boundingRect().height()-25));
     //w.getItems().append(map);
     //map->setID(scene->getUniqueID());

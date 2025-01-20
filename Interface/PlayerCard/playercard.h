@@ -8,6 +8,7 @@
 #include "../DialogGrid/dialoggrid.h"
 #include "../SvgGridContainer/gridcontainer.h"
 #include "../TextLabel/textlabel.h"
+#include "../../Objects/Badge/badge.h"
 
 class PlayerCard : public BlueRectButton
 {
@@ -17,6 +18,7 @@ public:
 private:
     Scene* scene = nullptr;
     DialogGrid* body = nullptr;
+
 };
 
 #endif // PLAYERCARD_H

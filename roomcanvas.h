@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
+#include "widgets/openglwidget.h"
 #include "widgets/scene.h"
 #include <QThread>
 #include <QFileDialog>
@@ -67,6 +68,7 @@ private slots:
 private:
     Ui::RoomCanvas *ui;
     QThread* thread;
+    QTimer* timer;
     //QList<CanvasObject*> items;
     Scene* scene;
     Canvas* canvas;
