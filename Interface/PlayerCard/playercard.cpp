@@ -21,27 +21,27 @@ PlayerCard::PlayerCard(Scene* scene) {
     float centerX = (boundingRect().width()-body->getWidth())/2;
     body->setPos(QPointF(centerX,this->boundingRect().height()-6));
 
-    GridContainer* container = new GridContainer(body);
+    container = new GridContainer(body);
     container->setVerticalAlignment(GridContainer::VerticalAlignment::TOP);
     container->setHorizontalAlignment(GridContainer::HorizontalAlignment::CENTER);
     container->setTopMargin(10);
     container->setVerticalSpacing(5);
 
-    Badge* badge = new Badge(container,Penguin::BADGE::MEMBER_2);
+    badge = new Badge(container,Penguin::BADGE::MEMBER_2);
     badge->setZValue(1);
     GridContainer::CELL_PROPERTIES* badge_CP = container->addGridItem(badge,0,0);
     badge_CP->horizontalAlignment = GridContainer::HorizontalAlignment::LEFT;
 
-    TextLabel* label = new TextLabel();
-    QFont font = label->getInput()->font();
+    username = new TextLabel();
+    QFont font = username->getInput()->font();
     font.setPointSize(11);
     font.setBold(true);
-    label->getInput()->setFont(font);
-    label->setTextLimit(13);
-    label->setText("WOWTHSIISALONGASDAK");
-    label->setMaximumWidth(110);
-    label->setMaximumHeight(container->getMaxHeight(0));
-    container->addGridItem(label,0,1);
+    username->getInput()->setFont(font);
+    username->setTextLimit(13);
+    username->setText("WOWTHSIISALONGASDAK");
+    username->setMaximumWidth(110);
+    username->setMaximumHeight(container->getMaxHeight(0));
+    container->addGridItem(username,0,1);
 
     CircleButton* xButton = new CircleButton();
     xButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/close/close.svg");
@@ -57,12 +57,9 @@ PlayerCard::PlayerCard(Scene* scene) {
     bg->setZValue(0);
     container->addGridItem(bg,1,0,3,1);
 
-    CanvasObject* penguin_paper = new CanvasObject(bg);
-    PROPERTIES* pp_properties = new PROPERTIES();
-    pp_properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/penguin_paper/penguin_paper.svg";
-    penguin_paper->initFrames(pp_properties->filePath,pp_properties);
-    penguin_paper->setCurrentFrames(pp_properties);
-    penguin_paper->setFrame(0);
+    penguin_paper = new PenguinPaper(bg);
+
+    penguin_paper->changeColor("#660000");
 
     float pp_centerX = (bg->boundingRect().width()-penguin_paper->boundingRect().width())/2;
     float pp_centerY = (bg->boundingRect().height()-penguin_paper->boundingRect().height())-10;

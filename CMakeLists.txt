@@ -70,6 +70,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Objects/Penguin/clothes.h Objects/Penguin/clothes.cpp
         Objects/Badge/badge.h Objects/Badge/badge.cpp
         Objects/MaskedCanvasObject/maskedcanvasobject.h Objects/MaskedCanvasObject/maskedcanvasobject.cpp
+        Objects/PenguinPaper/penguinpaper.h Objects/PenguinPaper/penguinpaper.cpp
 
 
     )

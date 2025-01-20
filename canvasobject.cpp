@@ -27,6 +27,12 @@ CanvasObject::CanvasObject(QString dir, CanvasObject* parent) {
     }
 }
 
+void CanvasObject::refresh(){
+    setCurrentFrames(getCurrentProperties());
+    setFrame(getCurrentFrame());
+    return;
+}
+
 bool CanvasObject::isTransparentPixel(QPointF pos){
     if(!isImageLatest){
         QSvgRenderer* renderer = this->renderer();

@@ -78,6 +78,8 @@ public:
 
     bool isTransparentPixel(QPointF pos);
 
+    void refresh();
+
     //double setScale(double scale);
     //double getScale();
 

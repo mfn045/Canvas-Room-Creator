@@ -35,8 +35,6 @@ Penguin::Penguin(Scene* parent) : parent(parent) {
     initializeFrames("C:/Users/mfn45/OneDrive/Desktop/Penguin_States_Updated/Sitting/East",DIRECTION::E,STATE::SITTING);
     initializeFrames("C:/Users/mfn45/OneDrive/Desktop/Penguin_States_Updated/Sitting/South_East",DIRECTION::SE,STATE::SITTING);
 
-    changeColor("#660000");
-
     setVelocity(3);
     setScale(0.15);
 
@@ -47,6 +45,8 @@ Penguin::Penguin(Scene* parent) : parent(parent) {
     setCurrentFrames(DIRECTION::S,STATE::STANDING);
     setFrame(getCurrentFrame());
     setOrigin(QPointF(300,300));
+
+    changeColor("#660000");
 
 }
 
