@@ -29,6 +29,7 @@ int main(int argc, char *argv[])
 
     Interface* interface = Interface::getInstance();
     interface->setScene(w.getScene());
+    interface->loadItems();
     interface->loadFonts();
     interface->loadPenguin();
     interface->loadHUD();

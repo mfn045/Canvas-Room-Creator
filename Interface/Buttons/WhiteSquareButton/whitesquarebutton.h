@@ -17,4 +17,4 @@ private:
     SIZE size = SIZE::SMALL;
 };
 
-#endif // BLUECIRCLEBUTTON_H
+#endif // WHITESQUAREBUTTON_H

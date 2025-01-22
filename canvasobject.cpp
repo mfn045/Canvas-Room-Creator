@@ -184,6 +184,10 @@ QVariant CanvasObject::itemChange(GraphicsItemChange change, const QVariant &val
 
 void CanvasObject::initFrames(QString filePath,PROPERTIES* properties){
     if(filePath.isEmpty()) return;
+    if(!QFile(filePath).exists()){
+        filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/unknown/1.svg";
+        properties->filePath = filePath;
+    }
     QList<QByteArray*> arrays;
     if(filePath.contains(".svg")){
         QFile file(filePath);

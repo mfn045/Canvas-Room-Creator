@@ -11,6 +11,7 @@
 #include "SvgGridContainer/gridcontainer.h"
 #include "ChatHistory/chathistory.h"
 #include "PlayerCard/playercard.h"
+#include "../Objects/Items/items.h"
 
 
 class Interface
@@ -20,6 +21,7 @@ public:
     Scene* getScene();
     Scene* setScene(Scene* scene);
 
+    bool loadItems();
     bool loadFonts();
     bool loadPenguin();
     bool loadHUD();

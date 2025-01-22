@@ -17,6 +17,13 @@ Scene* Interface::setScene(Scene* scene){
     return this->scene;
 }
 
+
+bool Interface::loadItems(){
+    Items* items = Items::getInstance();
+    items->getCost(-1);
+    return true;
+}
+
 bool Interface::loadFonts(){
     int id = QFontDatabase::addApplicationFont("://Font/141_Burbank Small.ttf");
     QString family = QFontDatabase::applicationFontFamilies(id).at(0);

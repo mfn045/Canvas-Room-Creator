@@ -33,8 +33,7 @@ void WhiteSquareButton::setIcon(QString filePath){
     icon->initFrames(properties->filePath,properties);
     icon->setCurrentFrames(properties);
     icon->setFrame(0);
-    icon->setScale(5);
-    int centerX = 0;//(boundingRect().width()-icon->boundingRect().width())/2;
-    int centerY = 0;//(boundingRect().height()-icon->boundingRect().height())/2;
+    int centerX = (boundingRect().width()-icon->boundingRect().width())/2;
+    int centerY = (boundingRect().height()-icon->boundingRect().height())/2;
     icon->setPos(QPointF(centerX,centerY-1));
 }
