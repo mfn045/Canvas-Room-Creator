@@ -37,6 +37,8 @@ public:
     explicit CanvasObject(CanvasObject* parent = nullptr);
     explicit CanvasObject(QString filePath, CanvasObject* parent = nullptr);
 
+    ~CanvasObject();
+
     void initFrames(QString filePath,PROPERTIES* properties);
     QList<QByteArray*>& getCurrentFrames();
     QMap<PROPERTIES*, QList<QByteArray*>>& getFrames();
@@ -137,11 +139,6 @@ private:
      * @brief framePauses is a list of frames where it will pause animation.
      */
     QList<int> framePauses;
-
-    /**
-     * @brief isVisible is a boolean that will show the frames if its toggled as visible.
-     */
-    bool isVisible = true;
 
     /**
      * @brief origin is a QPointF of where the center of mass of the object is.

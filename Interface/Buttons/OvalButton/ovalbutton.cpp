@@ -1,26 +1,19 @@
-#include "whiterectbutton.h"
+#include "ovalbutton.h"
 
-WhiteRectButton::WhiteRectButton(CanvasObject* parent, SIZE size, TYPE type) : AbstractButton(parent)
+OvalButton::OvalButton(CanvasObject* parent, COLOR color) : AbstractButton(parent)
 {
-    QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/whiterectbutton/";
-    QString sizeStr = "";
-    QString typeStr = "";
+    QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/ovalbutton/";
+    QString colorStr = "";
 
-    if(size == SIZE::SMALL){
-        sizeStr = "small/";
-    }else if(size == SIZE::MEDIUM){
-        sizeStr = "medium/";
+    if(color == COLOR::WHITE){
+        colorStr = "white/";
+    }else if(color == COLOR::BLUE){
+        colorStr = "blue/";
     }
 
-    if(type == TYPE::WITHOUT_ARROW){
-        typeStr = "without_arrow/";
-    }else if(type == TYPE::WITH_ARROW){
-        typeStr = "with_arrow/";
-    }
-
-    QString upButton = path + sizeStr + typeStr + "up.svg";
-    QString overButton = path + sizeStr + typeStr + "over.svg";
-    QString downButton = path + sizeStr + typeStr + "down.svg";
+    QString upButton = path + colorStr + "up.svg";
+    QString overButton = path + colorStr + "over.svg";
+    QString downButton = path + colorStr + "down.svg";
 
     setIsHoverable(true);
     setIsClickable(true);
@@ -30,7 +23,7 @@ WhiteRectButton::WhiteRectButton(CanvasObject* parent, SIZE size, TYPE type) : A
     setOver(overButton);
 }
 
-void WhiteRectButton::setText(QString text){
+void OvalButton::setText(QString text){
     if(label == nullptr){
         label = new TextLabel(this);
         label->setSizePolicy(QSizePolicy::Policy::Expanding,QSizePolicy::Policy::Expanding);
@@ -45,7 +38,7 @@ void WhiteRectButton::setText(QString text){
     label->getInput()->setAlignment(Qt::AlignCenter);
 }
 
-CanvasObject* WhiteRectButton::setIcon(QString filePath){
+CanvasObject* OvalButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
         icon = new CanvasObject();

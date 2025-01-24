@@ -25,7 +25,8 @@ MenuBar::MenuBar(Scene *parent)
     puffleTricks_Button = new CircleButton();
     //QRectF buttonSize = safeChat_Button->boundingRect();
     //safeChat_Button->setPos(QPointF(17,12));
-    puffleTricks_Button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/safechat/safechat.svg");
+    CanvasObject* obj = puffleTricks_Button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/safechat/safechat.svg");
+    obj->renderer()->setViewBox(QRectF(0,-40,0.001,50));
     container->addGridItem(puffleTricks_Button,0,0);
 
     emoticons_Button = new CircleButton();

@@ -23,7 +23,7 @@ WhiteSquareButton::WhiteSquareButton(CanvasObject* parent, SIZE size) : Abstract
     setOver(overButton);
 }
 
-void WhiteSquareButton::setIcon(QString filePath){
+CanvasObject* WhiteSquareButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
         icon = new CanvasObject();
@@ -36,4 +36,5 @@ void WhiteSquareButton::setIcon(QString filePath){
     int centerX = (boundingRect().width()-icon->boundingRect().width())/2;
     int centerY = (boundingRect().height()-icon->boundingRect().height())/2;
     icon->setPos(QPointF(centerX,centerY-1));
+    return icon;
 }

@@ -52,7 +52,7 @@ CanvasObject* AbstractButton::getIcon(){
     return this->icon;
 }
 
-void AbstractButton::setIcon(QString filePath){
+CanvasObject* AbstractButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
         icon = new CanvasObject();
@@ -62,6 +62,7 @@ void AbstractButton::setIcon(QString filePath){
     icon->initFrames(properties->filePath,properties);
     icon->setCurrentFrames(properties);
     icon->setFrame(0);
+    return icon;
 }
 
 void AbstractButton::setCurrentFrames(STATE state){

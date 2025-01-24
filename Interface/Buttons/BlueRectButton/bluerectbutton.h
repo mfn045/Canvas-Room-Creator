@@ -9,7 +9,7 @@ class BlueRectButton : public AbstractButton
 public:
     explicit BlueRectButton(CanvasObject *parent = nullptr);
 
-    void setIcon(QString filePath) override;
+    CanvasObject* setIcon(QString filePath) override;
 };
 
 #endif // BLUERECTBUTTON_H

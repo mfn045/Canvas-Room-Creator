@@ -4,9 +4,6 @@ PlayerCard::PlayerCard(Scene* scene) {
     if(scene != nullptr){
         this->scene = scene;
     }
-    for(int i = 1; i < 500; i++){
-        ownedItems.append(i);
-    }
     qDebug() << "PLAYER CARD IS BEING SET!!!";
     setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/rectbuttonstripes/rectbuttonstripes.svg");
     setPos(QPointF(100,100));
@@ -123,111 +120,10 @@ PlayerCard::PlayerCard(Scene* scene) {
     qDebug() << container->pos();*/
 
 
-    CanvasObject* inventory = new CanvasObject(this);
-    PROPERTIES* invProperties = new PROPERTIES();
-    invProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/inventory/inventory.svg";
-    inventory->setFlag(GraphicsItemFlag::ItemStacksBehindParent,true);
-    inventory->initFrames(invProperties->filePath,invProperties);
-    inventory->setCurrentFrames(invProperties);
-    inventory->setFrame(0);
-    inventory->setZValue(0);
-    QTransform invTransform = inventory->transform();
-    invTransform.setMatrix(0.975,invTransform.m12(),invTransform.m13(),
-                            invTransform.m21(),0.975,invTransform.m23(),
-                            invTransform.m31(),invTransform.m32(),invTransform.m33());
-    inventory->setTransform(invTransform);
-    inventory->setPos(QPointF(50,boundingRect().height()-5));
-
-
-    GridContainer* items = new GridContainer(inventory);
-    items->setTopMargin(10);
-    items->setRightMargin(5);
-    items->setVerticalSpacing(5);
-    items->setHorizontalSpacing(5);
-    items->setHorizontalAlignment(GridContainer::HorizontalAlignment::RIGHT);
-    items->setScale(0.975);
-
-    int i = 0;
-    for(int r = 0; r < 4; r++){
-        for(int c = 0; c < 3; c++){
-            WhiteSquareButton* button = new WhiteSquareButton(nullptr,WhiteSquareButton::SIZE::MEDIUM);
-            items->addGridItem(button,r,c);
-            inventoryItems.insert(i,button);
-            i++;
-        }
-    }
-
-    loadInventoryPage(1);
-
-    CanvasObject* scrollBar = new CanvasObject();
-    PROPERTIES* scrollBarProperties = new PROPERTIES();
-    scrollBarProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/whitescrollrect/whitescrollrect.svg";
-    scrollBar->initFrames(scrollBarProperties->filePath,scrollBarProperties);
-    scrollBar->setCurrentFrames(scrollBarProperties);
-    scrollBar->setFrame(0);
-
-    items->addGridItem(scrollBar,0,3,1,4);
-
-    CircleButton* scrollUpButton = new CircleButton(scrollBar,CircleButton::COLOR::WHITE);
-    scrollUpButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/whitearrows/up/up.svg");
-    scrollUpButton->setPos(QPointF(0,-(scrollUpButton->boundingRect().height()/2)));
-    scrollUpButton->connect(scrollUpButton, &CircleButton::clicked, [&](){
-        loadInventoryPage(--currentInventoryPage);
-    });
-
-    CircleButton* scrollDownButton = new CircleButton(scrollBar,CircleButton::COLOR::WHITE);
-    scrollDownButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/whitearrows/down/down.svg");
-    scrollDownButton->setPos(QPointF(0,scrollBar->boundingRect().height()-(scrollUpButton->boundingRect().height()/2)));
-    scrollDownButton->connect(scrollDownButton, &CircleButton::clicked, [&](){
-        loadInventoryPage(++currentInventoryPage);
-    });
-
-    items->updateLayout();
+    inventory = new Inventory(this);
+    inventory->setPenguinPaper(penguin_paper);
 }
 
-void PlayerCard::loadInventoryPage(int page){
-    if(page < 1) return;
-    int i = 0;
-    for(int itemIndex = 0+((page-1)*12); itemIndex < itemIndex+12; itemIndex++){
-        if((ownedItems.size()-1) < itemIndex || i == 12) break;
-        qDebug() << "Item Index " << itemIndex;
-        int itemId = ownedItems[itemIndex];
-        WhiteSquareButton* button = inventoryItems.value(i);
-        button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/items/" + QString::number(itemId) + "/icon/1.svg");
-        button->disconnect();
-        button->connect(button, &WhiteSquareButton::clicked, [=](){
-            qDebug() << "Clicked " << itemId;
-            Items* items = Items::getInstance();
-            int type = items->getType(itemId);
-            if(type == Clothes::TYPE::HEAD){
-                penguin_paper->setHead(itemId);
-                qDebug() << "Head";
-            }else if(type == Clothes::TYPE::FACE){
-                penguin_paper->setFace(itemId);
-                qDebug() << "face";
-            }else if(type == Clothes::TYPE::NECK){
-                penguin_paper->setNeck(itemId);
-                qDebug() << "neck";
-            }else if(type == Clothes::TYPE::BODY){
-                penguin_paper->setBody(itemId);
-                qDebug() << "body";
-            }else if(type == Clothes::TYPE::HAND){
-                penguin_paper->setHand(itemId);
-                qDebug() << "hand";
-            }else if(type == Clothes::TYPE::FEET){
-                penguin_paper->setFeet(itemId);
-                qDebug() << "feeet";
-            }else if(type == Clothes::TYPE::PIN){
-                penguin_paper->setPin(itemId);
-                qDebug() << "pin";
-            }else if(type == Clothes::TYPE::BACKGROUND){
-                penguin_paper->setBackground(itemId);
-                qDebug() << "bg";
-            }else if(type == Clothes::TYPE::COLOR){
-                penguin_paper->setColor(itemId);
-            }
-        });
-        i++;
-    }
-    this->currentInventoryPage = page;
+Inventory* PlayerCard::getInventory(){
+    return inventory;
 }

@@ -11,7 +11,7 @@ public:
         MEDIUM
     };
     explicit WhiteSquareButton(CanvasObject *parent = nullptr, SIZE size = SIZE::SMALL);
-    void setIcon(QString filePath) override;
+    CanvasObject* setIcon(QString filePath) override;
 
 private:
     SIZE size = SIZE::SMALL;

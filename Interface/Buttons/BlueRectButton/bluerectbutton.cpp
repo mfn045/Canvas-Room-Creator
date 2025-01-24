@@ -14,7 +14,7 @@ BlueRectButton::BlueRectButton(CanvasObject* parent) : AbstractButton(parent)
     setOver(overButton);
 }
 
-void BlueRectButton::setIcon(QString filePath){
+CanvasObject* BlueRectButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
         icon = new CanvasObject();
@@ -28,4 +28,5 @@ void BlueRectButton::setIcon(QString filePath){
     double centerX = (boundingRect().width()-iconRect.width())/2;
     double centerY = (boundingRect().height()-iconRect.height())/2;
     icon->setPos(QPointF(centerX,centerY+4));
+    return icon;
 }

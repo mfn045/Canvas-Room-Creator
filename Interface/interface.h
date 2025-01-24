@@ -25,12 +25,18 @@ public:
     bool loadFonts();
     bool loadPenguin();
     bool loadHUD();
+    bool loadPlayerCard();
+
+    PlayerCard* getPlayerCard();
 
 private:
     Interface() = default;
     static Interface* instance;
     Scene* scene = nullptr;
     PlayerCard* playercard = nullptr;
+
+    Penguin* activePenguin = nullptr;
+    QList<Penguin*> penguins;
 };
 
 #endif // INTERFACE_H

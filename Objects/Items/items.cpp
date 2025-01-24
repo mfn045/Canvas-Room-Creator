@@ -19,6 +19,10 @@ Items* Items::getInstance(){
     return items;
 }
 
+bool Items::exists(int itemId){
+    QJsonValue val = object.value(QString::number(itemId));
+    return !val.isUndefined();
+}
 
 int Items::getType(int itemId){
     QJsonValue val = object.value(QString::number(itemId));
@@ -36,11 +40,20 @@ int Items::getCost(int itemId){
     }
     return -1;
 }
-bool Items::isDisabled(int itemId){
+
+bool Items::isBait(int itemId){
     QJsonValue val = object.value(QString::number(itemId));
     if(val.isObject()){
         QJsonObject item = val.toObject();
         return item.value("bait").toBool();
+    }
+    return false;
+}
+bool Items::isPatched(int itemId){
+    QJsonValue val = object.value(QString::number(itemId));
+    if(val.isObject()){
+        QJsonObject item = val.toObject();
+        return item.value("patched").toBool();
     }
     return false;
 }

@@ -22,7 +22,7 @@ CircleButton::CircleButton(CanvasObject* parent, COLOR color) : AbstractButton(p
     setScale(1.2);
 }
 
-void CircleButton::setIcon(QString filePath){
+CanvasObject* CircleButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
         icon = new CanvasObject();
@@ -35,4 +35,5 @@ void CircleButton::setIcon(QString filePath){
     int centerX = (boundingRect().width()-icon->boundingRect().width())/2;
     int centerY = (boundingRect().height()-icon->boundingRect().height())/2;
     icon->setPos(QPointF(centerX,centerY-1));
+    return icon;
 }

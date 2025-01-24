@@ -11,7 +11,7 @@ public:
         WHITE
     };
     explicit CircleButton(CanvasObject *parent = nullptr, COLOR color = COLOR::BLUE);
-    void setIcon(QString filePath) override;
+    CanvasObject* setIcon(QString filePath) override;
 };
 
 #endif // CIRCLEBUTTON_H

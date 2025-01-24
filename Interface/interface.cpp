@@ -48,15 +48,26 @@ bool Interface::loadFonts(){
 
 bool Interface::loadPenguin(){
     if(!scene) return false;
-    Penguin* penguin = new Penguin(scene);
+    activePenguin = new Penguin(scene);
     //w.getItems().append(penguin);
-    penguin->setID(scene->getUniqueID());
-    penguin->setPos(QPointF(0,0));
-    scene->addItem(penguin);
+    activePenguin->setID(scene->getUniqueID());
+    activePenguin->setPos(QPointF(0,0));
+    scene->addItem(activePenguin);
     //w.updateLayers();
     //w.update();
     return true;
+}
 
+bool Interface::loadPlayerCard(){
+    if(playercard != nullptr) return false;
+    playercard = new PlayerCard(scene);
+    playercard->setID(scene->getUniqueID());
+    scene->addItem(playercard);
+    return true;
+}
+
+PlayerCard* Interface::getPlayerCard(){
+    return playercard;
 }
 
 bool Interface::loadHUD(){

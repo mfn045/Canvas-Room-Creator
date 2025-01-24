@@ -20,7 +20,7 @@ public:
     };
 
     void setCurrentFrames(STATE state);
-    virtual void setIcon(QString filePath);
+    virtual CanvasObject* setIcon(QString filePath);
     void setUp(QString filePath);
     void setDown(QString filePath);
     void setOver(QString filePath);

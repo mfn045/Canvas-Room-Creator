@@ -12,7 +12,9 @@ public:
     static Items* getInstance();
     int getType(int itemId);
     int getCost(int itemId);
-    bool isDisabled(int itemId);
+    bool isBait(int itemId);
+    bool isPatched(int itemId);
+    bool exists(int itemId);
 
 private:
     Items();

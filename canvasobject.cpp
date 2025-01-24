@@ -27,6 +27,17 @@ CanvasObject::CanvasObject(QString dir, CanvasObject* parent) {
     }
 }
 
+CanvasObject::~CanvasObject(){
+    for(auto i = getFrames().begin(); i != getFrames().end(); i++){
+        for(auto j = i.value().begin(); j != i.value().end(); j++){
+            QByteArray* arr = *j;
+            delete arr;
+        }
+        i.value().clear();
+        delete i.key();
+    }
+}
+
 void CanvasObject::refresh(){
     setCurrentFrames(getCurrentProperties());
     setFrame(getCurrentFrame());

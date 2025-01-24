@@ -51,12 +51,13 @@ public:
         STATE state = STATE::STANDING;
         DIRECTION direction = DIRECTION::S;
     };
+
     Penguin(Scene* parent = nullptr);
-    CanvasObject* getCanvasObject();
 
     void sendChatBubble(QString msg);
 
     void walkTo(QPointF pos);
+
     void changeColor(QString color);
 
     DIRECTION getCurrentDirection();
@@ -87,6 +88,8 @@ private:
     ChatBubble* bubble = nullptr;
 
     Clothes clothes;
+
+    bool active = false;
 
 public slots:
     void animationDone() override;

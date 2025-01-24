@@ -12,6 +12,7 @@
 #include "Interface/ChatHistory/chathistory.h"
 #include "Interface/interface.h"
 #include "Interface/PlayerCard/playercard.h"
+#include "Objects/Penguin/clothingitem.h"
 #include <QRect>
 #include <QFontDatabase>
 
@@ -33,10 +34,18 @@ int main(int argc, char *argv[])
     interface->loadFonts();
     interface->loadPenguin();
     interface->loadHUD();
+    interface->loadPlayerCard();
 
-    PlayerCard* pc = new PlayerCard(w.getScene());
-    pc->setID(w.getScene()->getUniqueID());
-    w.getScene()->addItem(pc);
+    ClothingItem* item = new ClothingItem();
+    CanvasObject::PROPERTIES* properties = new CanvasObject::PROPERTIES();
+    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/shapes/frames/1.svg";
+    item->initFrames(properties->filePath, properties);
+    item->setCurrentFrames(properties);
+    item->setFrame(0);
+    item->setScale(5);
+    //item->updateViewbox();
+    w.getScene()->addItem(item);
+    item->setPos(QPointF(100,100));
 
     /*YesNoDialog* dialog = new YesNoDialog(w.getScene(),YesNoDialog::TYPE::ORANGE);
     dialog->insertText("Hello there! Are you enjoying CP?");

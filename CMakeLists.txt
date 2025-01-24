@@ -74,6 +74,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Objects/Items/items.h Objects/Items/items.cpp
         Interface/Buttons/Inventory/CategoryButton/categorybutton.h Interface/Buttons/Inventory/CategoryButton/categorybutton.cpp
         Interface/Buttons/WhiteRectButton/whiterectbutton.h Interface/Buttons/WhiteRectButton/whiterectbutton.cpp
+        Interface/Buttons/OvalButton/ovalbutton.h Interface/Buttons/OvalButton/ovalbutton.cpp
+        Interface/PlayerCard/Inventory/inventory.h Interface/PlayerCard/Inventory/inventory.cpp
+        Objects/Penguin/clothingitem.h Objects/Penguin/clothingitem.cpp
 
 
     )
