@@ -6,7 +6,7 @@
 #include "../DialogGrid/dialoggrid.h"
 #include "../SvgGridContainer/gridcontainer.h"
 #include "../TextLabel/textlabel.h"
-#include "../../Objects/PenguinPaper/penguinpaper.h"
+#include "../../Objects/Penguin/Paper/penguinpaper.h"
 #include "../../Objects/Badge/badge.h"
 #include "../PlayerCard/Inventory/inventory.h"
 
@@ -19,7 +19,7 @@ public:
 
 private:
     Scene* scene = nullptr;
-    Penguin* penguin = nullptr;
+    PenguinSprite* penguin = nullptr;
     DialogGrid* body = nullptr;
     GridContainer* container = nullptr;
     Badge* badge = nullptr;

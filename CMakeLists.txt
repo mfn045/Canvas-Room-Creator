@@ -36,7 +36,6 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         widgets/canvas.h
         widgets/canvas.cpp
         Dialogs/propertiesdialog.h Dialogs/propertiesdialog.cpp Dialogs/propertiesdialog.ui
-        Objects/Penguin/penguin.h Objects/Penguin/penguin.cpp
         Interface/MenuBar/menubar.h Interface/MenuBar/menubar.cpp
         Interface/Buttons/AbstractButton/abstractbutton.h Interface/Buttons/AbstractButton/abstractbutton.cpp
         Interface/Buttons/CircleButton/circlebutton.h Interface/Buttons/CircleButton/circlebutton.cpp
@@ -70,13 +69,16 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Objects/Penguin/clothes.h Objects/Penguin/clothes.cpp
         Objects/Badge/badge.h Objects/Badge/badge.cpp
         Objects/MaskedCanvasObject/maskedcanvasobject.h Objects/MaskedCanvasObject/maskedcanvasobject.cpp
-        Objects/PenguinPaper/penguinpaper.h Objects/PenguinPaper/penguinpaper.cpp
         Objects/Items/items.h Objects/Items/items.cpp
         Interface/Buttons/Inventory/CategoryButton/categorybutton.h Interface/Buttons/Inventory/CategoryButton/categorybutton.cpp
         Interface/Buttons/WhiteRectButton/whiterectbutton.h Interface/Buttons/WhiteRectButton/whiterectbutton.cpp
         Interface/Buttons/OvalButton/ovalbutton.h Interface/Buttons/OvalButton/ovalbutton.cpp
         Interface/PlayerCard/Inventory/inventory.h Interface/PlayerCard/Inventory/inventory.cpp
-        Objects/Penguin/clothingitem.h Objects/Penguin/clothingitem.cpp
+        Objects/Constants/constants.h
+        Objects/Penguin/Sprite/penguinspritebase.h Objects/Penguin/Sprite/penguinspritebase.cpp
+        Objects/Penguin/Sprite/penguinsprite.h Objects/Penguin/Sprite/penguinsprite.cpp
+        Objects/Penguin/Sprite/Clothing/penguinspriteclothing.h Objects/Penguin/Sprite/Clothing/penguinspriteclothing.cpp
+        Objects/Penguin/Paper/penguinpaper.h Objects/Penguin/Paper/penguinpaper.cpp
 
 
     )

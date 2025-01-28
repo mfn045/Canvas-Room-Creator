@@ -1,18 +1,5 @@
 #include "roomcanvas.h"
-#include "Objects/Penguin/penguin.h"
-#include "Interface/MenuBar/menubar.h"
-#include "Interface/News/news.h"
-#include "Interface/Map/map.h"
-#include "Interface/Mail/mail.h"
-#include "Interface/Friend_Requests/friend_requests.h"
-#include "Interface/Dialogs/YesNoDialog/yesnodialog.h"
-#include "Interface/Buttons/OrangeButton/orangebutton.h"
-#include "Interface/SvgGridContainer/gridcontainer.h"
-#include "Interface/Buttons/WhiteSquareButton/whitesquarebutton.h"
-#include "Interface/ChatHistory/chathistory.h"
 #include "Interface/interface.h"
-#include "Interface/PlayerCard/playercard.h"
-#include "Objects/Penguin/clothingitem.h"
 #include <QRect>
 #include <QFontDatabase>
 
@@ -35,17 +22,21 @@ int main(int argc, char *argv[])
     interface->loadPenguin();
     interface->loadHUD();
     interface->loadPlayerCard();
+    interface->getPlayerCard()->getInventory()->setPenguin(interface->getActivePenguin());
 
-    ClothingItem* item = new ClothingItem();
+
+
+    /*ClothingItem* item = new ClothingItem();
+    item->setHasAnimationLoop(true);
     CanvasObject::PROPERTIES* properties = new CanvasObject::PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/shapes/frames/1.svg";
+    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/sprite_export/output/301/26";
     item->initFrames(properties->filePath, properties);
     item->setCurrentFrames(properties);
     item->setFrame(0);
     item->setScale(5);
     //item->updateViewbox();
     w.getScene()->addItem(item);
-    item->setPos(QPointF(100,100));
+    item->setPos(QPointF(100,100));*/
 
     /*YesNoDialog* dialog = new YesNoDialog(w.getScene(),YesNoDialog::TYPE::ORANGE);
     dialog->insertText("Hello there! Are you enjoying CP?");

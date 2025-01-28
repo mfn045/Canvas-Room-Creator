@@ -2,7 +2,7 @@
 #define INTERFACE_H
 #include "../widgets/scene.h"
 #include <QFontDatabase>
-#include "../Objects/Penguin/penguin.h"
+#include "../Objects/Penguin/Sprite/penguinsprite.h"
 #include "MenuBar/menubar.h"
 #include "News/news.h"
 #include "Mail/mail.h"
@@ -29,14 +29,16 @@ public:
 
     PlayerCard* getPlayerCard();
 
+    PenguinSprite* getActivePenguin();
+
 private:
     Interface() = default;
     static Interface* instance;
     Scene* scene = nullptr;
     PlayerCard* playercard = nullptr;
 
-    Penguin* activePenguin = nullptr;
-    QList<Penguin*> penguins;
+    PenguinSprite* activePenguin = nullptr;
+    QList<PenguinSprite*> penguins;
 };
 
 #endif // INTERFACE_H

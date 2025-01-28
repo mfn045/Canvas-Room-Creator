@@ -27,7 +27,7 @@ PlayerCard::PlayerCard(Scene* scene) {
     container->setTopMargin(10);
     container->setVerticalSpacing(5);
 
-    badge = new Badge(container,Penguin::BADGE::MEMBER_4);
+    badge = new Badge(container,PENGUIN::BADGE::MEMBER_4);
     badge->setZValue(1);
     GridContainer::CELL_PROPERTIES* badge_CP = container->addGridItem(badge,0,0);
     badge_CP->horizontalAlignment = GridContainer::HorizontalAlignment::LEFT;

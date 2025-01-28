@@ -48,7 +48,7 @@ bool Interface::loadFonts(){
 
 bool Interface::loadPenguin(){
     if(!scene) return false;
-    activePenguin = new Penguin(scene);
+    activePenguin = new PenguinSprite(scene);
     //w.getItems().append(penguin);
     activePenguin->setID(scene->getUniqueID());
     activePenguin->setPos(QPointF(0,0));
@@ -135,7 +135,7 @@ bool Interface::loadHUD(){
     //map->setID(scene->getUniqueID());
     //scene->addItem(map);
     //w.updateLayers();
-   // w.update();
+    //w.update();
 
     /*bar->connect(bar->getSendChatButton(),&BlueCircleButton::clicked,[&](){
         if(penguin != nullptr && bar->getChatInput() != nullptr){
@@ -146,6 +146,11 @@ bool Interface::loadHUD(){
     });*/
     container->updateLayout();
     return true;
+}
+
+
+PenguinSprite* Interface::getActivePenguin(){
+    return activePenguin;
 }
 
 Interface* Interface::instance = nullptr;
