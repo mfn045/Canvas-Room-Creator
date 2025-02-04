@@ -104,20 +104,6 @@ void MultiCanvasObject::initFrames(QString filePath,PROPERTIES* properties){
     }
 }
 
-QPointF MultiCanvasObject::getOrigin(){
-    return this->origin;
-}
-
-QPointF MultiCanvasObject::setOrigin(QPointF origin){
-    this->origin = origin;
-    QList<QGraphicsItem*> children = childItems();
-    for(QGraphicsItem* child : children){
-        MultiCanvasObject* childObj = (MultiCanvasObject*)child;
-        childObj->setOrigin(this->origin);
-    }
-    return this->origin;
-}
-
 QList<QByteArray*>& MultiCanvasObject::setCurrentFrames(PROPERTIES* paramProperties){
     bool changed = false;
     isSettingFrame = true;

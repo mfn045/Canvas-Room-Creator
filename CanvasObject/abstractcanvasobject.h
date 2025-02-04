@@ -28,6 +28,9 @@ public:
     QString getName();
     QString setName(QString name);
 
+    QPointF getOrigin();
+    QPointF setOrigin(QPointF origin);
+
     bool containsActionFlag(CANVAS::ACTION flag);
     void setActionFlags(int flags);
     int getActionFlags();
@@ -68,6 +71,7 @@ protected:
 private:
     unsigned short actionFlags = 0;
     int id = 0;
+    QPointF origin;
     QString name = "";
 
 signals:

@@ -23,18 +23,15 @@ public:
 
     QRegion getClipRegion();
 
-    QList<CANVAS::Frame*>& getCurrentSpriteFrames();
+    QList<int>& getCurrentSpriteFrames();
 
-    QMap<int, QList<CANVAS::Frame*>>& getSprites();
-    QList<CANVAS::Frame*>& setCurrentSprite(int sprite);
+    QMap<int, QList<int>>& getSprites();
+    QList<int>& setCurrentSprite(int sprite);
     int getCurrentSprite();
 
     void nextFrame(bool loop = true, bool force = false) override;
     void setFrame(int currentFrame) override;
     void prevFrame(bool loop = true, bool force = false) override;
-
-    QPointF getOrigin();
-    QPointF setOrigin(QPointF origin);
 
     //CONST_POSITION setConstPosition(CONST_POSITION newConst);
     //CONST_POSITION getConstPosition();
@@ -43,7 +40,7 @@ public:
 
     void recursivePaint(QPainter* painter, QString id, QDomElement el = QDomElement());
 
-    QPainterPath* parsePath(QString d);
+    QPainterPath parsePath(QString d);
 
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
@@ -56,17 +53,17 @@ private:
 
     QHash<QString, QDomElement> elements;
 
-    QMap<int,QList<CANVAS::Frame*>> sprites;
+    QHash<QString, QPainterPath> paths;
 
-    QList<CANVAS::Frame*> currentFrames;
+    QMap<int,QList<int>> sprites;
+
+    QList<int> currentFrames;
 
     int currentSprite = 1;
 
     int id = 0;
 
     QString name = "";
-
-    QPointF origin;
 
     QRegion clipRegion;
 

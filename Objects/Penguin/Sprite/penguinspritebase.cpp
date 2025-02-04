@@ -1,31 +1,15 @@
 #include "penguinspritebase.h"
 
-PenguinSpriteBase::PenguinSpriteBase(MultiCanvasObject* parent) : MultiCanvasObject(parent) {}
+PenguinSpriteBase::PenguinSpriteBase(AtlasCanvasObject* parent) : AtlasCanvasObject(parent) {}
 
-void PenguinSpriteBase::initializeFrames(QString filePath, PENGUIN::DIRECTION direction, PENGUIN::STATE state){
-    if(filePath.isEmpty()) return;
-    PENGUINSPRITEPROPERTIES* p = nullptr;
-    for(PROPERTIES* properties : getFrames().keys()){
-        PENGUINSPRITEPROPERTIES* penguinProperties = (PENGUINSPRITEPROPERTIES*) properties;
-        if(penguinProperties->direction == direction && penguinProperties->state == state){
-            p = (PENGUINSPRITEPROPERTIES*)properties;
-        }
-    }
-    if(p == nullptr){
-        p = new PENGUINSPRITEPROPERTIES();
-        p->direction = direction;
-        p->state = state;
-        p->filePath = filePath;
-    }
-    initFrames(filePath,p);
-}
-
-void PenguinSpriteBase::setCurrentFrames(PENGUIN::DIRECTION direction, PENGUIN::STATE state){
+void PenguinSpriteBase::setCurrentSprite(PENGUIN::DIRECTION direction, PENGUIN::STATE state){
     bool changed = false;
-    for(PROPERTIES* properties : getFrames().keys()){
-        PENGUINSPRITEPROPERTIES* penguinProperties = (PENGUINSPRITEPROPERTIES*) properties;
-        if(penguinProperties->direction == direction && penguinProperties->state == state){
-            MultiCanvasObject::setCurrentFrames(properties);
+    int frame = -1;
+    for(auto i = PENGUIN::spritesMapped.begin(); i != PENGUIN::spritesMapped.end(); i++){
+        PENGUIN::SPRITEINFO info = *i;
+        if(info.direction == direction && info.state == state){
+            frame = i.key();
+            AtlasCanvasObject::setCurrentSprite(frame);
             changed = true;
         }
     }
@@ -35,8 +19,8 @@ void PenguinSpriteBase::setCurrentFrames(PENGUIN::DIRECTION direction, PENGUIN::
         setFrame(getCurrentFrame());
         QList<QGraphicsItem*> children = childItems();
         for(QGraphicsItem* child : children){
-            PenguinSpriteBase* childObj = (PenguinSpriteBase*)child;
-            childObj->setCurrentFrames(direction,state);
+            AtlasCanvasObject* childObj = (AtlasCanvasObject*)child;
+            childObj->setCurrentSprite(frame);
             childObj->setFrame(getCurrentFrame());
         }
     }
@@ -48,12 +32,12 @@ PENGUIN::DIRECTION PenguinSpriteBase::getCurrentDirection(){
 
 void PenguinSpriteBase::setCurrentDirection(PENGUIN::DIRECTION direction){
     if(direction != this->currentDirection){
-        setCurrentFrames(direction,this->currentState);
+        setCurrentSprite(direction,this->currentState);
         setFrame(getCurrentFrame());
         QList<QGraphicsItem*> children = childItems();
         for(QGraphicsItem* child : children){
             PenguinSpriteBase* childObj = (PenguinSpriteBase*)child;
-            childObj->setCurrentFrames(direction,this->currentState);
+            childObj->setCurrentSprite(direction,this->currentState);
             childObj->setFrame(getCurrentFrame());
         }
     }
@@ -64,7 +48,7 @@ PENGUIN::STATE PenguinSpriteBase::getCurrentState(){
 }
 
 void PenguinSpriteBase::setCurrentState(PENGUIN::STATE state){
-    setCurrentFrames(this->currentDirection,state);
+    setCurrentSprite(this->currentDirection,state);
     setFrame(getCurrentFrame());
 }
 
@@ -80,4 +64,5 @@ PENGUIN::STATE PenguinSpriteBase::getStateFromString(QString string){
     } else if(string.toLower() == "waving"){
         return PENGUIN::STATE::WAVING;
     }
+    return PENGUIN::STATE::UNUSED;
 }

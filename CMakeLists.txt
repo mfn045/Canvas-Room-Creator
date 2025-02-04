@@ -83,6 +83,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         CanvasObject/abstractcanvasobject.h CanvasObject/abstractcanvasobject.cpp
         CanvasObject/Multi/multicanvasobject.h CanvasObject/Multi/multicanvasobject.cpp
         CanvasObject/Multi/Masked/maskedmulticanvasobject.h CanvasObject/Multi/Masked/maskedmulticanvasobject.cpp
+        Objects/Player/playerfactory.h Objects/Player/playerfactory.cpp
+        Objects/Player/player.h Objects/Player/player.cpp
 
 
     )

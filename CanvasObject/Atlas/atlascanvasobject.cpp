@@ -4,7 +4,7 @@ AtlasCanvasObject::AtlasCanvasObject(AtlasCanvasObject* parent) : AbstractCanvas
 
 void AtlasCanvasObject::initFrames(QString filePath){
     if(filePath.isEmpty()) return;
-    QList<CANVAS::Frame> arrays;
+    QList<int> arrays;
     QDir directory(filePath);
 
     if(directory.exists()){
@@ -20,7 +20,7 @@ void AtlasCanvasObject::initFrames(QString filePath){
                         QJsonDocument doc = QJsonDocument::fromJson(jsonFile.readAll());
                         QJsonArray root = doc.array();
                         for(auto j = root.begin(); j != root.end(); j++){
-                            QList<CANVAS::Frame*> frames;
+                            QList<int> frames;
                             if(j->isObject()){
                                 QJsonObject spriteObj = j->toObject();
                                 for(auto k = spriteObj.begin(); k != spriteObj.end(); k++){
@@ -29,41 +29,10 @@ void AtlasCanvasObject::initFrames(QString filePath){
                                     if(spriteValue.isArray()){
                                         QJsonArray frameArray = spriteValue.toArray();
                                         for(auto k = frameArray.begin(); k != frameArray.end(); k++){
-                                            if(k->isObject()){
-                                                QJsonObject frameObj = k->toObject();
-                                                for(auto l = frameObj.begin(); l != frameObj.end(); l++){
-                                                    int frame = l.key().toInt();
-                                                    QJsonValueRef frameValue = l.value();
-                                                    if(frameValue.isObject()){
-                                                        QJsonObject frameObj = frameValue.toObject();
-                                                        QJsonValue xminValue = frameObj["xmin"];
-                                                        QJsonValue xmaxValue = frameObj["xmax"];
-                                                        QJsonValue yminValue = frameObj["ymin"];
-                                                        QJsonValue ymaxValue = frameObj["ymax"];
-                                                        int xmin = 0;
-                                                        int xmax = 0;
-                                                        int ymin = 0;
-                                                        int ymax = 0;
-                                                        if(xminValue.isString()){
-                                                            xmin = xminValue.toString().toInt();
-                                                        }
-                                                        if(yminValue.isString()){
-                                                            ymin = yminValue.toString().toInt();
-                                                        }
-                                                        if(xmaxValue.isString()){
-                                                            xmax = xmaxValue.toString().toInt();
-                                                        }
-                                                        if(ymaxValue.isString()){
-                                                            ymax = ymaxValue.toString().toInt();
-                                                        }
-                                                        CANVAS::Frame* frame = new CANVAS::Frame;
-                                                        frame->xmin = xmin;
-                                                        frame->xmax = xmax;
-                                                        frame->ymin = ymin;
-                                                        frame->ymax = ymax;
-                                                        frames.append(frame);
-                                                    }
-                                                }
+                                            if(k->isString()){
+                                                int frameNum = k->toInt();
+                                                qDebug() << "added " << frameNum;
+                                                frames.append(frameNum);
                                             }
                                         }
                                     }
@@ -77,7 +46,6 @@ void AtlasCanvasObject::initFrames(QString filePath){
                     if(svgFile.open(QFile::ReadOnly)){
                         qDebug() << "OPENED SVG";
                         QByteArray arr = svgFile.readAll();
-                        renderer()->load(arr);
                         doc.setContent(arr);
 
                         QDomElement docElem = doc.documentElement();
@@ -102,6 +70,7 @@ void AtlasCanvasObject::initFrames(QString filePath){
                                 defsChild = defsChild.nextSiblingElement();
                             }
                         }
+                        doc.clear();
                         qDebug() << "FOUND THIS MANY " << elements.count();
                     }
                 }
@@ -109,15 +78,15 @@ void AtlasCanvasObject::initFrames(QString filePath){
     }
 }
 
-QList<CANVAS::Frame*>& AtlasCanvasObject::getCurrentSpriteFrames(){
+QList<int>& AtlasCanvasObject::getCurrentSpriteFrames(){
     return this->currentFrames;
 }
 
-QMap<int, QList<CANVAS::Frame*>>& AtlasCanvasObject::getSprites(){
+QMap<int, QList<int>>& AtlasCanvasObject::getSprites(){
     return this->sprites;
 }
 
-QList<CANVAS::Frame*>& AtlasCanvasObject::setCurrentSprite(int sprite){
+QList<int>& AtlasCanvasObject::setCurrentSprite(int sprite){
     bool changed = false;
     isSettingFrame = true;
     for(auto i = sprites.begin(); i != sprites.end(); i++){
@@ -129,8 +98,7 @@ QList<CANVAS::Frame*>& AtlasCanvasObject::setCurrentSprite(int sprite){
         }
     }
     if(!changed){
-        QList<CANVAS::Frame*> map;
-        map.append(new CANVAS::Frame);
+        QList<int> map;
         this->currentFrames = map;
         this->currentSprite = -1;
     }
@@ -148,17 +116,14 @@ void AtlasCanvasObject::nextFrame(bool loop, bool force){
     if(!animationOn) return;
     if(currentFrame < currentFrames.size()-1){
         currentFrame++;
-        CANVAS::Frame frame = *currentFrames.at(currentFrame);
-        clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-        setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+        update();
         QList<QGraphicsItem*> children = childItems();
         if(children.size() > 0){
             for(QGraphicsItem* child : children){
                 if(auto obj = dynamic_cast<AtlasCanvasObject*>(child)){
                     if(currentFrame < obj->currentFrames.size()) {
                         obj->currentFrame = currentFrame;
-                        obj->clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-                        obj->setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+                        obj->update();
                     }
                 }
             }
@@ -167,17 +132,14 @@ void AtlasCanvasObject::nextFrame(bool loop, bool force){
     }else{
         if(loop){
             currentFrame=0;
-            CANVAS::Frame frame = *currentFrames.at(currentFrame);
-            clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-            setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+            update();
             QList<QGraphicsItem*> children = childItems();
             if(children.size() > 0){
                 for(QGraphicsItem* child : children){
                     if(auto obj = dynamic_cast<AtlasCanvasObject*>(child)){
                         if(currentFrame < obj->currentFrames.size()) {
                             obj->currentFrame = currentFrame;
-                            obj->clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-                            obj->setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+                            obj->update();
                         }
                     }
                 }
@@ -193,17 +155,14 @@ void AtlasCanvasObject::setFrame(int currentFrame){
     if(currentFrames.isEmpty()) return;
     if(currentFrame < currentFrames.size() && currentFrame >= 0){
         this->currentFrame = currentFrame;
-        CANVAS::Frame frame = *currentFrames.at(currentFrame);
-        clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-        setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+        update();
         QList<QGraphicsItem*> children = childItems();
         if(children.size() > 0){
             for(QGraphicsItem* child : children){
                 if(auto obj = dynamic_cast<AtlasCanvasObject*>(child)){
                     if(currentFrame < obj->currentFrames.size()) {
                         obj->currentFrame = currentFrame;
-                        obj->clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-                        obj->setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+                        obj->update();
                     }
                 }
             }
@@ -218,17 +177,14 @@ void AtlasCanvasObject::prevFrame(bool loop, bool force){
     if(!animationOn) return;
     if(currentFrame > 0){
         currentFrame--;
-        CANVAS::Frame frame = *currentFrames.at(currentFrame);
-        clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-        setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+        update();
         QList<QGraphicsItem*> children = childItems();
         if(children.size() > 0){
             for(QGraphicsItem* child : children){
                 if(auto obj = dynamic_cast<AtlasCanvasObject*>(child)){
                     if(currentFrame < obj->currentFrames.size()) {
                         obj->currentFrame = currentFrame;
-                        obj->clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-                        obj->setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+                        obj->update();
                     }
                 }
             }
@@ -237,17 +193,14 @@ void AtlasCanvasObject::prevFrame(bool loop, bool force){
     }else{
         if(loop){
             currentFrame=currentFrames.size()-1;
-            CANVAS::Frame frame = *currentFrames.at(currentFrame);
-            clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-            setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+            update();
             QList<QGraphicsItem*> children = childItems();
             if(children.size() > 0){
                 for(QGraphicsItem* child : children){
                     if(auto obj = dynamic_cast<AtlasCanvasObject*>(child)){
                         if(currentFrame < obj->currentFrames.size()) {
                             obj->currentFrame = currentFrame;
-                            obj->clipRegion = QRect(frame.xmin,frame.ymin,frame.xmax-frame.xmin,frame.ymax-frame.ymin);
-                            obj->setElementId("frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame));
+                            obj->update();
                         }
                     }
                 }
@@ -274,7 +227,6 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
         qDebug() << "ID and QDomElement parameters can't be both empty and null!";
         return;
     }
-    qDebug() << id << el.tagName();
     QString transform = element.attribute("transform");
     if(!transform.isEmpty()){
         QStringList matrix = transform.replace("matrix(","").replace(")","").split(", ");
@@ -284,19 +236,22 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
     }
 
     if(element.hasAttribute("href")){
-        qDebug() << "Found reference : " << element.attribute("href");
         QString reference = element.attribute("href").replace("#","");
         QDomElement foundElement = elements.value(reference);
         if(!foundElement.isNull()){
-            qDebug() << "---------------";
             recursivePaint(painter,reference);
-            qDebug() << "---------------";
         }
     }
 
     if(element.tagName() == "path"){
-        qDebug() << "Found path";
-        QPainterPath* path = parsePath(element.attribute("d"));
+        QString draw = element.attribute("d");
+        QPainterPath path;
+        if(paths.contains(draw)){
+            path = paths.value(draw);
+        }else{
+            paths.insert(draw,parsePath(element.attribute("d")));
+            path = paths.value(draw);
+        }
         QString fill = element.attribute("fill");
         QString fillOpacity = element.attribute("fill-opacity");
         QString stroke = element.attribute("stroke");
@@ -318,7 +273,6 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
                 } else if(strokeLineCap == "square"){
                     pen.setCapStyle(Qt::RoundCap);
                 }
-                painter->setPen(pen);
             }
             if(!strokeLineJoin.isEmpty() && !strokeLineJoin.contains("none",Qt::CaseInsensitive)){
                 if(strokeLineJoin == "round"){
@@ -328,18 +282,15 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
                 } else if(strokeLineJoin == "miter"){
                     pen.setJoinStyle(Qt::MiterJoin);
                 }
-                painter->setPen(pen);
             }
             if(!strokeWidth.isEmpty() && !strokeWidth.contains("none",Qt::CaseInsensitive)){
                 pen.setWidthF(strokeWidth.toFloat());
-                painter->setPen(pen);
             }
             painter->setPen(pen);
         } else {
             painter->setPen(Qt::NoPen);
         }
-        painter->drawPath(*path);
-        delete path;
+        painter->drawPath(path);
     }
 
     QDomElement child = element.firstChildElement();
@@ -352,7 +303,7 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
             }
         }
         if(element.tagName() == "clipPath" && child.tagName() == "path"){
-            QPainterPath* path = parsePath(child.attribute("d"));
+            QPainterPath path = parsePath(child.attribute("d"));
             QString fill = child.attribute("fill");
             QString fillOpacity = child.attribute("fill-opacity");
             QString stroke = child.attribute("stroke");
@@ -394,30 +345,21 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
             } else {
                 painter->setPen(Qt::NoPen);
             }
-            painter->setClipPath(*path);
-            qDebug() << "Found clip path path" << path->elementCount();
-            delete path;
+            painter->setClipPath(path);
         }
         if(element.tagName() == "g" && child.tagName() == "use"){
-            qDebug() << "Found child reference : " << child.attribute("href");
             QString reference = child.attribute("href").replace("#","");
             QDomElement foundElement = elements.value(reference);
             if(!foundElement.isNull()){
-                qDebug() << "---------------";
                 recursivePaint(painter,reference);
-                qDebug() << "---------------";
             }
         }
         if(child.hasChildNodes()){
-            qDebug() << "Has child";
             for(int i = 0; i < child.childNodes().count(); i++){
                 QDomNode node = child.childNodes().at(i);
                 if(node.isElement()){
                     QDomElement nodeElement = node.toElement();
-                    qDebug() << "---------------";
                     recursivePaint(painter, "", nodeElement);
-                    qDebug() << "Child " << i << " : " << nodeElement.tagName() << nodeElement.attribute("id");
-                    qDebug() << "---------------";
                 }
             }
         }
@@ -429,17 +371,18 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
 }
 
 
-QPainterPath* AtlasCanvasObject::parsePath(QString d){
-    QPainterPath* path = new QPainterPath();
+QPainterPath AtlasCanvasObject::parsePath(QString d){
+    QPainterPath path;
     if(d.isEmpty()){
         return path;
     }
     QString currentCommand;
     QStringList list = d.split(QRegularExpression(R"([\s|,])"));
-    QList<int> points;
+    QList<float> points;
     for(int i = 0; i < list.count(); i++){
         float point;
         QString param = list.at(i);
+        bool closeLine = false;
         if(param.toLower() == "m"){
             currentCommand = "m";
             points.clear();
@@ -464,23 +407,27 @@ QPainterPath* AtlasCanvasObject::parsePath(QString d){
             currentCommand = "q";
             param = param.replace("q","",Qt::CaseInsensitive);
             points.clear();
+        } else if(param.endsWith("z",Qt::CaseInsensitive)){
+            param = param.replace("z","",Qt::CaseInsensitive);
+            closeLine = true;
         }
-        point = param.toFloat();
-        points.append(point);
+        if(!param.isEmpty()){
+            point = param.toFloat();
+            points.append(point);
+        }
         if(currentCommand == "m" && points.count() == 2){
-            path->moveTo(points.at(0),points.at(1));
+            path.moveTo(points.at(0),points.at(1));
             points.clear();
         }else if(currentCommand == "l" && points.count() == 2){
-            path->lineTo(points.at(0),points.at(1));
+            path.lineTo(points.at(0),points.at(1));
             points.clear();
         }else if(currentCommand == "q" && points.count() == 4){
-            path->quadTo(points.at(0),points.at(1),points.at(2),points.at(3));
+            path.quadTo(points.at(0),points.at(1),points.at(2),points.at(3));
             points.clear();
         }
-        if(param.contains("z",Qt::CaseInsensitive)){
+        if(closeLine){
             currentCommand = "z";
-            param = param.replace("z","",Qt::CaseInsensitive);
-            path->closeSubpath();
+            path.closeSubpath();
         }
     }
     return path;
@@ -531,9 +478,7 @@ void AtlasCanvasObject::paint(QPainter *painter,
     painter->setBrush(QColor("white"));
     painter->drawRect(QRect(0,0,100,100));
     painter->restore();
-    qDebug() << "###########################";
     recursivePaint(painter,"frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame+1));
-    qDebug() << "###########################";
 
     //QPainterPath path;
     /*path.moveTo(QPointF(19.375,36.7818));

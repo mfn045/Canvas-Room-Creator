@@ -1,25 +1,25 @@
 #ifndef PENGUINSPRITEBASE_H
 #define PENGUINSPRITEBASE_H
 
-#include "../../../CanvasObject/Multi/multicanvasobject.h"
+#include "../../../CanvasObject/Atlas/atlascanvasobject.h"
 #include "../../Constants/constants.h"
 
-class PenguinSpriteBase : public MultiCanvasObject
+class PenguinSpriteBase : public AtlasCanvasObject
 {
 public:
-    struct PENGUINSPRITEPROPERTIES : public PROPERTIES {
+    /*struct PENGUINSPRITEPROPERTIES : public PROPERTIES {
         PENGUIN::STATE state = PENGUIN::STATE::STANDING;
         PENGUIN::DIRECTION direction = PENGUIN::DIRECTION::S;
-    };
-    explicit PenguinSpriteBase(MultiCanvasObject* parent = nullptr);
+    };*/
+    explicit PenguinSpriteBase(AtlasCanvasObject* parent = nullptr);
 
     PENGUIN::DIRECTION getCurrentDirection();
     void setCurrentDirection(PENGUIN::DIRECTION direction);
+
     PENGUIN::STATE getCurrentState();
     void setCurrentState(PENGUIN::STATE state);
 
-    void initializeFrames(QString filePath, PENGUIN::DIRECTION direction, PENGUIN::STATE state);
-    void setCurrentFrames(PENGUIN::DIRECTION direction, PENGUIN::STATE state);
+    void setCurrentSprite(PENGUIN::DIRECTION direction, PENGUIN::STATE state);
 
     PENGUIN::STATE getStateFromString(QString string);
 

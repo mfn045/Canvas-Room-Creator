@@ -11,6 +11,20 @@ AbstractCanvasObject::AbstractCanvasObject(AbstractCanvasObject* parent) {
 }
 
 
+QPointF AbstractCanvasObject::getOrigin(){
+    return this->origin;
+}
+QPointF AbstractCanvasObject::setOrigin(QPointF origin){
+    this->origin = origin;
+    QList<QGraphicsItem*> children = childItems();
+    for(QGraphicsItem* child : children){
+        AbstractCanvasObject* childObj = (AbstractCanvasObject*)child;
+        childObj->setOrigin(this->origin);
+    }
+    return this->origin;
+    return this->origin;
+}
+
 bool AbstractCanvasObject::isFramePaused(){
     if(framePauses.contains(currentFrame)){
         return true;

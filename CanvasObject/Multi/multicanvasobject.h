@@ -41,9 +41,6 @@ public:
     void setFrame(int currentFrame) override;
     void prevFrame(bool loop = true, bool force = false) override;
 
-    QPointF getOrigin();
-    QPointF setOrigin(QPointF origin);
-
     CONST_POSITION setConstPosition(CONST_POSITION newConst);
     CONST_POSITION getConstPosition();
 
@@ -76,11 +73,6 @@ private:
      * @brief currentProperties is the current properties of the frame being displayed
      */
     PROPERTIES* currentProperties;
-
-    /**
-     * @brief origin is a QPointF of where the center of mass of the object is.
-     */
-    QPointF origin;
 
     bool isSettingFrame = false;
 

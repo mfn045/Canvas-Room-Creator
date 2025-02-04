@@ -7,37 +7,9 @@ PenguinSprite::PenguinSprite(Scene* parent) : parent(parent) {
     setFlag(GraphicsItemFlag::ItemIsSelectable);
     setFlag(GraphicsItemFlag::ItemStacksBehindParent);
 
-    QString directory = "C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/frames/output/";
+    QString directory = "C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output";
 
-    initializeFrames(directory+"1",DIRECTION::S,STATE::STANDING);
-    initializeFrames(directory+"2",DIRECTION::SW,STATE::STANDING);
-    initializeFrames(directory+"3",DIRECTION::W,STATE::STANDING);
-    initializeFrames(directory+"4",DIRECTION::NW,STATE::STANDING);
-    initializeFrames(directory+"5",DIRECTION::N,STATE::STANDING);
-    initializeFrames(directory+"6",DIRECTION::NE,STATE::STANDING);
-    initializeFrames(directory+"7",DIRECTION::E,STATE::STANDING);
-    initializeFrames(directory+"8",DIRECTION::SE,STATE::STANDING);
-
-    initializeFrames(directory+"9",DIRECTION::S,STATE::WALKING);
-    initializeFrames(directory+"10",DIRECTION::SW,STATE::WALKING);
-    initializeFrames(directory+"11",DIRECTION::W,STATE::WALKING);
-    initializeFrames(directory+"12",DIRECTION::NW,STATE::WALKING);
-    initializeFrames(directory+"13",DIRECTION::N,STATE::WALKING);
-    initializeFrames(directory+"14",DIRECTION::NE,STATE::WALKING);
-    initializeFrames(directory+"15",DIRECTION::E,STATE::WALKING);
-    initializeFrames(directory+"16",DIRECTION::SE,STATE::WALKING);
-
-    initializeFrames(directory+"17",DIRECTION::S,STATE::SITTING);
-    initializeFrames(directory+"18",DIRECTION::SW,STATE::SITTING);
-    initializeFrames(directory+"19",DIRECTION::W,STATE::SITTING);
-    initializeFrames(directory+"20",DIRECTION::NW,STATE::SITTING);
-    initializeFrames(directory+"21",DIRECTION::N,STATE::SITTING);
-    initializeFrames(directory+"22",DIRECTION::NE,STATE::SITTING);
-    initializeFrames(directory+"23",DIRECTION::E,STATE::SITTING);
-    initializeFrames(directory+"24",DIRECTION::SE,STATE::SITTING);
-
-    initializeFrames(directory+"25",DIRECTION::S,STATE::WAVING);
-    initializeFrames(directory+"26",DIRECTION::S,STATE::DANCING);
+    initFrames(directory);
 
     setVelocity(3);
 
@@ -45,7 +17,7 @@ PenguinSprite::PenguinSprite(Scene* parent) : parent(parent) {
     setIsClickable(true);
     setIsHoverable(true);
 
-    setCurrentFrames(DIRECTION::S,STATE::STANDING);
+    setCurrentSprite(DIRECTION::S,STATE::STANDING);
     setFrame(getCurrentFrame());
     setOrigin(QPointF(32.5,32.5));
 
@@ -56,10 +28,10 @@ PenguinSprite::PenguinSprite(Scene* parent) : parent(parent) {
 
 void PenguinSprite::sendChatBubble(QString msg){
     if(bubble == nullptr){
-        bubble = new ChatBubble(this,msg);
+        //bubble = new ChatBubble(this,msg);
     } else {
         delete bubble;
-        bubble = new ChatBubble(this,msg);
+        //bubble = new ChatBubble(this,msg);
         bubble->setText(msg);
     }
 }
@@ -170,7 +142,7 @@ void PenguinSprite::sceneMousePressed(QPointF posTemp){
         direction = DIRECTION::N;
         //qDebug() << "NORTH --> " << pos() << ", " << "x: " << x << "," << "y: " << y << "," << pos << ", " << angle;
     }
-    setCurrentFrames(direction,STATE::WALKING);
+    setCurrentSprite(direction,STATE::WALKING);
     posTemp.setX(posTemp.x()+(pos().x()-mapToParent(getOrigin()).x()));
     posTemp.setY(posTemp.y()+(pos().y()-mapToParent(getOrigin()).y()));
 
@@ -192,7 +164,7 @@ void PenguinSprite::sceneKeyPressed(int key){
         if(getCurrentState() != STATE::WALKING){
             setIsMouseTrackable(false);
             setHasAnimationLoop(false);
-            setCurrentFrames(DIRECTION::S,STATE::WAVING);
+            setCurrentSprite(DIRECTION::S,STATE::WAVING);
             setFrame(getCurrentFrame());
         }
     }else if(key == Qt::Key_I){
@@ -202,7 +174,7 @@ void PenguinSprite::sceneKeyPressed(int key){
             }else{
                 setIsMouseTrackable(false);
                 setHasAnimationLoop(false);
-                setCurrentFrames(DIRECTION::N,STATE::SITTING);
+                setCurrentSprite(DIRECTION::N,STATE::SITTING);
                 setFrame(getCurrentFrame());
             }
         }
@@ -213,7 +185,7 @@ void PenguinSprite::sceneKeyPressed(int key){
             }else{
                 setIsMouseTrackable(false);
                 setHasAnimationLoop(false);
-                setCurrentFrames(DIRECTION::S,STATE::SITTING);
+                setCurrentSprite(DIRECTION::S,STATE::SITTING);
                 setFrame(getCurrentFrame());
             }
         }
@@ -224,7 +196,7 @@ void PenguinSprite::sceneKeyPressed(int key){
             }else{
                 setIsMouseTrackable(false);
                 setHasAnimationLoop(false);
-                setCurrentFrames(DIRECTION::W,STATE::SITTING);
+                setCurrentSprite(DIRECTION::W,STATE::SITTING);
                 setFrame(getCurrentFrame());
             }
         }
@@ -235,7 +207,7 @@ void PenguinSprite::sceneKeyPressed(int key){
             }else{
                 setIsMouseTrackable(false);
                 setHasAnimationLoop(false);
-                setCurrentFrames(DIRECTION::E,STATE::SITTING);
+                setCurrentSprite(DIRECTION::E,STATE::SITTING);
                 setFrame(getCurrentFrame());
             }
         }
@@ -243,7 +215,7 @@ void PenguinSprite::sceneKeyPressed(int key){
 }
 
 void PenguinSprite::animationDone(){
-    setCurrentFrames(getCurrentDirection(),STATE::STANDING);
+    setCurrentSprite(getCurrentDirection(),STATE::STANDING);
     setIsMouseTrackable(true);
     setFrame(0);
 }
@@ -310,7 +282,7 @@ void PenguinSprite::walkTo(QPointF toPos){
 }
 
 void PenguinSprite::resetPenguin(){
-    setCurrentFrames(getCurrentDirection(),STATE::STANDING);
+    setCurrentSprite(getCurrentDirection(),STATE::STANDING);
     setIsMouseTrackable(true);
     setFrame(0);
 }
@@ -320,7 +292,7 @@ void PenguinSprite::setPosition(QPointF pos){
 }
 
 void PenguinSprite::changeColor(QString color){
-    QDomDocument doc;
+    /*QDomDocument doc;
     for(auto it = getFrames().begin(); it != getFrames().end(); it++){
         for(QByteArray* ba : it.value()){
             doc.setContent(*ba);
@@ -349,14 +321,14 @@ void PenguinSprite::changeColor(QString color){
             }
             *ba = doc.toByteArray();
         }
-    }
+    }*/
 }
 
 PenguinSpriteClothing* PenguinSprite::loadItem(int id){
     PenguinSpriteClothing* item = new PenguinSpriteClothing(this);
     QString directory = "C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/sprite_export/output/" + QString::number(id) + "/";
 
-    item->initializeFrames(directory+"1",DIRECTION::S,STATE::STANDING);
+    /*item->initializeFrames(directory+"1",DIRECTION::S,STATE::STANDING);
     item->initializeFrames(directory+"2",DIRECTION::SW,STATE::STANDING);
     item->initializeFrames(directory+"3",DIRECTION::W,STATE::STANDING);
     item->initializeFrames(directory+"4",DIRECTION::NW,STATE::STANDING);
@@ -386,8 +358,8 @@ PenguinSpriteClothing* PenguinSprite::loadItem(int id){
     item->initializeFrames(directory+"25",DIRECTION::S,STATE::WAVING);
     item->initializeFrames(directory+"26",DIRECTION::S,STATE::DANCING);
 
-
-    item->setCurrentFrames(getCurrentDirection(),getCurrentState());
+*/
+    item->setCurrentSprite(getCurrentDirection(),getCurrentState());
     item->setFrame(getCurrentFrame());
 
     return item;
@@ -497,13 +469,13 @@ bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
             if(getCurrentState() != STATE::WALKING){
                 setIsMouseTrackable(false);
                 setHasAnimationLoop(false);
-                setCurrentFrames(DIRECTION::S,STATE::WAVING);
+                setCurrentSprite(DIRECTION::S,STATE::WAVING);
             }
         } else if(key == Qt::Key_D){
             if(getCurrentState() != STATE::WALKING){
                 setIsMouseTrackable(false);
                 setHasAnimationLoop(true);
-                setCurrentFrames(DIRECTION::S,STATE::DANCING);
+                setCurrentSprite(DIRECTION::S,STATE::DANCING);
             }
         }else if(key == Qt::Key_I){
             if(getCurrentState() != STATE::WALKING){
@@ -512,7 +484,7 @@ bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
                 }else{
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
-                    setCurrentFrames(DIRECTION::N,STATE::SITTING);
+                    setCurrentSprite(DIRECTION::N,STATE::SITTING);
                 }
             }
         }else if(key == Qt::Key_K){
@@ -522,7 +494,7 @@ bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
                 }else{
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
-                    setCurrentFrames(DIRECTION::S,STATE::SITTING);
+                    setCurrentSprite(DIRECTION::S,STATE::SITTING);
                 }
             }
         }else if(key == Qt::Key_J){
@@ -532,7 +504,7 @@ bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
                 }else{
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
-                    setCurrentFrames(DIRECTION::W,STATE::SITTING);
+                    setCurrentSprite(DIRECTION::W,STATE::SITTING);
                 }
             }
         }else if(key == Qt::Key_L){
@@ -542,7 +514,7 @@ bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
                 }else{
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
-                    setCurrentFrames(DIRECTION::E,STATE::SITTING);
+                    setCurrentSprite(DIRECTION::E,STATE::SITTING);
                 }
             }
         }
@@ -607,7 +579,7 @@ bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
                     direction = DIRECTION::N;
                     //qDebug() << "NORTH --> " << pos() << ", " << "x: " << x << "," << "y: " << y << "," << pos << ", " << angle;
                 }
-                setCurrentFrames(direction,STATE::WALKING);
+                setCurrentSprite(direction,STATE::WALKING);
                 setFrame(getCurrentFrame());
                 posTemp.setX(posTemp.x()+(pos().x()-mapToParent(getOrigin()).x()));
                 posTemp.setY(posTemp.y()+(pos().y()-mapToParent(getOrigin()).y()));

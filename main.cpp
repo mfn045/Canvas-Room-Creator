@@ -19,12 +19,12 @@ int main(int argc, char *argv[])
 
     Interface* interface = Interface::getInstance();
     interface->setScene(w.getScene());
-    //interface->loadItems();
-    //interface->loadFonts();
-    //interface->loadPenguin();
-    //interface->loadHUD();
-    //interface->loadPlayerCard();
-    //interface->getPlayerCard()->getInventory()->setPenguin(interface->getActivePenguin());
+    interface->loadItems();
+    interface->loadFonts();
+    interface->loadPenguin();
+    interface->loadHUD();
+    interface->loadPlayerCard();
+    interface->getPlayerCard()->getInventory()->setPenguin(interface->getActivePenguin());
 /*
     MultiCanvasObject* obj = new MultiCanvasObject();
     MultiCanvasObject::PROPERTIES* properties = new MultiCanvasObject::PROPERTIES();
@@ -89,14 +89,31 @@ int main(int argc, char *argv[])
     //qDebug() << obj1 << obj1->pos();
     //qDebug() << obj2 << obj2->pos();
     //qDebug() << obj3 << obj3->pos();
-    AtlasCanvasObject* atlas = new AtlasCanvasObject();
+    /*AtlasCanvasObject* atlas = new AtlasCanvasObject();
     atlas->initFrames("C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output");
-    atlas->setCurrentSprite(29);
+    atlas->setCurrentSprite(10);
     atlas->setFrame(0);
-    atlas->setScale(3);
     atlas->setHasAnimationLoop(true);
-    w.getScene()->addItem(atlas);
+    w.getScene()->addItem(atlas);*/
 
+
+    /*AtlasCanvasObject* atlas2 = new AtlasCanvasObject();
+    atlas2->initFrames("C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output");
+    atlas2->setCurrentSprite(10);
+    atlas2->setFrame(0);
+    atlas2->setHasAnimationLoop(true);
+    atlas2->setPos(QPointF(100,100));
+    w.getScene()->addItem(atlas2);
+
+
+    AtlasCanvasObject* atlas3 = new AtlasCanvasObject();
+    atlas3->initFrames("C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output");
+    atlas3->setCurrentSprite(10);
+    atlas3->setFrame(0);
+    atlas3->setHasAnimationLoop(true);
+    atlas3->setPos(QPointF(200,200));
+    w.getScene()->addItem(atlas3);
+*/
     qDebug() << " -------------- END --------------- ";
 
 

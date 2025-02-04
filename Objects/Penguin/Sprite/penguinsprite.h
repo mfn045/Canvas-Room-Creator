@@ -9,7 +9,7 @@
 #include <QGraphicsView>
 #include <QThread>
 #include <QObject>
-#include "../../../CanvasObject/Multi/multicanvasobject.h"
+#include "../../../CanvasObject/Atlas/atlascanvasobject.h"
 #include "penguinspritebase.h"
 #include "../../../widgets/scene.h"
 #include "Clothing/penguinspriteclothing.h"
@@ -52,12 +52,12 @@ private:
     bool active = false;
 
 
-    MultiCanvasObject* head = nullptr;
-    MultiCanvasObject* face = nullptr;
-    MultiCanvasObject* neck = nullptr;
-    MultiCanvasObject* body = nullptr;
-    MultiCanvasObject* hand = nullptr;
-    MultiCanvasObject* feet = nullptr;
+    AtlasCanvasObject* head = nullptr;
+    AtlasCanvasObject* face = nullptr;
+    AtlasCanvasObject* neck = nullptr;
+    AtlasCanvasObject* body = nullptr;
+    AtlasCanvasObject* hand = nullptr;
+    AtlasCanvasObject* feet = nullptr;
 
 
 public slots:
