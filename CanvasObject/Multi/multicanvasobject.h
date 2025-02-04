@@ -11,11 +11,6 @@
 class MultiCanvasObject : public AbstractCanvasObject
 {
 public:
-    enum ACTION {
-        CLICKABLE = 1,
-        HOVERABLE = 2,
-        MOUSE_TRACKABLE = 4
-    };
     struct PROPERTIES {
         QString filePath = "";
         int yOffset = 0;

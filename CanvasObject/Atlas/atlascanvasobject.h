@@ -21,8 +21,6 @@ public:
 
     void initFrames(QString filePath);
 
-    QRegion getClipRegion();
-
     QList<int>& getCurrentSpriteFrames();
 
     QMap<int, QList<int>>& getSprites();
@@ -62,10 +60,6 @@ private:
     int currentSprite = 1;
 
     int id = 0;
-
-    QString name = "";
-
-    QRegion clipRegion;
 
     bool isSettingFrame = false;
 

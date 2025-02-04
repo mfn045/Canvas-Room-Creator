@@ -212,10 +212,6 @@ void AtlasCanvasObject::prevFrame(bool loop, bool force){
     }
 }
 
-QRegion AtlasCanvasObject::getClipRegion(){
-    return this->clipRegion;
-}
-
 void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElement el){
     painter->save();
     QDomElement& element = el;

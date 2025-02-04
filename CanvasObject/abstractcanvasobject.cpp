@@ -22,7 +22,6 @@ QPointF AbstractCanvasObject::setOrigin(QPointF origin){
         childObj->setOrigin(this->origin);
     }
     return this->origin;
-    return this->origin;
 }
 
 bool AbstractCanvasObject::isFramePaused(){
