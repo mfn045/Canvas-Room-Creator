@@ -1,14 +1,14 @@
 #ifndef BADGE_H
 #define BADGE_H
 
-#include "../../canvasobject.h"
-#include "../MaskedCanvasObject/maskedcanvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
+#include "../../CanvasObject/Multi/Masked/maskedmulticanvasobject.h"
 #include "../Constants/constants.h"
 
-class Badge : public CanvasObject
+class Badge : public MultiCanvasObject
 {
 public:
-    explicit Badge(CanvasObject* parent = nullptr, PENGUIN::BADGE badgeType = PENGUIN::BADGE::NONE);
+    explicit Badge(MultiCanvasObject* parent = nullptr, PENGUIN::BADGE badgeType = PENGUIN::BADGE::NONE);
 
     void setBadge(PENGUIN::BADGE badgeType);
 };

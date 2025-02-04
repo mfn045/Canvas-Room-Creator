@@ -1,6 +1,6 @@
 #include "badge.h"
 
-Badge::Badge(CanvasObject* parent, PENGUIN::BADGE badgeType) {
+Badge::Badge(MultiCanvasObject* parent, PENGUIN::BADGE badgeType) {
 
     if(badgeType == PENGUIN::BADGE::MEMBER_0
         || badgeType == PENGUIN::BADGE::MEMBER_1
@@ -13,7 +13,7 @@ Badge::Badge(CanvasObject* parent, PENGUIN::BADGE badgeType) {
         setCurrentFrames(backgroundProperties);
         setFrame(0);
 
-        MaskedCanvasObject* flashy = new MaskedCanvasObject(this);
+        MaskedMultiCanvasObject* flashy = new MaskedMultiCanvasObject(this);
         flashy->setHasAnimationLoop(true);
         flashy->setMask("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/flashy_mask.svg");
         flashy->getRegion().translate(QPoint(323,381));
@@ -28,7 +28,7 @@ Badge::Badge(CanvasObject* parent, PENGUIN::BADGE badgeType) {
         int flash_centerY = -flashy->sceneBoundingRect().height()+(1.5*boundingRect().height());
         flashy->setPos(QPointF(flash_centerX,flash_centerY));
 
-        CanvasObject* star = new CanvasObject(this);
+        MultiCanvasObject* star = new MultiCanvasObject(this);
         PROPERTIES* starProperties = new PROPERTIES();
         starProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/star/1.svg";
         star->initFrames(starProperties->filePath,starProperties);
@@ -40,9 +40,9 @@ Badge::Badge(CanvasObject* parent, PENGUIN::BADGE badgeType) {
 
         float ribbon_offset = 50;
 
-        CanvasObject* ribbon_front = new CanvasObject(this);
+        MultiCanvasObject* ribbon_front = new MultiCanvasObject(this);
         PROPERTIES* rfProperties = new PROPERTIES();
-        rfProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/ribbon_front/ru.svg";
+        rfProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/ribbon_front/en.svg";
         ribbon_front->initFrames(rfProperties->filePath,rfProperties);
         ribbon_front->setCurrentFrames(rfProperties);
         ribbon_front->setFrame(0);
@@ -50,7 +50,7 @@ Badge::Badge(CanvasObject* parent, PENGUIN::BADGE badgeType) {
         float rf_centerX = (boundingRect().width()-ribbon_front->sceneBoundingRect().width())/2;
         ribbon_front->setPos(QPointF(rf_centerX,ribbon_offset));
 
-        CanvasObject* ribbon_back = new CanvasObject(this);
+        MultiCanvasObject* ribbon_back = new MultiCanvasObject(this);
         ribbon_back->setFlag(QGraphicsSvgItem::GraphicsItemFlag::ItemStacksBehindParent);
         PROPERTIES* rbProperties = new PROPERTIES();
         rbProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/ribbon_back/1.svg";
@@ -61,7 +61,7 @@ Badge::Badge(CanvasObject* parent, PENGUIN::BADGE badgeType) {
         ribbon_back->setPos(QPointF(rb_centerX,ribbon_offset+8.5));
 
         if(badgeType > PENGUIN::BADGE::MEMBER_0){
-            CanvasObject* chevron = new CanvasObject(this);
+            MultiCanvasObject* chevron = new MultiCanvasObject(this);
             PROPERTIES* chevronProperties = new PROPERTIES();
             QString chevronPath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/chevron/";
             if(badgeType== PENGUIN::BADGE::MEMBER_1){

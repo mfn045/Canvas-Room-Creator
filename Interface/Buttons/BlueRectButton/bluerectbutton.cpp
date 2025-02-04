@@ -1,6 +1,6 @@
 #include "bluerectbutton.h"
 
-BlueRectButton::BlueRectButton(CanvasObject* parent) : AbstractButton(parent)
+BlueRectButton::BlueRectButton(MultiCanvasObject* parent) : AbstractButton(parent)
 {
     QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/bluerectbutton/up.svg";
     QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/bluerectbutton/over.svg";
@@ -14,10 +14,10 @@ BlueRectButton::BlueRectButton(CanvasObject* parent) : AbstractButton(parent)
     setOver(overButton);
 }
 
-CanvasObject* BlueRectButton::setIcon(QString filePath){
+MultiCanvasObject* BlueRectButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
-        icon = new CanvasObject();
+        icon = new MultiCanvasObject();
         icon->setParentItem(this);
     }
     properties->filePath = filePath;

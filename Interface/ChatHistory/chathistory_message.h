@@ -1,14 +1,14 @@
 #ifndef CHATHISTORY_MESSAGE_H
 #define CHATHISTORY_MESSAGE_H
 
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../TextLabel/textlabel.h"
 
-class ChatHistory_Message : public CanvasObject
+class ChatHistory_Message : public MultiCanvasObject
 {
     Q_OBJECT
 public:
-    explicit ChatHistory_Message(CanvasObject* parent = nullptr);
+    explicit ChatHistory_Message(MultiCanvasObject* parent = nullptr);
 
     TextLabel* getLabel();
 

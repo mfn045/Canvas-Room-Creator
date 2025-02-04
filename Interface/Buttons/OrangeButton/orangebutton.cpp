@@ -1,6 +1,6 @@
 #include "orangebutton.h"
 
-OrangeButton::OrangeButton(CanvasObject* parent, SIZE size) : AbstractButton(parent) {
+OrangeButton::OrangeButton(MultiCanvasObject* parent, SIZE size) : AbstractButton(parent) {
     if(parent != nullptr){
         setParentItem(parent);
     }

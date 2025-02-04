@@ -1,6 +1,6 @@
 #include "chatbubble.h"
 
-ChatBubble::ChatBubble(CanvasObject* parent, QString msg) {
+ChatBubble::ChatBubble(MultiCanvasObject* parent, QString msg) {
     setParentItem(parent);
     this->bubbleMsg = msg;
     QString chatbubble = "";

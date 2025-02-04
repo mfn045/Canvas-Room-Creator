@@ -1,13 +1,13 @@
 #ifndef CATEGORYBUTTON_H
 #define CATEGORYBUTTON_H
 
-#include "../../../../canvasobject.h"
+#include "../../../../CanvasObject/Multi/multicanvasobject.h"
 #include "../../OvalButton/ovalbutton.h"
 
-class CategoryButton : public CanvasObject
+class CategoryButton : public MultiCanvasObject
 {
 public:
-    explicit CategoryButton(CanvasObject* parent = nullptr);
+    explicit CategoryButton(MultiCanvasObject* parent = nullptr);
     OvalButton* getButton();
 
 private:

@@ -16,7 +16,7 @@ RoomCanvas::RoomCanvas(QWidget *parent)
         QList<QGraphicsItem*> selected = scene->selectedItems();
         if(selected.size() >= 1){
             for(QGraphicsItem* item : selected){
-                CanvasObject* itemObj = (CanvasObject*) item;
+                MultiCanvasObject* itemObj = (MultiCanvasObject*) item;
                 itemObj->getCurrentProperties()->xOffset=item->pos().x()-itemObj->getOrigin().x();
                 itemObj->getCurrentProperties()->yOffset=item->pos().y()-itemObj->getOrigin().y();
             }
@@ -41,7 +41,7 @@ RoomCanvas::RoomCanvas(QWidget *parent)
     thread = QThread::create([this](){
         while(true){
             QMetaObject::invokeMethod(this,"nextFrame", Qt::QueuedConnection);
-            QThread::msleep(60);
+            QThread::msleep(40);
         }
     });
     thread->start();
@@ -56,7 +56,7 @@ RoomCanvas::~RoomCanvas()
 void RoomCanvas::mousePressEvent(QMouseEvent *event){
     if(selectingOrigin != nullptr){
         QPointF pos = canvas->mapFrom(this,event->pos());
-        CanvasObject* obj = (CanvasObject*)selectingOrigin;
+        MultiCanvasObject* obj = (MultiCanvasObject*)selectingOrigin;
         obj->setOrigin(pos);
         selectingOrigin = nullptr;
         setCursor(Qt::ArrowCursor);
@@ -80,7 +80,7 @@ void checkGraphicsChildSelection(QGraphicsItem* item, QTreeWidgetItem* selectedT
     QList<QGraphicsItem*> children = item->childItems();
     if(children.size() >= 1){
         for(QGraphicsItem* child : children){
-            CanvasObject* childObj = (CanvasObject*)child;
+            MultiCanvasObject* childObj = (MultiCanvasObject*)child;
             for(int i = 0; i < selectedTreeItem->childCount(); i++){
                 QTreeWidgetItem* childTreeItem = selectedTreeItem->child(i);
                 QString layerID = childTreeItem->text(1);
@@ -106,7 +106,7 @@ void RoomCanvas::changeLayersSelection(){
     updatingSelection = true;
     layers->clearSelection();
     for(QGraphicsItem* item : scene->items()){
-        CanvasObject* obj = dynamic_cast<CanvasObject*>(item);
+        MultiCanvasObject* obj = dynamic_cast<MultiCanvasObject*>(item);
         if(obj){
             for(int i = 0; i < layers->invisibleRootItem()->childCount(); i++){
                 QTreeWidgetItem* selectedTreeItem = layers->invisibleRootItem()->child(i);
@@ -133,7 +133,7 @@ void checkLayersChildSelection(QGraphicsItem* item, QTreeWidgetItem* selectedTre
     QList<QGraphicsItem*> children = item->childItems();
     if(children.size() >= 1){
         for(QGraphicsItem* child : children){
-            CanvasObject* childObj = (CanvasObject*)child;
+            MultiCanvasObject* childObj = (MultiCanvasObject*)child;
             for(int i = 0; i < selectedTreeItem->childCount(); i++){
                 QTreeWidgetItem* childTreeItem = selectedTreeItem->child(i);
                 QString layerID = childTreeItem->text(1);
@@ -159,7 +159,7 @@ void RoomCanvas::changeGraphicsSelection(){
     updatingSelection = true;
     scene->clearSelection();
     for(QGraphicsItem* item : scene->items()){
-        CanvasObject* obj = dynamic_cast<CanvasObject*>(item);
+        MultiCanvasObject* obj = dynamic_cast<MultiCanvasObject*>(item);
         if(obj){
         for(int i = 0; i < layers->invisibleRootItem()->childCount(); i++){
             QTreeWidgetItem* selectedTreeItem = layers->invisibleRootItem()->child(i);
@@ -185,20 +185,26 @@ void RoomCanvas::changeGraphicsSelection(){
 void RoomCanvas::nextFrame(){
     if(attemptingUpdate) return;
     for(QGraphicsItem* item : scene->items()){
-        CanvasObject* obj = dynamic_cast<CanvasObject*>(item);
+        MultiCanvasObject* obj = dynamic_cast<MultiCanvasObject*>(item);
         if(obj){
             if(!obj->getCurrentFrames().isEmpty() && obj->getCurrentFrames().size() >= 2){
                 obj->nextFrame(obj->hasAnimationLoop());
             }
         }
+        AtlasCanvasObject* obj2 = dynamic_cast<AtlasCanvasObject*>(item);
+        if(obj2){
+            if(!obj2->getCurrentSpriteFrames().isEmpty() && obj2->getCurrentSpriteFrames().size() >= 2){
+                obj2->nextFrame(obj2->hasAnimationLoop());
+            }
+        }
     }
 }
 
-void updateChildLayers(CanvasObject* obj,QTreeWidgetItem* parent){
+void updateChildLayers(MultiCanvasObject* obj,QTreeWidgetItem* parent){
     QList<QGraphicsItem*> children = obj->childItems();
     if(children.size() >= 1){
         for(QGraphicsItem* child : children){
-            if(auto childObj = dynamic_cast<CanvasObject*>(child)){
+            if(auto childObj = dynamic_cast<MultiCanvasObject*>(child)){
             QTreeWidgetItem* item = new QTreeWidgetItem();
             item->setIcon(0,QIcon(*childObj->getCurrentFrames().at(0)));
             if(obj->getName().isEmpty()){
@@ -217,7 +223,7 @@ void updateChildLayers(CanvasObject* obj,QTreeWidgetItem* parent){
 void RoomCanvas::updateLayers(){
     layers->clear();
     for(QGraphicsItem* item : scene->items()){
-        CanvasObject* obj = dynamic_cast<CanvasObject*>(item);
+        MultiCanvasObject* obj = dynamic_cast<MultiCanvasObject*>(item);
         if(obj){
         if(obj->getCurrentFrames().isEmpty()) continue;
         QTreeWidgetItem* item = new QTreeWidgetItem();
@@ -240,13 +246,13 @@ void RoomCanvas::updateLayers(){
 void RoomCanvas::updateItems(){
     if(layers->invisibleRootItem() == nullptr) return;
     attemptingUpdate = true;
-    QList<CanvasObject*> updatedItems;
+    QList<MultiCanvasObject*> updatedItems;
     bool updated = false;
     for(int i = 0; i < layers->invisibleRootItem()->childCount(); i++){
         QTreeWidgetItem* item = layers->invisibleRootItem()->child(i);
         QString layerID = item->text(1);
         for(QGraphicsItem* item : scene->items()){
-            CanvasObject* obj = dynamic_cast<CanvasObject*>(item);
+            MultiCanvasObject* obj = dynamic_cast<MultiCanvasObject*>(item);
             if(obj){
             if(obj->getName().isEmpty()){
                 if(layerID.replace("Layer ","").toInt() == obj->getID()){
@@ -266,7 +272,7 @@ void RoomCanvas::updateItems(){
         items = updatedItems;
     }*/
     for(QGraphicsItem* item : scene->items()){
-        if(auto obj = dynamic_cast<CanvasObject*>(item)){
+        if(auto obj = dynamic_cast<MultiCanvasObject*>(item)){
         scene->removeItem(item);
         }
     }
@@ -278,7 +284,7 @@ void RoomCanvas::updateItems(){
     attemptingUpdate = false;
 }
 
-/*QList<CanvasObject*>& RoomCanvas::getItems(){
+/*QList<MultiCanvasObject*>& RoomCanvas::getItems(){
     return this->items;
 }*/
 
@@ -292,7 +298,7 @@ Canvas* RoomCanvas::getCanvas(){
 
 void RoomCanvas::addItem(QString dir){
     if(dir.isEmpty()) return;
-    CanvasObject* item = new CanvasObject(dir);
+    MultiCanvasObject* item = new MultiCanvasObject();
     item->setCursor(Qt::PointingHandCursor);
     //items.append(item);
     item->setID(id_increment);
@@ -301,11 +307,11 @@ void RoomCanvas::addItem(QString dir){
     updateLayers();
 }
 
-void RoomCanvas::remItemByCanvasObject(CanvasObject* canvasObj){
+void RoomCanvas::remItemByCanvasObject(MultiCanvasObject* canvasObj){
     if(canvasObj == nullptr) return;
-    QList<CanvasObject*> updatedItems;
+    QList<MultiCanvasObject*> updatedItems;
     for(QGraphicsItem* item : scene->items()){
-        CanvasObject* obj = dynamic_cast<CanvasObject*>(item);
+        MultiCanvasObject* obj = dynamic_cast<MultiCanvasObject*>(item);
         if(obj){
         if(obj != canvasObj){
             updatedItems.append(obj);
@@ -406,7 +412,7 @@ void RoomCanvas::on_actionRemove_Selected_triggered()
     int ret = mb.exec();
     if(ret == QMessageBox::StandardButton::Yes){
         for(QGraphicsItem* item : scene->selectedItems()){
-            if(auto obj = dynamic_cast<CanvasObject*>(item)){
+            if(auto obj = dynamic_cast<MultiCanvasObject*>(item)){
             remItemByCanvasObject(obj);
             }
         }
@@ -489,7 +495,7 @@ void RoomCanvas::on_actionRename_Item_triggered()
     QString name = dialog.getText(this,"Rename Item","What would you like to rename the item to?");
     if(!name.isEmpty()){
         for(QGraphicsItem* item : selectedItems){
-            if(auto obj = dynamic_cast<CanvasObject*>(item)){
+            if(auto obj = dynamic_cast<MultiCanvasObject*>(item)){
                 obj->setName(name);
             }
         }
@@ -519,8 +525,8 @@ void RoomCanvas::on_actionAdd_child_sprite_file_to_selected_triggered()
         return;
     }
     QString dir = getFilePath();
-    CanvasObject* parent = (CanvasObject*)selectedItems.at(0);
-    CanvasObject* child = new CanvasObject(dir,parent);
+    MultiCanvasObject* parent = (MultiCanvasObject*)selectedItems.at(0);
+    MultiCanvasObject* child = new MultiCanvasObject(parent);
     child->setID(parent->child_id_increment);
     parent->child_id_increment++;
     updateLayers();
@@ -549,12 +555,12 @@ void RoomCanvas::on_actionScale_Selected_triggered()
         return;
     }
     for(QGraphicsItem* item : selectedItems){
-        CanvasObject* obj = (CanvasObject*) item;
+        MultiCanvasObject* obj = (MultiCanvasObject*) item;
         item->setScale(0.5);
     }
 }
 
-/*void RoomCanvas::setDialogFilePaths(PropertiesDialog& dialog, CanvasObject* obj, STATE state){
+/*void RoomCanvas::setDialogFilePaths(PropertiesDialog& dialog, MultiCanvasObject* obj, STATE state){
     dialog.clearFilePaths();
     for(PROPERTIES* properties : obj->getFrames().keys()){
         if(properties->state == state){
@@ -609,7 +615,7 @@ void RoomCanvas::on_actionScale_Selected_triggered()
         return;
     }
     PropertiesDialog dialog(this);
-    CanvasObject* obj = (CanvasObject*)selectedItems.at(0);
+    MultiCanvasObject* obj = (MultiCanvasObject*)selectedItems.at(0);
     setDialogFilePaths(dialog,obj,obj->getCurrentState());
     connect(&dialog,&PropertiesDialog::stateChanged,[&](){
         qDebug() << "Changed state to " << dialog.getState();

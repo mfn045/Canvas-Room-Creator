@@ -2,14 +2,14 @@
 #define DIALOG_H
 
 #include <QObject>
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../Buttons/BlueButton/bluebutton.h"
 #include "../Buttons/OrangeButton/orangebutton.h"
 #include "../../widgets/scene.h"
 #include "../TextLabel/textlabel.h"
 #include <QApplication>
 
-class AbstractDialog : public CanvasObject
+class AbstractDialog : public MultiCanvasObject
 {
     Q_OBJECT
 public:
@@ -67,15 +67,15 @@ protected:
     }
 
 private:
-    CanvasObject* top = nullptr;
-    CanvasObject* top_left = nullptr;
-    CanvasObject* top_right = nullptr;
-    CanvasObject* left = nullptr;
-    CanvasObject* right = nullptr;
-    CanvasObject* bottom_left = nullptr;
-    CanvasObject* bottom = nullptr;
-    CanvasObject* bottom_right = nullptr;
-    CanvasObject* center = nullptr;
+    MultiCanvasObject* top = nullptr;
+    MultiCanvasObject* top_left = nullptr;
+    MultiCanvasObject* top_right = nullptr;
+    MultiCanvasObject* left = nullptr;
+    MultiCanvasObject* right = nullptr;
+    MultiCanvasObject* bottom_left = nullptr;
+    MultiCanvasObject* bottom = nullptr;
+    MultiCanvasObject* bottom_right = nullptr;
+    MultiCanvasObject* center = nullptr;
 
     QString path_top = "";
     QString path_top_left = "";

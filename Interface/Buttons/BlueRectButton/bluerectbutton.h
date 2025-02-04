@@ -7,9 +7,9 @@ class BlueRectButton : public AbstractButton
 {
     Q_OBJECT
 public:
-    explicit BlueRectButton(CanvasObject *parent = nullptr);
+    explicit BlueRectButton(MultiCanvasObject *parent = nullptr);
 
-    CanvasObject* setIcon(QString filePath) override;
+    MultiCanvasObject* setIcon(QString filePath) override;
 };
 
 #endif // BLUERECTBUTTON_H

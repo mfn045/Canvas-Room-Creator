@@ -1,6 +1,8 @@
 #ifndef CONSTANTS_H
 #define CONSTANTS_H
 
+#include <QDomDocument>
+
 namespace PENGUIN {
 enum DIRECTION {
     S,
@@ -43,6 +45,20 @@ enum TYPE {
     PIN,
     BACKGROUND,
     AWARD
+};
+}
+namespace CANVAS {
+enum ACTION {
+    CLICKABLE = 1,
+    HOVERABLE = 2,
+    MOUSE_TRACKABLE = 4
+};
+struct Frame {
+    int xmin = 0;
+    int xmax = 0;
+    int ymin = 0;
+    int ymax = 0;
+    QDomDocument r;
 };
 }
 

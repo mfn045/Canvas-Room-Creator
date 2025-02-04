@@ -1,6 +1,6 @@
 #include "map.h"
 
-Map::Map(CanvasObject* parent) : AbstractButton(parent) {
+Map::Map(MultiCanvasObject* parent) : AbstractButton(parent) {
     QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/map/up.svg";
     QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/map/over.svg";
     QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/map/down.svg";

@@ -6,11 +6,11 @@
 #include <QGraphicsTextItem>
 #include "../../widgets/scene.h"
 #include "../Buttons/CircleButton/circlebutton.h"
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../TextBox/textbox.h"
 #include "../SvgGridContainer/gridcontainer.h"
 
-class MenuBar : public CanvasObject
+class MenuBar : public MultiCanvasObject
 {
     Q_OBJECT
 public:
@@ -31,7 +31,7 @@ private:
     CircleButton* friends_Button = nullptr;
     CircleButton* igloo_Button = nullptr;
     CircleButton* settings_Button = nullptr;
-    CanvasObject* chat = nullptr;
+    MultiCanvasObject* chat = nullptr;
     TextBox* chatInput = nullptr;
 
     Scene* parent;

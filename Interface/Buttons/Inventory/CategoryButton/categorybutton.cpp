@@ -1,6 +1,6 @@
 #include "categorybutton.h"
 
-CategoryButton::CategoryButton(CanvasObject* parent) : CanvasObject(parent) {
+CategoryButton::CategoryButton(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     PROPERTIES* properties = new PROPERTIES();
     properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/inventory/categorybutton/1.svg";
 

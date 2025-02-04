@@ -1,6 +1,6 @@
 #include "inventory.h"
 
-Inventory::Inventory(CanvasObject* parent) : CanvasObject(parent) {
+Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     for(int i = 1; i < 500; i++){
         ownedItems.append(i);
     }
@@ -41,7 +41,7 @@ Inventory::Inventory(CanvasObject* parent) : CanvasObject(parent) {
 
     loadInventoryPage(1);
 
-    CanvasObject* scrollBar = new CanvasObject();
+    MultiCanvasObject* scrollBar = new MultiCanvasObject();
     PROPERTIES* scrollBarProperties = new PROPERTIES();
     scrollBarProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/whitescrollrect/whitescrollrect.svg";
     scrollBar->initFrames(scrollBarProperties->filePath,scrollBarProperties);
@@ -266,15 +266,19 @@ void Inventory::loadInventoryPage(int page, SORT sort){
                     qDebug() << "Head";
                 }else if(type == Clothes::TYPE::FACE){
                     penguin_paper->setFace(itemId);
+                    penguin->setFace(itemId);
                     qDebug() << "face";
                 }else if(type == Clothes::TYPE::NECK){
                     penguin_paper->setNeck(itemId);
+                    penguin->setNeck(itemId);
                     qDebug() << "neck";
                 }else if(type == Clothes::TYPE::BODY){
                     penguin_paper->setBody(itemId);
+                    penguin->setBody(itemId);
                     qDebug() << "body";
                 }else if(type == Clothes::TYPE::HAND){
                     penguin_paper->setHand(itemId);
+                    penguin->setHand(itemId);
                     qDebug() << "hand";
                 }else if(type == Clothes::TYPE::FEET){
                     penguin_paper->setFeet(itemId);

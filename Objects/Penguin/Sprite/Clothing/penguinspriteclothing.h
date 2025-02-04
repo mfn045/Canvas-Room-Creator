@@ -10,7 +10,7 @@ class PenguinSpriteClothing : public PenguinSpriteBase
 {
 public:
 
-    explicit PenguinSpriteClothing(CanvasObject* parent = nullptr);
+    explicit PenguinSpriteClothing(MultiCanvasObject* parent = nullptr);
 
 };
 

@@ -10,8 +10,8 @@ public:
         SMALL,
         MEDIUM
     };
-    explicit WhiteSquareButton(CanvasObject *parent = nullptr, SIZE size = SIZE::SMALL);
-    CanvasObject* setIcon(QString filePath) override;
+    explicit WhiteSquareButton(MultiCanvasObject *parent = nullptr, SIZE size = SIZE::SMALL);
+    MultiCanvasObject* setIcon(QString filePath) override;
 
 private:
     SIZE size = SIZE::SMALL;

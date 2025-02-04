@@ -1,6 +1,6 @@
 #include "penguinpaper.h"
 
-PenguinPaper::PenguinPaper(CanvasObject* parent) : CanvasObject(parent) {
+PenguinPaper::PenguinPaper(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     PROPERTIES* pp_properties = new PROPERTIES();
     pp_properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/penguin_paper/penguin_paper.svg";
     initFrames(pp_properties->filePath,pp_properties);
@@ -56,7 +56,7 @@ void PenguinPaper::setHead(int headId){
     }
     head->setIsClickable(true);
     head->setIsHoverable(true);
-    head->connect(head,&CanvasObject::mousePress, [this](){
+    head->connect(head,&MultiCanvasObject::mousePress, [this](){
         delete head;
         head = nullptr;
     });
@@ -95,7 +95,7 @@ void PenguinPaper::setFace(int faceId){
     }
     face->setIsClickable(true);
     face->setIsHoverable(true);
-    face->connect(face,&CanvasObject::mousePress, [this](){
+    face->connect(face,&MultiCanvasObject::mousePress, [this](){
         delete face;
         face = nullptr;
     });
@@ -135,7 +135,7 @@ void PenguinPaper::setNeck(int neckId){
     }
     neck->setIsClickable(true);
     neck->setIsHoverable(true);
-    neck->connect(neck,&CanvasObject::mousePress, [this](){
+    neck->connect(neck,&MultiCanvasObject::mousePress, [this](){
         delete neck;
         neck = nullptr;
     });
@@ -174,7 +174,7 @@ void PenguinPaper::setBody(int bodyId){
     }
     body->setIsClickable(true);
     body->setIsHoverable(true);
-    body->connect(body,&CanvasObject::mousePress, [this](){
+    body->connect(body,&MultiCanvasObject::mousePress, [this](){
         delete body;
         body = nullptr;
     });
@@ -213,7 +213,7 @@ void PenguinPaper::setHand(int handId){
     }
     hand->setIsClickable(true);
     hand->setIsHoverable(true);
-    hand->connect(hand,&CanvasObject::mousePress, [this](){
+    hand->connect(hand,&MultiCanvasObject::mousePress, [this](){
         delete hand;
         hand = nullptr;
     });
@@ -251,7 +251,7 @@ void PenguinPaper::setFeet(int feetId){
     }
     feet->setIsClickable(true);
     feet->setIsHoverable(true);
-    feet->connect(feet,&CanvasObject::mousePress, [this](){
+    feet->connect(feet,&MultiCanvasObject::mousePress, [this](){
         delete feet;
         feet = nullptr;
     });
@@ -289,7 +289,7 @@ void PenguinPaper::setPin(int pinId){
     }
     pin->setIsClickable(true);
     pin->setIsHoverable(true);
-    pin->connect(pin,&CanvasObject::mousePress, [this](){
+    pin->connect(pin,&MultiCanvasObject::mousePress, [this](){
         delete pin;
         pin = nullptr;
     });
@@ -327,7 +327,7 @@ void PenguinPaper::setBackground(int backgroundId){
     }
     background->setIsClickable(true);
     background->setIsHoverable(true);
-    background->connect(background,&CanvasObject::mousePress, [this](){
+    background->connect(background,&MultiCanvasObject::mousePress, [this](){
         delete background;
         background = nullptr;
     });
@@ -388,8 +388,8 @@ void PenguinPaper::setColor(int colorId){
     }
 }
 
-CanvasObject* PenguinPaper::loadItem(int id){
-    CanvasObject* item = new CanvasObject(this);
+MultiCanvasObject* PenguinPaper::loadItem(int id){
+    MultiCanvasObject* item = new MultiCanvasObject(this);
     PROPERTIES* properties = new PROPERTIES();
     properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/items/";
     properties->filePath += QString::number(id);

@@ -13,7 +13,8 @@
 #include <QMenu>
 #include "widgets/layers.h"
 #include "widgets/canvas.h"
-#include "canvasobject.h"
+#include "CanvasObject/Multi/multicanvasobject.h"
+#include "CanvasObject/Atlas/atlascanvasobject.h"
 #include <QInputDialog>
 #include <QMouseEvent>
 
@@ -32,10 +33,10 @@ public:
     ~RoomCanvas();
     Q_INVOKABLE void nextFrame();
     void addItem(QString dir);
-    void remItemByCanvasObject(CanvasObject* canvasObj);
+    void remItemByCanvasObject(MultiCanvasObject* canvasObj);
     //QList<CanvasObject*>& getItems();
     QString getFilePath();
-    //void setDialogFilePaths(PropertiesDialog& dialog, CanvasObject* obj, STATE state);
+    //void setDialogFilePaths(PropertiesDialog& dialog, MultiCanvasObject* obj, STATE state);
     void updateLayers();
 
     Scene* getScene();

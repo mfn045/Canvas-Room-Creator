@@ -28,8 +28,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(Clubpenguin-Room-Creator
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
-        canvasobject.h
-        canvasobject.cpp
+
+
         widgets/layers.h
         widgets/layers.cpp
         resources.qrc
@@ -68,7 +68,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         widgets/openglwidget.h widgets/openglwidget.cpp
         Objects/Penguin/clothes.h Objects/Penguin/clothes.cpp
         Objects/Badge/badge.h Objects/Badge/badge.cpp
-        Objects/MaskedCanvasObject/maskedcanvasobject.h Objects/MaskedCanvasObject/maskedcanvasobject.cpp
+
         Objects/Items/items.h Objects/Items/items.cpp
         Interface/Buttons/Inventory/CategoryButton/categorybutton.h Interface/Buttons/Inventory/CategoryButton/categorybutton.cpp
         Interface/Buttons/WhiteRectButton/whiterectbutton.h Interface/Buttons/WhiteRectButton/whiterectbutton.cpp
@@ -79,6 +79,10 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Objects/Penguin/Sprite/penguinsprite.h Objects/Penguin/Sprite/penguinsprite.cpp
         Objects/Penguin/Sprite/Clothing/penguinspriteclothing.h Objects/Penguin/Sprite/Clothing/penguinspriteclothing.cpp
         Objects/Penguin/Paper/penguinpaper.h Objects/Penguin/Paper/penguinpaper.cpp
+        CanvasObject/Atlas/atlascanvasobject.h CanvasObject/Atlas/atlascanvasobject.cpp
+        CanvasObject/abstractcanvasobject.h CanvasObject/abstractcanvasobject.cpp
+        CanvasObject/Multi/multicanvasobject.h CanvasObject/Multi/multicanvasobject.cpp
+        CanvasObject/Multi/Masked/maskedmulticanvasobject.h CanvasObject/Multi/Masked/maskedmulticanvasobject.cpp
 
 
     )

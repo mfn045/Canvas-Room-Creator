@@ -9,7 +9,7 @@ class Mail : public AbstractButton
 {
     Q_OBJECT
 public:
-    explicit Mail(CanvasObject* parent = nullptr);
+    explicit Mail(MultiCanvasObject* parent = nullptr);
     void animationIn();
     Notification* getNotification();
 

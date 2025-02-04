@@ -1,17 +1,17 @@
 #ifndef PENGUINSPRITEBASE_H
 #define PENGUINSPRITEBASE_H
 
-#include "../../../canvasobject.h"
+#include "../../../CanvasObject/Multi/multicanvasobject.h"
 #include "../../Constants/constants.h"
 
-class PenguinSpriteBase : public CanvasObject
+class PenguinSpriteBase : public MultiCanvasObject
 {
 public:
     struct PENGUINSPRITEPROPERTIES : public PROPERTIES {
         PENGUIN::STATE state = PENGUIN::STATE::STANDING;
         PENGUIN::DIRECTION direction = PENGUIN::DIRECTION::S;
     };
-    explicit PenguinSpriteBase(CanvasObject* parent = nullptr);
+    explicit PenguinSpriteBase(MultiCanvasObject* parent = nullptr);
 
     PENGUIN::DIRECTION getCurrentDirection();
     void setCurrentDirection(PENGUIN::DIRECTION direction);

@@ -8,7 +8,7 @@ class Moderator : public AbstractButton
 {
     Q_OBJECT
 public:
-    explicit Moderator(CanvasObject* parent = nullptr);
+    explicit Moderator(MultiCanvasObject* parent = nullptr);
 };
 
 #endif // MAP_H

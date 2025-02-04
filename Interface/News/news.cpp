@@ -1,6 +1,6 @@
 #include "news.h"
 
-News::News(CanvasObject* parent) : AbstractButton(parent) {
+News::News(MultiCanvasObject* parent) : AbstractButton(parent) {
     QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/up.svg";
     QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/over.svg";
     QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/down.svg";
@@ -12,7 +12,7 @@ News::News(CanvasObject* parent) : AbstractButton(parent) {
     setDown(downButton);
     setOver(overButton);
 
-    notification = new CanvasObject();
+    notification = new MultiCanvasObject();
     notification->setParentItem(this);
     PROPERTIES* properties = new PROPERTIES();
     properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/notification.svg";

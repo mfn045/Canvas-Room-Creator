@@ -1,10 +1,10 @@
 #ifndef DIALOGGRID_H
 #define DIALOGGRID_H
 
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../../widgets/scene.h"
 
-class DialogGrid : public CanvasObject
+class DialogGrid : public MultiCanvasObject
 {
 public:
     enum class TYPE {
@@ -44,15 +44,15 @@ public:
     QRectF boundingRect() const override;
 
 private:
-    CanvasObject* top = nullptr;
-    CanvasObject* top_left = nullptr;
-    CanvasObject* top_right = nullptr;
-    CanvasObject* left = nullptr;
-    CanvasObject* right = nullptr;
-    CanvasObject* bottom_left = nullptr;
-    CanvasObject* bottom = nullptr;
-    CanvasObject* bottom_right = nullptr;
-    CanvasObject* center = nullptr;
+    MultiCanvasObject* top = nullptr;
+    MultiCanvasObject* top_left = nullptr;
+    MultiCanvasObject* top_right = nullptr;
+    MultiCanvasObject* left = nullptr;
+    MultiCanvasObject* right = nullptr;
+    MultiCanvasObject* bottom_left = nullptr;
+    MultiCanvasObject* bottom = nullptr;
+    MultiCanvasObject* bottom_right = nullptr;
+    MultiCanvasObject* center = nullptr;
 
     QString path_top = "";
     QString path_top_left = "";

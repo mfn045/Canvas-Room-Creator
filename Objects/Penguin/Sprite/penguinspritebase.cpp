@@ -1,6 +1,6 @@
 #include "penguinspritebase.h"
 
-PenguinSpriteBase::PenguinSpriteBase(CanvasObject* parent) : CanvasObject(parent) {}
+PenguinSpriteBase::PenguinSpriteBase(MultiCanvasObject* parent) : MultiCanvasObject(parent) {}
 
 void PenguinSpriteBase::initializeFrames(QString filePath, PENGUIN::DIRECTION direction, PENGUIN::STATE state){
     if(filePath.isEmpty()) return;
@@ -25,7 +25,7 @@ void PenguinSpriteBase::setCurrentFrames(PENGUIN::DIRECTION direction, PENGUIN::
     for(PROPERTIES* properties : getFrames().keys()){
         PENGUINSPRITEPROPERTIES* penguinProperties = (PENGUINSPRITEPROPERTIES*) properties;
         if(penguinProperties->direction == direction && penguinProperties->state == state){
-            CanvasObject::setCurrentFrames(properties);
+            MultiCanvasObject::setCurrentFrames(properties);
             changed = true;
         }
     }

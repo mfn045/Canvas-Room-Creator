@@ -4,14 +4,14 @@
 #include <QObject>
 #include <QTextEdit>
 #include <QTimer>
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../TextLabel/textlabel.h"
 
-class ChatBubble : public CanvasObject
+class ChatBubble : public MultiCanvasObject
 {
     Q_OBJECT
 public:
-    explicit ChatBubble(CanvasObject* parent, QString msg);
+    explicit ChatBubble(MultiCanvasObject* parent, QString msg);
 
     enum TYPE {
         SMALL,

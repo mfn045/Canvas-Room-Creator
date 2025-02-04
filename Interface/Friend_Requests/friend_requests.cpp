@@ -1,6 +1,6 @@
 #include "friend_requests.h"
 
-Friend_Requests::Friend_Requests(CanvasObject* parent) : AbstractButton(parent) {
+Friend_Requests::Friend_Requests(MultiCanvasObject* parent) : AbstractButton(parent) {
     QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/friend_requests/up.svg";
     QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/friend_requests/over.svg";
     QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/friend_requests/down.svg";

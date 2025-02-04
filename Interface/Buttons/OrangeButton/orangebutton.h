@@ -13,7 +13,7 @@ public:
         MEDIUM,
         LARGE
     };
-    explicit OrangeButton(CanvasObject* parent = nullptr, SIZE size = SIZE::SMALL);
+    explicit OrangeButton(MultiCanvasObject* parent = nullptr, SIZE size = SIZE::SMALL);
 
     void setText(QString text);
 

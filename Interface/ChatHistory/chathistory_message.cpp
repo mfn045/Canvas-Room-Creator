@@ -1,6 +1,6 @@
 #include "chathistory_message.h"
 
-ChatHistory_Message::ChatHistory_Message(CanvasObject* parent) : CanvasObject() {
+ChatHistory_Message::ChatHistory_Message(MultiCanvasObject* parent) : MultiCanvasObject() {
     if(parent != nullptr){
         setParentItem(parent);
     }
@@ -18,8 +18,8 @@ ChatHistory_Message::ChatHistory_Message(CanvasObject* parent) : CanvasObject() 
 
     setIsClickable(true);
     setIsHoverable(true);
-    connect(this,&CanvasObject::hoverEnter,this,&ChatHistory_Message::hoverEnterReceiver);
-    connect(this,&CanvasObject::hoverLeave,this,&ChatHistory_Message::hoverLeaveReceiver);
+    connect(this,&MultiCanvasObject::hoverEnter,this,&ChatHistory_Message::hoverEnterReceiver);
+    connect(this,&MultiCanvasObject::hoverLeave,this,&ChatHistory_Message::hoverLeaveReceiver);
 
     textLabel = new TextLabel(this);
     textLabel->setAcceptHoverEvents(false);

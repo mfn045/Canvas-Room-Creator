@@ -1,6 +1,6 @@
 #include "whiterectbutton.h"
 
-WhiteRectButton::WhiteRectButton(CanvasObject* parent, SIZE size, TYPE type) : AbstractButton(parent)
+WhiteRectButton::WhiteRectButton(MultiCanvasObject* parent, SIZE size, TYPE type) : AbstractButton(parent)
 {
     QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/whiterectbutton/";
     QString sizeStr = "";
@@ -45,10 +45,10 @@ void WhiteRectButton::setText(QString text){
     label->getInput()->setAlignment(Qt::AlignCenter);
 }
 
-CanvasObject* WhiteRectButton::setIcon(QString filePath){
+MultiCanvasObject* WhiteRectButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
-        icon = new CanvasObject();
+        icon = new MultiCanvasObject();
         icon->setParentItem(this);
     }
     properties->filePath = filePath;

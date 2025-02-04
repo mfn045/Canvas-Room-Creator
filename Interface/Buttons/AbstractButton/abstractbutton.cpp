@@ -1,6 +1,6 @@
 #include "abstractbutton.h"
 
-AbstractButton::AbstractButton(CanvasObject *parent)
+AbstractButton::AbstractButton(MultiCanvasObject *parent)
 {
     setFlag(GraphicsItemFlag::ItemIsSelectable);
 
@@ -48,14 +48,14 @@ void AbstractButton::setOver(QString filePath){
     }
 }
 
-CanvasObject* AbstractButton::getIcon(){
+MultiCanvasObject* AbstractButton::getIcon(){
     return this->icon;
 }
 
-CanvasObject* AbstractButton::setIcon(QString filePath){
+MultiCanvasObject* AbstractButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
-        icon = new CanvasObject();
+        icon = new MultiCanvasObject();
         icon->setParentItem(this);
     }
     properties->filePath = filePath;
@@ -70,7 +70,7 @@ void AbstractButton::setCurrentFrames(STATE state){
     for(PROPERTIES* properties : getFrames().keys()){
         BUTTONPROPERTIES* buttonProperties = (BUTTONPROPERTIES*) properties;
         if(buttonProperties->state == state){
-            CanvasObject::setCurrentFrames(properties);
+            MultiCanvasObject::setCurrentFrames(properties);
             changed = true;
         }
     }

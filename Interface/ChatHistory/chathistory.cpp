@@ -11,7 +11,7 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
     double centerY = -5;
     setPos(QPointF(boundingRect().width()+centerX,boundingRect().height()+centerY));
 
-    historyBox = new CanvasObject();
+    historyBox = new MultiCanvasObject();
     historyBox->setScale(-1);
     historyBox->setFlag(GraphicsItemFlag::ItemStacksBehindParent);
     historyBox->setParentItem(this);

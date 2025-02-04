@@ -13,7 +13,7 @@ public:
         MEDIUM,
         LARGE
     };
-    explicit BlueButton(CanvasObject* parent = nullptr, SIZE size = SIZE::SMALL);
+    explicit BlueButton(MultiCanvasObject* parent = nullptr, SIZE size = SIZE::SMALL);
 
     void setText(QString text);
 

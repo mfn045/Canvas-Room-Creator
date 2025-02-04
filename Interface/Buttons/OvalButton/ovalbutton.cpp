@@ -1,6 +1,6 @@
 #include "ovalbutton.h"
 
-OvalButton::OvalButton(CanvasObject* parent, COLOR color) : AbstractButton(parent)
+OvalButton::OvalButton(MultiCanvasObject* parent, COLOR color) : AbstractButton(parent)
 {
     QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/ovalbutton/";
     QString colorStr = "";
@@ -38,10 +38,10 @@ void OvalButton::setText(QString text){
     label->getInput()->setAlignment(Qt::AlignCenter);
 }
 
-CanvasObject* OvalButton::setIcon(QString filePath){
+MultiCanvasObject* OvalButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
-        icon = new CanvasObject();
+        icon = new MultiCanvasObject();
         icon->setParentItem(this);
     }
     properties->filePath = filePath;

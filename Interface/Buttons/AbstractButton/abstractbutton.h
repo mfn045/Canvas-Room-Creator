@@ -2,13 +2,13 @@
 #define BUTTON_H
 
 #include <QGraphicsObject>
-#include "../../../canvasobject.h"
+#include "../../../CanvasObject/Multi/multicanvasobject.h"
 
-class AbstractButton : public CanvasObject
+class AbstractButton : public MultiCanvasObject
 {
     Q_OBJECT
 public:
-    explicit AbstractButton(CanvasObject *parent = nullptr);
+    explicit AbstractButton(MultiCanvasObject *parent = nullptr);
     enum STATE {
         UP,
         OVER,
@@ -20,12 +20,12 @@ public:
     };
 
     void setCurrentFrames(STATE state);
-    virtual CanvasObject* setIcon(QString filePath);
+    virtual MultiCanvasObject* setIcon(QString filePath);
     void setUp(QString filePath);
     void setDown(QString filePath);
     void setOver(QString filePath);
 
-    CanvasObject* getIcon();
+    MultiCanvasObject* getIcon();
 
     virtual QVariant positionChanged(const QVariant& pos);
 
@@ -41,7 +41,7 @@ protected:
     void hoverEnterEvent(QGraphicsSceneHoverEvent *event) override;
     QVariant itemChange(GraphicsItemChange change, const QVariant &value) override;
 
-    CanvasObject* icon = nullptr;
+    MultiCanvasObject* icon = nullptr;
 
 signals:
     void clicked();

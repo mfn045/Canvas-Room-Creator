@@ -1,12 +1,14 @@
 #ifndef PENGUINPAPER_H
 #define PENGUINPAPER_H
 
-#include "../../../canvasobject.h"
+#include <QDomDocument>
+#include <QJsonDocument>
+#include "../../../CanvasObject/Multi/multicanvasobject.h"
 
-class PenguinPaper : public CanvasObject
+class PenguinPaper : public MultiCanvasObject
 {
 public:
-    explicit PenguinPaper(CanvasObject* parent = nullptr);
+    explicit PenguinPaper(MultiCanvasObject* parent = nullptr);
 
     void changeColor(QString color);
 
@@ -21,15 +23,15 @@ public:
     void setColor(int colorId);
 
 private:
-    CanvasObject* loadItem(int id);
-    CanvasObject* head = nullptr;
-    CanvasObject* face = nullptr;
-    CanvasObject* neck = nullptr;
-    CanvasObject* body = nullptr;
-    CanvasObject* hand = nullptr;
-    CanvasObject* feet = nullptr;
-    CanvasObject* pin = nullptr;
-    CanvasObject* background = nullptr;
+    MultiCanvasObject* loadItem(int id);
+    MultiCanvasObject* head = nullptr;
+    MultiCanvasObject* face = nullptr;
+    MultiCanvasObject* neck = nullptr;
+    MultiCanvasObject* body = nullptr;
+    MultiCanvasObject* hand = nullptr;
+    MultiCanvasObject* feet = nullptr;
+    MultiCanvasObject* pin = nullptr;
+    MultiCanvasObject* background = nullptr;
 
 };
 

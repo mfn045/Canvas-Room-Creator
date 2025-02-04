@@ -9,7 +9,7 @@
 #include <QGraphicsView>
 #include <QThread>
 #include <QObject>
-#include "../../../canvasobject.h"
+#include "../../../CanvasObject/Multi/multicanvasobject.h"
 #include "penguinspritebase.h"
 #include "../../../widgets/scene.h"
 #include "Clothing/penguinspriteclothing.h"
@@ -52,12 +52,12 @@ private:
     bool active = false;
 
 
-    CanvasObject* head = nullptr;
-    CanvasObject* face = nullptr;
-    CanvasObject* neck = nullptr;
-    CanvasObject* body = nullptr;
-    CanvasObject* hand = nullptr;
-    CanvasObject* feet = nullptr;
+    MultiCanvasObject* head = nullptr;
+    MultiCanvasObject* face = nullptr;
+    MultiCanvasObject* neck = nullptr;
+    MultiCanvasObject* body = nullptr;
+    MultiCanvasObject* hand = nullptr;
+    MultiCanvasObject* feet = nullptr;
 
 
 public slots:
@@ -70,7 +70,7 @@ public slots:
 
 
 protected:
-    //bool eventFilter(QObject *watched, QEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
     void keyPressEvent(QKeyEvent *event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
 };

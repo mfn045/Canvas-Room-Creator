@@ -1,14 +1,14 @@
 #ifndef NOTIFICATION_H
 #define NOTIFICATION_H
 
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../TextLabel/textlabel.h"
 #include <QThread>
 
-class Notification : public CanvasObject
+class Notification : public MultiCanvasObject
 {
 public:
-    explicit Notification(CanvasObject* parent = nullptr);
+    explicit Notification(MultiCanvasObject* parent = nullptr);
     int setNumber(int number);
     int getNumber();
 

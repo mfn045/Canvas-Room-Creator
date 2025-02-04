@@ -25,7 +25,7 @@ MenuBar::MenuBar(Scene *parent)
     puffleTricks_Button = new CircleButton();
     //QRectF buttonSize = safeChat_Button->boundingRect();
     //safeChat_Button->setPos(QPointF(17,12));
-    CanvasObject* obj = puffleTricks_Button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/safechat/safechat.svg");
+    MultiCanvasObject* obj = puffleTricks_Button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/safechat/safechat.svg");
     obj->renderer()->setViewBox(QRectF(0,-40,0.001,50));
     container->addGridItem(puffleTricks_Button,0,0);
 
@@ -44,7 +44,7 @@ MenuBar::MenuBar(Scene *parent)
     snowBall_Button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/snowballv2/snowballv2.svg");
     container->addGridItem(snowBall_Button,0,3);
 
-    chat = new CanvasObject();
+    chat = new MultiCanvasObject();
     chat->setIsClickable(true);
     PROPERTIES* chatProperties = new PROPERTIES();
     chatProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chatbar/chatbar.svg";

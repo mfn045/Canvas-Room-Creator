@@ -1,9 +1,9 @@
 #ifndef GRIDCONTAINER_H
 #define GRIDCONTAINER_H
 
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 
-class GridContainer : public CanvasObject
+class GridContainer : public MultiCanvasObject
 {
 public:
     enum class VerticalAlignment {
@@ -33,10 +33,10 @@ public:
             return false;
         }
     };
-    explicit GridContainer(CanvasObject* parent = nullptr);
+    explicit GridContainer(MultiCanvasObject* parent = nullptr);
     explicit GridContainer(QRectF parentRect = QRectF(0,0,0,0));
 
-    CELL_PROPERTIES* addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
+    CELL_PROPERTIES* addGridItem(MultiCanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
     CELL_PROPERTIES* addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
 
     int setHorizontalSpacing(int horizontalSpacing);
@@ -45,7 +45,7 @@ public:
     int setVerticalSpacing(int verticalSpacing);
     int getVerticalSpacing();
 
-    CELL_PROPERTIES* getCellProperties(CanvasObject* object);
+    CELL_PROPERTIES* getCellProperties(MultiCanvasObject* object);
     CELL_PROPERTIES* getCellProperties(int row, int column);
 
 
@@ -102,7 +102,7 @@ private:
     VerticalAlignment verticalAlignment = VerticalAlignment::TOP;
     HorizontalAlignment horizontalAlignment = HorizontalAlignment::LEFT;
 
-    QMap<CELL_PROPERTIES*,QGraphicsItem*> map; // The location position of each canvasobject to update the layout.
+    QMap<CELL_PROPERTIES*,QGraphicsItem*> map; // The location position of each MultiCanvasObject to update the layout.
 };
 
 #endif // GRIDCONTAINER_H

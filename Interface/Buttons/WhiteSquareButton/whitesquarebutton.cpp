@@ -1,6 +1,6 @@
 #include "whitesquarebutton.h"
 
-WhiteSquareButton::WhiteSquareButton(CanvasObject* parent, SIZE size) : AbstractButton(parent)
+WhiteSquareButton::WhiteSquareButton(MultiCanvasObject* parent, SIZE size) : AbstractButton(parent)
 {
     QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/whitesquarebutton/";
     QString type = "";
@@ -23,10 +23,10 @@ WhiteSquareButton::WhiteSquareButton(CanvasObject* parent, SIZE size) : Abstract
     setOver(overButton);
 }
 
-CanvasObject* WhiteSquareButton::setIcon(QString filePath){
+MultiCanvasObject* WhiteSquareButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
-        icon = new CanvasObject();
+        icon = new MultiCanvasObject();
         icon->setParentItem(this);
     }
     properties->filePath = filePath;

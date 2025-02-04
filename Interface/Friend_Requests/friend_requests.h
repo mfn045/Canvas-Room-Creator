@@ -9,7 +9,7 @@ class Friend_Requests : public AbstractButton
 {
     Q_OBJECT
 public:
-    explicit Friend_Requests(CanvasObject* parent = nullptr);
+    explicit Friend_Requests(MultiCanvasObject* parent = nullptr);
     Notification* getNotification();
 
 private:

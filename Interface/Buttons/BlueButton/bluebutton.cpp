@@ -1,6 +1,6 @@
 #include "bluebutton.h"
 
-BlueButton::BlueButton(CanvasObject* parent, SIZE size) : AbstractButton(parent) {
+BlueButton::BlueButton(MultiCanvasObject* parent, SIZE size) : AbstractButton(parent) {
     if(parent != nullptr){
         setParentItem(parent);
     }

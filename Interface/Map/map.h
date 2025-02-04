@@ -9,7 +9,7 @@ class Map : public AbstractButton
 {
     Q_OBJECT
 public:
-    explicit Map(CanvasObject* parent = nullptr);
+    explicit Map(MultiCanvasObject* parent = nullptr);
     Notification* getNotification();
 
 private:

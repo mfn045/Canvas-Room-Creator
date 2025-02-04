@@ -1,10 +1,11 @@
 #include "penguinsprite.h"
 
 PenguinSprite::PenguinSprite(Scene* parent) : parent(parent) {
-    //parent->installEventFilter(this);
+    parent->installEventFilter(this);
     connect(parent,SIGNAL(mouseMoved(QPointF)),this,SLOT(sceneMouseMoved(QPointF)));
     connect(parent,SIGNAL(mousePressed(QPointF)),this,SLOT(sceneMousePressed(QPointF)));
     setFlag(GraphicsItemFlag::ItemIsSelectable);
+    setFlag(GraphicsItemFlag::ItemStacksBehindParent);
 
     QString directory = "C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/frames/output/";
 
@@ -46,7 +47,7 @@ PenguinSprite::PenguinSprite(Scene* parent) : parent(parent) {
 
     setCurrentFrames(DIRECTION::S,STATE::STANDING);
     setFrame(getCurrentFrame());
-    setOrigin(QPointF(300,300));
+    setOrigin(QPointF(32.5,32.5));
 
     changeColor("#660000");
 
@@ -403,23 +404,64 @@ void PenguinSprite::setHead(int headId){
         delete head;
         head = loadItem(headId);
     }
+    head->setZValue(6);
     qDebug() << "HEAD IS " << head;
 }
 
 void PenguinSprite::setFace(int faceId){
-
+    bool exists = false;
+    if(face == nullptr){
+        face = loadItem(faceId);
+    }else {
+        exists = true;
+    }
+    if(exists){
+        delete face;
+        face = loadItem(faceId);
+    }
+    face->setZValue(5);
 }
 
 void PenguinSprite::setNeck(int neckId){
-
+    bool exists = false;
+    if(neck == nullptr){
+        neck = loadItem(neckId);
+    }else {
+        exists = true;
+    }
+    if(exists){
+        delete neck;
+        neck = loadItem(neckId);
+    }
+    neck->setZValue(4);
 }
 
 void PenguinSprite::setBody(int bodyId){
-
+    bool exists = false;
+    if(body == nullptr){
+        body = loadItem(bodyId);
+    }else {
+        exists = true;
+    }
+    if(exists){
+        delete body;
+        body = loadItem(bodyId);
+    }
+    body->setZValue(3);
 }
 
 void PenguinSprite::setHand(int handId){
-
+    bool exists = false;
+    if(hand == nullptr){
+        hand = loadItem(handId);
+    }else {
+        exists = true;
+    }
+    if(exists){
+        delete hand;
+        hand = loadItem(handId);
+    }
+    hand->setZValue(8);
 }
 
 void PenguinSprite::setFeet(int feetId){
@@ -433,6 +475,7 @@ void PenguinSprite::setFeet(int feetId){
         delete feet;
         feet = loadItem(feetId);
     }
+    feet->setZValue(2);
     qDebug() << "feet IS " << feet;
 }
 
@@ -446,7 +489,7 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
     return QGraphicsItem::mousePressEvent(event);
 }
 
-/*bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
+bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){
     if(event->type() == QEvent::KeyPress){
         QKeyEvent* keyEvent = (QKeyEvent*)event;
         int key = keyEvent->key();
@@ -455,7 +498,12 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
                 setIsMouseTrackable(false);
                 setHasAnimationLoop(false);
                 setCurrentFrames(DIRECTION::S,STATE::WAVING);
-                setFrame(getCurrentFrame());
+            }
+        } else if(key == Qt::Key_D){
+            if(getCurrentState() != STATE::WALKING){
+                setIsMouseTrackable(false);
+                setHasAnimationLoop(true);
+                setCurrentFrames(DIRECTION::S,STATE::DANCING);
             }
         }else if(key == Qt::Key_I){
             if(getCurrentState() != STATE::WALKING){
@@ -465,7 +513,6 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
                     setCurrentFrames(DIRECTION::N,STATE::SITTING);
-                    setFrame(getCurrentFrame());
                 }
             }
         }else if(key == Qt::Key_K){
@@ -476,7 +523,6 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
                     setCurrentFrames(DIRECTION::S,STATE::SITTING);
-                    setFrame(getCurrentFrame());
                 }
             }
         }else if(key == Qt::Key_J){
@@ -487,7 +533,6 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
                     setCurrentFrames(DIRECTION::W,STATE::SITTING);
-                    setFrame(getCurrentFrame());
                 }
             }
         }else if(key == Qt::Key_L){
@@ -498,11 +543,10 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
                     setIsMouseTrackable(false);
                     setHasAnimationLoop(false);
                     setCurrentFrames(DIRECTION::E,STATE::SITTING);
-                    setFrame(getCurrentFrame());
                 }
             }
         }
-    }else if(event->type() == QEvent::MouseButtonPress){
+    }/*else if(event->type() == QEvent::MouseButtonPress){
         QMouseEvent* mouseEvent = (QMouseEvent*)event;
         if(mouseEvent->button() == Qt::LeftButton){
             qDebug() << " AYYY LEFTTTT ------";
@@ -522,7 +566,7 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
                     qDebug() << "2" <<  origin;
                 }
                 QPointF posTemp(0,0);
-                /*QList<QGraphicsView*> views = scene()->views();
+                /&QList<QGraphicsView*> views = scene()->views();
                 QGraphicsView* view = nullptr;
                 if (!views.isEmpty()) {
                     view= views.first();
@@ -569,6 +613,6 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
                 posTemp.setY(posTemp.y()+(pos().y()-mapToParent(getOrigin()).y()));
                 walkTo(posTemp);
         }
-    }
+    }*/
     return QObject::eventFilter(watched,event);
-}*/
+}

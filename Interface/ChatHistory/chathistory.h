@@ -1,7 +1,7 @@
 #ifndef CHATHISTORY_H
 #define CHATHISTORY_H
 
-#include "../../canvasobject.h"
+#include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../../widgets/scene.h"
 #include "../Buttons/BlueRectButton/bluerectbutton.h"
 #include "../SvgGridContainer/gridcontainer.h"
@@ -55,7 +55,7 @@ protected:
 
 private:
     Scene* scene = nullptr;
-    CanvasObject* historyBox = nullptr;
+    MultiCanvasObject* historyBox = nullptr;
     QList<ChatHistory_Message*> pastMessages;
     double maxHeight = 0;
 

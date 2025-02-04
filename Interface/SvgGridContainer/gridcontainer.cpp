@@ -1,6 +1,6 @@
 #include "gridcontainer.h"
 
-GridContainer::GridContainer(CanvasObject* parent) {
+GridContainer::GridContainer(MultiCanvasObject* parent) {
     if(parent != nullptr){
         setParentItem(parent);
     }
@@ -109,7 +109,7 @@ void GridContainer::updateMaximums(){
 }
 
 
-GridContainer::CELL_PROPERTIES* GridContainer::getCellProperties(CanvasObject* object){
+GridContainer::CELL_PROPERTIES* GridContainer::getCellProperties(MultiCanvasObject* object){
     return map.key(object);
 }
 
@@ -148,7 +148,7 @@ QRectF GridContainer::boundingRect() const {
     return QRect(0,0,getWidth(),getHeight());
 }
 
-GridContainer::CELL_PROPERTIES* GridContainer::addGridItem(CanvasObject* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
+GridContainer::CELL_PROPERTIES* GridContainer::addGridItem(MultiCanvasObject* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
     if(locationOccupied(row,col)) return nullptr;
     qDebug() << "Added Item";
     CELL_PROPERTIES* cellP = new CELL_PROPERTIES();

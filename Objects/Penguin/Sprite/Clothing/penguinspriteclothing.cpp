@@ -1,4 +1,4 @@
 #include "penguinspriteclothing.h"
 
-PenguinSpriteClothing::PenguinSpriteClothing(CanvasObject* parent) : PenguinSpriteBase(parent) {
+PenguinSpriteClothing::PenguinSpriteClothing(MultiCanvasObject* parent) : PenguinSpriteBase(parent) {
 }

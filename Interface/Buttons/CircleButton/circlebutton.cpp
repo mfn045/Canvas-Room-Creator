@@ -1,6 +1,6 @@
 #include "circlebutton.h"
 
-CircleButton::CircleButton(CanvasObject* parent, COLOR color) : AbstractButton(parent)
+CircleButton::CircleButton(MultiCanvasObject* parent, COLOR color) : AbstractButton(parent)
 {
     QString colorPath = "";
     if(color == COLOR::BLUE){
@@ -22,10 +22,10 @@ CircleButton::CircleButton(CanvasObject* parent, COLOR color) : AbstractButton(p
     setScale(1.2);
 }
 
-CanvasObject* CircleButton::setIcon(QString filePath){
+MultiCanvasObject* CircleButton::setIcon(QString filePath){
     PROPERTIES* properties = new PROPERTIES();
     if(icon == nullptr){
-        icon = new CanvasObject();
+        icon = new MultiCanvasObject();
         icon->setParentItem(this);
     }
     properties->filePath = filePath;

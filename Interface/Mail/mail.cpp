@@ -1,6 +1,6 @@
 #include "mail.h"
 
-Mail::Mail(CanvasObject* parent) : AbstractButton(parent) {
+Mail::Mail(MultiCanvasObject* parent) : AbstractButton(parent) {
     QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_up.svg";
     QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_over.svg";
     QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_down.svg";

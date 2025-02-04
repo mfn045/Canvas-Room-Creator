@@ -12,8 +12,8 @@ public:
         BLUE
     };
 
-    explicit OvalButton(CanvasObject *parent = nullptr, COLOR color = COLOR::WHITE);
-    CanvasObject* setIcon(QString filePath) override;
+    explicit OvalButton(MultiCanvasObject *parent = nullptr, COLOR color = COLOR::WHITE);
+    MultiCanvasObject* setIcon(QString filePath) override;
     void setText(QString text);
 
 private:

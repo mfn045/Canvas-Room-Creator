@@ -48,7 +48,7 @@ PlayerCard::PlayerCard(Scene* scene) {
     GridContainer::CELL_PROPERTIES* xButton_CP = container->addGridItem(xButton,0,2);
     xButton_CP->horizontalAlignment = GridContainer::HorizontalAlignment::RIGHT;
 
-    CanvasObject* bg = new CanvasObject();
+    MultiCanvasObject* bg = new MultiCanvasObject();
     PROPERTIES* bg_properties = new PROPERTIES();
     bg_properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/background.svg";
     bg->initFrames(bg_properties->filePath,bg_properties);

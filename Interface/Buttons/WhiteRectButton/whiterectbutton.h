@@ -16,8 +16,8 @@ public:
         WITH_ARROW
     };
 
-    explicit WhiteRectButton(CanvasObject *parent = nullptr, SIZE size = SIZE::SMALL, TYPE type = TYPE::WITHOUT_ARROW);
-    CanvasObject* setIcon(QString filePath) override;
+    explicit WhiteRectButton(MultiCanvasObject *parent = nullptr, SIZE size = SIZE::SMALL, TYPE type = TYPE::WITHOUT_ARROW);
+    MultiCanvasObject* setIcon(QString filePath) override;
     void setText(QString text);
 
 private:

@@ -8,13 +8,13 @@ class News : public AbstractButton
 {
     Q_OBJECT
 public:
-    explicit News(CanvasObject* parent = nullptr);
+    explicit News(MultiCanvasObject* parent = nullptr);
 
     void showNotification();
     void hideNotification();
 
 private:
-    CanvasObject* notification = nullptr;
+    MultiCanvasObject* notification = nullptr;
 };
 
 #endif // MAP_H

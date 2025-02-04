@@ -1,6 +1,6 @@
 #include "notification.h"
 
-Notification::Notification(CanvasObject* parent) : CanvasObject(parent) {
+Notification::Notification(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     oneDigitProperties = new PROPERTIES();
     oneDigitProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/notification/onedigit.svg";
     initFrames(oneDigitProperties->filePath,oneDigitProperties);

@@ -161,7 +161,7 @@ bool DialogGrid::init(){
             if(j == 0 && k == 0){
                 PROPERTIES* top_left_properties = new PROPERTIES();
                 top_left_properties->filePath = path_top_left;
-                top_left = new CanvasObject();
+                top_left = new MultiCanvasObject();
                 top_left->initFrames(top_left_properties->filePath,top_left_properties);
                 top_left->setCurrentFrames(top_left_properties);
                 top_left->setFrame(0);
@@ -180,7 +180,7 @@ bool DialogGrid::init(){
                 // TOP
                 PROPERTIES* top_properties = new PROPERTIES();
                 top_properties->filePath = path_top;
-                top = new CanvasObject();
+                top = new MultiCanvasObject();
                 top->initFrames(top_properties->filePath,top_properties);
                 top->setCurrentFrames(top_properties);
                 top->setFrame(0);
@@ -198,7 +198,7 @@ bool DialogGrid::init(){
                 // TOP RIGHT
                 PROPERTIES* top_right_properties = new PROPERTIES();
                 top_right_properties->filePath = path_top_right;
-                top_right = new CanvasObject();
+                top_right = new MultiCanvasObject();
                 top_right->initFrames(top_right_properties->filePath,top_right_properties);
                 top_right->setCurrentFrames(top_right_properties);
                 top_right->setFrame(0);
@@ -216,7 +216,7 @@ bool DialogGrid::init(){
                 // LEFT
                 PROPERTIES* left_properties = new PROPERTIES();
                 left_properties->filePath = path_left;
-                left = new CanvasObject();
+                left = new MultiCanvasObject();
                 left->initFrames(left_properties->filePath,left_properties);
                 left->setCurrentFrames(left_properties);
                 left->setFrame(0);
@@ -234,7 +234,7 @@ bool DialogGrid::init(){
                 // RIGHT
                 PROPERTIES* right_properties = new PROPERTIES();
                 right_properties->filePath = path_right;
-                right = new CanvasObject();
+                right = new MultiCanvasObject();
                 right->initFrames(right_properties->filePath,right_properties);
                 right->setCurrentFrames(right_properties);
                 right->setFrame(0);
@@ -252,7 +252,7 @@ bool DialogGrid::init(){
                 // BOTTOM LEFT
                 PROPERTIES* bottom_left_properties = new PROPERTIES();
                 bottom_left_properties->filePath = path_bottom_left;
-                bottom_left = new CanvasObject();
+                bottom_left = new MultiCanvasObject();
                 bottom_left->initFrames(bottom_left_properties->filePath,bottom_left_properties);
                 bottom_left->setCurrentFrames(bottom_left_properties);
                 bottom_left->setFrame(0);
@@ -270,7 +270,7 @@ bool DialogGrid::init(){
                 // BOTTOM
                 PROPERTIES* bottom_properties = new PROPERTIES();
                 bottom_properties->filePath = path_bottom;
-                bottom = new CanvasObject();
+                bottom = new MultiCanvasObject();
                 bottom->initFrames(bottom_properties->filePath,bottom_properties);
                 bottom->setCurrentFrames(bottom_properties);
                 bottom->setFrame(0);
@@ -288,7 +288,7 @@ bool DialogGrid::init(){
                 // BOTTOM RIGHT
                 PROPERTIES* bottom_right_properties = new PROPERTIES();
                 bottom_right_properties->filePath = path_bottom_right;
-                bottom_right = new CanvasObject();
+                bottom_right = new MultiCanvasObject();
                 bottom_right->initFrames(bottom_right_properties->filePath,bottom_right_properties);
                 bottom_right->setCurrentFrames(bottom_right_properties);
                 bottom_right->setFrame(0);
@@ -306,7 +306,7 @@ bool DialogGrid::init(){
                 // CENTER
                 PROPERTIES* center_properties = new PROPERTIES();
                 center_properties->filePath = path_center;
-                center = new CanvasObject();
+                center = new MultiCanvasObject();
                 center->initFrames(center_properties->filePath,center_properties);
                 center->setCurrentFrames(center_properties);
                 center->setFrame(0);

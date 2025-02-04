@@ -1,5 +1,7 @@
 #include "roomcanvas.h"
 #include "Interface/interface.h"
+#include "CanvasObject/Multi/multicanvasobject.h"
+#include "CanvasObject/Atlas/atlascanvasobject.h"
 #include <QRect>
 #include <QFontDatabase>
 
@@ -17,18 +19,25 @@ int main(int argc, char *argv[])
 
     Interface* interface = Interface::getInstance();
     interface->setScene(w.getScene());
-    interface->loadItems();
-    interface->loadFonts();
-    interface->loadPenguin();
-    interface->loadHUD();
-    interface->loadPlayerCard();
-    interface->getPlayerCard()->getInventory()->setPenguin(interface->getActivePenguin());
-
+    //interface->loadItems();
+    //interface->loadFonts();
+    //interface->loadPenguin();
+    //interface->loadHUD();
+    //interface->loadPlayerCard();
+    //interface->getPlayerCard()->getInventory()->setPenguin(interface->getActivePenguin());
+/*
+    MultiCanvasObject* obj = new MultiCanvasObject();
+    MultiCanvasObject::PROPERTIES* properties = new MultiCanvasObject::PROPERTIES();
+    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output/test.svg";
+    obj->initFrames(properties->filePath,properties);
+    obj->setCurrentFrames(properties);
+    obj->setFrame(0);
+    w.getScene()->addItem(obj);*/
 
 
     /*ClothingItem* item = new ClothingItem();
     item->setHasAnimationLoop(true);
-    CanvasObject::PROPERTIES* properties = new CanvasObject::PROPERTIES();
+    MultiCanvasObject::PROPERTIES* properties = new MultiCanvasObject::PROPERTIES();
     properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/sprite_export/output/301/26";
     item->initFrames(properties->filePath, properties);
     item->setCurrentFrames(properties);
@@ -44,8 +53,8 @@ int main(int argc, char *argv[])
     dialog->initDialog();
     w.getScene()->addItem(dialog);*/
 
-    /*CanvasObject* rect = new CanvasObject();
-    CanvasObject::PROPERTIES* properties = new CanvasObject::PROPERTIES();
+    /*CanvasObject* rect = new MultiCanvasObject();
+    MultiCanvasObject::PROPERTIES* properties = new MultiCanvasObject::PROPERTIES();
     properties->filePath ="C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/test/test.svg";
     rect->initFrames(properties->filePath,properties);
     rect->setCurrentFrames(properties);
@@ -80,6 +89,14 @@ int main(int argc, char *argv[])
     //qDebug() << obj1 << obj1->pos();
     //qDebug() << obj2 << obj2->pos();
     //qDebug() << obj3 << obj3->pos();
+    AtlasCanvasObject* atlas = new AtlasCanvasObject();
+    atlas->initFrames("C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output");
+    atlas->setCurrentSprite(29);
+    atlas->setFrame(0);
+    atlas->setScale(3);
+    atlas->setHasAnimationLoop(true);
+    w.getScene()->addItem(atlas);
+
     qDebug() << " -------------- END --------------- ";
 
 

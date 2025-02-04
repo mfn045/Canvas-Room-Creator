@@ -1,7 +1,7 @@
 #ifndef INVENTORY_H
 #define INVENTORY_H
 
-#include "../../../canvasobject.h"
+#include "../../../CanvasObject/Multi/multicanvasobject.h"
 #include "../../SvgGridContainer/gridcontainer.h"
 #include "../../Buttons/WhiteSquareButton/whitesquarebutton.h"
 #include "../../Buttons/OvalButton/ovalbutton.h"
@@ -13,7 +13,7 @@
 #include "../../../Objects/Penguin/clothes.h"
 #include "../../../Objects/Penguin/Sprite/penguinsprite.h"
 
-class Inventory : public CanvasObject
+class Inventory : public MultiCanvasObject
 {
 public:
     enum SORT {
@@ -29,7 +29,7 @@ public:
         AWARD,
         ALL
     };
-    explicit Inventory(CanvasObject* parent = nullptr);
+    explicit Inventory(MultiCanvasObject* parent = nullptr);
 
     SORT sortItemsBy(SORT sort);
 
