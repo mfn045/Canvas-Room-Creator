@@ -36,13 +36,15 @@ public:
 
     int child_id_increment = 0;
 
-    void recursivePaint(QPainter* painter, QString id, QDomElement el = QDomElement());
+    void recursivePaint(QTransform transformSoFar, QPainter* painter, QString id, QDomElement el = QDomElement());
 
     QPainterPath parsePath(QString d);
 
     void paint(QPainter *painter,
                const QStyleOptionGraphicsItem *option,
                QWidget *widget = nullptr) override;
+
+    bool isTransparentPixel(QPointF pos) override;
 
     QRectF boundingRect() const override;
 
@@ -60,6 +62,8 @@ private:
     int currentSprite = 1;
 
     int id = 0;
+
+    QRectF actualBoundingRect;
 
     bool isSettingFrame = false;
 

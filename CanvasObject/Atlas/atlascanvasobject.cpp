@@ -212,7 +212,7 @@ void AtlasCanvasObject::prevFrame(bool loop, bool force){
     }
 }
 
-void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElement el){
+void AtlasCanvasObject::recursivePaint(QTransform originalPainterTransform, QPainter* painter, QString id, QDomElement el){
     painter->save();
     QDomElement& element = el;
     if(!id.isEmpty()){
@@ -227,7 +227,8 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
     if(!transform.isEmpty()){
         QStringList matrix = transform.replace("matrix(","").replace(")","").split(", ");
         if(matrix.count() == 6){
-            painter->setTransform(QTransform(matrix[0].toFloat(),matrix[1].toFloat(),matrix[2].toFloat(),matrix[3].toFloat(),matrix[4].toFloat(),matrix[5].toFloat()), true);
+            QTransform t = QTransform(matrix[0].toFloat(),matrix[1].toFloat(),matrix[2].toFloat(),matrix[3].toFloat(),matrix[4].toFloat(),matrix[5].toFloat());
+            painter->setTransform(t, true);
         }
     }
 
@@ -235,7 +236,7 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
         QString reference = element.attribute("href").replace("#","");
         QDomElement foundElement = elements.value(reference);
         if(!foundElement.isNull()){
-            recursivePaint(painter,reference);
+            recursivePaint(originalPainterTransform,painter,reference);
         }
     }
 
@@ -286,6 +287,9 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
         } else {
             painter->setPen(Qt::NoPen);
         }
+        QTransform t = painter->transform();
+        t *= originalPainterTransform.inverted();
+        actualBoundingRect = actualBoundingRect.united(t.mapRect(path.boundingRect()));
         painter->drawPath(path);
     }
 
@@ -295,7 +299,8 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
         if(!transform.isEmpty()){
             QStringList matrix = transform.replace("matrix(","").replace(")","").split(", ");
             if(matrix.count() == 6){
-                painter->setTransform(QTransform(matrix[0].toFloat(),matrix[1].toFloat(),matrix[2].toFloat(),matrix[3].toFloat(),matrix[4].toFloat(),matrix[5].toFloat()), true);
+                QTransform t = QTransform(matrix[0].toFloat(),matrix[1].toFloat(),matrix[2].toFloat(),matrix[3].toFloat(),matrix[4].toFloat(),matrix[5].toFloat());
+                painter->setTransform(t, true);
             }
         }
         if(element.tagName() == "clipPath" && child.tagName() == "path"){
@@ -347,7 +352,7 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
             QString reference = child.attribute("href").replace("#","");
             QDomElement foundElement = elements.value(reference);
             if(!foundElement.isNull()){
-                recursivePaint(painter,reference);
+                recursivePaint(originalPainterTransform,painter,reference);
             }
         }
         if(child.hasChildNodes()){
@@ -355,7 +360,7 @@ void AtlasCanvasObject::recursivePaint(QPainter* painter, QString id, QDomElemen
                 QDomNode node = child.childNodes().at(i);
                 if(node.isElement()){
                     QDomElement nodeElement = node.toElement();
-                    recursivePaint(painter, "", nodeElement);
+                    recursivePaint(originalPainterTransform,painter, "", nodeElement);
                 }
             }
         }
@@ -429,6 +434,16 @@ QPainterPath AtlasCanvasObject::parsePath(QString d){
     return path;
 }
 
+bool AtlasCanvasObject::isTransparentPixel(QPointF pos){
+    qDebug() << actualBoundingRect << pos;
+    if(actualBoundingRect.contains(QRectF(pos.x(),pos.y(),1,1))){
+        qDebug() << "CONTAINS POINT!!!";
+        return false;
+    }
+    qDebug() << "NOPE";
+    return true;
+}
+
 void AtlasCanvasObject::paint(QPainter *painter,
                                     const QStyleOptionGraphicsItem *option,
                                     QWidget *widget){
@@ -471,10 +486,11 @@ void AtlasCanvasObject::paint(QPainter *painter,
     painter->translate(QPointF(-50,-50));*/
     //painter->setClipRect(QRectF(25,25,25,25),Qt::ReplaceClip);
     painter->save();
-    painter->setBrush(QColor("white"));
-    painter->drawRect(QRect(0,0,100,100));
+    painter->setBrush(QColor("red"));
+    painter->drawRect(actualBoundingRect);
     painter->restore();
-    recursivePaint(painter,"frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame+1));
+    actualBoundingRect = QRectF();
+    recursivePaint(painter->transform(),painter,"frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame+1));
 
     //QPainterPath path;
     /*path.moveTo(QPointF(19.375,36.7818));

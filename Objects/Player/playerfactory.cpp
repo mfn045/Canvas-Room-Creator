@@ -2,6 +2,10 @@
 
 PlayerFactory::PlayerFactory() {}
 
+PlayerFactory* createPlayerFactory(){
+    return new PlayerFactory();
+}
+
 
 PlayerFactory::~PlayerFactory(){
     for(auto i = players.begin(); i != players.end(); i++){
@@ -13,18 +17,18 @@ PlayerFactory::~PlayerFactory(){
 Player* PlayerFactory::getPlayerByUsername(QString username){
     for(auto i = players.begin(); i != players.end(); i++){
         Player* player = *i;
-        /*if(player->getUsername().toLower() == username.toLower()){
+        if(player->getUsername().toLower() == username.toLower()){
             return player;
-        }*/
+        }
     }
     return nullptr;
 }
 Player* PlayerFactory::getPlayerByID(int playerID){
     for(auto i = players.begin(); i != players.end(); i++){
         Player* player = *i;
-        /*if(player->getID() == playerID){
+        if(player->getID() == playerID){
             return player;
-        }*/
+        }
     }
     return nullptr;
 }
@@ -32,6 +36,11 @@ Player* PlayerFactory::getPlayerByID(int playerID){
 
 QList<Player*> PlayerFactory::getPlayers()  {
     return players;
+}
+
+Player* PlayerFactory::setActivePlayer(Player* playerObj){
+    this->activePlayer = playerObj;
+    return this->activePlayer;
 }
 
 Player* PlayerFactory::createPlayer(){

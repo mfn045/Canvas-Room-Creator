@@ -35,6 +35,7 @@ public:
     };
     explicit GridContainer(MultiCanvasObject* parent = nullptr);
     explicit GridContainer(QRectF parentRect = QRectF(0,0,0,0));
+    ~GridContainer();
 
     CELL_PROPERTIES* addGridItem(MultiCanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
     CELL_PROPERTIES* addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);

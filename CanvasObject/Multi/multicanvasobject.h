@@ -31,6 +31,7 @@ public:
     QMap<PROPERTIES*, QList<QByteArray*>>& getFrames();
     QList<QByteArray*>& setCurrentFrames(PROPERTIES* properties);
     PROPERTIES* getCurrentProperties();
+    void clearFrames();
 
     void nextFrame(bool loop = true, bool force = false) override;
     void setFrame(int currentFrame) override;

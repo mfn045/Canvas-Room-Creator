@@ -6,26 +6,32 @@
 #include "../DialogGrid/dialoggrid.h"
 #include "../SvgGridContainer/gridcontainer.h"
 #include "../TextLabel/textlabel.h"
-#include "../../Objects/Penguin/Paper/penguinpaper.h"
 #include "../../Objects/Badge/badge.h"
 #include "../PlayerCard/Inventory/inventory.h"
+#include "../../Objects/Player/player.h"
 
 class PlayerCard : public BlueRectButton
 {
 public:
     explicit PlayerCard(Scene* scene = nullptr);
     Inventory* getInventory();
+    MultiCanvasObject* getBackground();
+
+    Player* setPlayer(Player* player);
+    Player* currentPlayer();
 
 
 private:
     Scene* scene = nullptr;
-    PenguinSprite* penguin = nullptr;
     DialogGrid* body = nullptr;
     GridContainer* container = nullptr;
     Badge* badge = nullptr;
     TextLabel* username = nullptr;
-    PenguinPaper* penguin_paper = nullptr;
+
+    MultiCanvasObject* bg = nullptr;
+
     Inventory* inventory = nullptr;
+    Player* player = nullptr;
 
 };
 

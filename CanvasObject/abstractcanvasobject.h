@@ -47,7 +47,7 @@ public:
     bool isAnimationOn();
     bool setIsAnimationOn(bool animationOn);
 
-    bool isTransparentPixel(QPointF pos);
+    virtual bool isTransparentPixel(QPointF pos);
 
     bool isFramePaused();
 

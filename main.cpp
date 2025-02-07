@@ -1,8 +1,12 @@
 #include "roomcanvas.h"
+#include "Game/game.h"
 #include "Interface/interface.h"
 #include "CanvasObject/Multi/multicanvasobject.h"
 #include "CanvasObject/Atlas/atlascanvasobject.h"
+#include "Objects/Penguin/Sprite/penguinsprite.h"
+#include "Interface/Dialogs/YesNoDialog/yesnodialog.h"
 #include <QRect>
+#include <QException>
 #include <QFontDatabase>
 
 #include <QApplication>
@@ -17,35 +21,56 @@ int main(int argc, char *argv[])
     w.setWindowIcon(QIcon(":/resources/Resources/logo.png"));
     w.show();
 
-    Interface* interface = Interface::getInstance();
+    Game* game = Game::getInstance();
+
+    PlayerFactory* factory = game->getPlayerFactory();
+
+    Interface* interface = game->getInterface();
     interface->setScene(w.getScene());
     interface->loadItems();
     interface->loadFonts();
-    interface->loadPenguin();
     interface->loadHUD();
+
+    Player* player1 = factory->createPlayer();
+    player1->setUsername("Username1");
+    player1->setBadge(PENGUIN::BADGE::MEMBER_2);
+    player1->setID(1);
+    factory->setActivePlayer(player1);
+    PenguinSprite* player1_sprite = player1->getPenguinSprite();
+    player1_sprite->initializeEvents(w.getScene());
+    interface->addToScene(player1_sprite);
+    QObject::connect(player1->getPenguinSprite(),&PenguinSprite::clickedPenguin, [interface,player1](){
+        PlayerCard* pc = interface->getPlayerCard();
+        if(pc && player1){
+            if(pc->currentPlayer() != player1){
+                pc->setPlayer(player1);
+            }
+            pc->show();
+        }
+    });
+    for(int i = 25; i < 50; i++){
+        player1->getOwnedItems().append(i);
+    }
+
+    Player* player2 = factory->createPlayer();
+    player2->setUsername("Username2");
+    player2->setBadge(PENGUIN::BADGE::MEMBER_0);
+    player2->setID(2);
+    interface->addToScene(player2->getPenguinSprite());
+    QObject::connect(player2->getPenguinSprite(),&PenguinSprite::clickedPenguin, [interface,player2](){
+        PlayerCard* pc = interface->getPlayerCard();
+        if(pc && player2){
+            if(pc->currentPlayer() != player2){
+                pc->setPlayer(player2);
+            }
+            pc->show();
+        }
+    });
+    for(int i = 0; i < 500; i++){
+        player2->getOwnedItems().append(i);
+    }
+
     interface->loadPlayerCard();
-    interface->getPlayerCard()->getInventory()->setPenguin(interface->getActivePenguin());
-/*
-    MultiCanvasObject* obj = new MultiCanvasObject();
-    MultiCanvasObject::PROPERTIES* properties = new MultiCanvasObject::PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output/test.svg";
-    obj->initFrames(properties->filePath,properties);
-    obj->setCurrentFrames(properties);
-    obj->setFrame(0);
-    w.getScene()->addItem(obj);*/
-
-
-    /*ClothingItem* item = new ClothingItem();
-    item->setHasAnimationLoop(true);
-    MultiCanvasObject::PROPERTIES* properties = new MultiCanvasObject::PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/sprite_export/output/301/26";
-    item->initFrames(properties->filePath, properties);
-    item->setCurrentFrames(properties);
-    item->setFrame(0);
-    item->setScale(5);
-    //item->updateViewbox();
-    w.getScene()->addItem(item);
-    item->setPos(QPointF(100,100));*/
 
     /*YesNoDialog* dialog = new YesNoDialog(w.getScene(),YesNoDialog::TYPE::ORANGE);
     dialog->insertText("Hello there! Are you enjoying CP?");

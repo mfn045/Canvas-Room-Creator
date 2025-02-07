@@ -9,9 +9,8 @@
 #include "../../Buttons/WhiteRectButton/whiterectbutton.h"
 #include "../../Buttons/Inventory/CategoryButton/categorybutton.h"
 #include "../../../Objects/Items/items.h"
-#include "../../../Objects/Penguin/Paper/penguinpaper.h"
+#include "../../../Objects/Player/player.h"
 #include "../../../Objects/Penguin/clothes.h"
-#include "../../../Objects/Penguin/Sprite/penguinsprite.h"
 
 class Inventory : public MultiCanvasObject
 {
@@ -33,22 +32,18 @@ public:
 
     SORT sortItemsBy(SORT sort);
 
-    PenguinPaper* setPenguinPaper(PenguinPaper* penguin_paper);
-    PenguinSprite* setPenguin(PenguinSprite* penguin);
+    Player* setPlayer(Player* player);
 
 private:
-    QList<int> ownedItems = {};
-
     int currentInventoryPage = 1;
 
     void loadInventoryPage(int page, SORT sort = SORT::ALL);
 
     SORT sort = SORT::ALL;
 
-    QMap<int, WhiteSquareButton*> inventoryItems;
+    Player* player = nullptr;
 
-    PenguinPaper* penguin_paper = nullptr;
-    PenguinSprite* penguin = nullptr;
+    QMap<int, WhiteSquareButton*> inventoryItems;
 };
 
 #endif // INVENTORY_H

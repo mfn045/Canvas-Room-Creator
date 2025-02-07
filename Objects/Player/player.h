@@ -1,27 +1,26 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <QString>
 #include "../Penguin/Sprite/penguinsprite.h"
 #include "../Penguin/Paper/penguinpaper.h"
 #include "../Constants/constants.h"
-#include "../Badge/badge.h"
 
 class Player
 {
 public:
-    explicit Player();
-
     QString getUsername();
     QString setUsername(QString username);
 
-    QList<int>& getFriends() const;
-    QList<int>& addFriend(int playerId) const;
-    QList<int>& remFriend(int playerId) const;
+    QList<int> getFriends() const;
+    QList<int> addFriend(int playerId);
+    QList<int> remFriend(int playerId);
 
-    QList<int>& getIgnoreList() const;
-    QList<int>& addIgnore(int playerId) const;
-    QList<int>& remIgnore(int playerId) const;
+    QList<int> getIgnoreList() const;
+    QList<int> addIgnore(int playerId);
+    QList<int> remIgnore(int playerId);
+
+
+    QList<int>& getOwnedItems();
 
     int getID();
     int setID(int playerId);
@@ -29,23 +28,37 @@ public:
     PENGUIN::BADGE getBadge();
     PENGUIN::BADGE setBadge(PENGUIN::BADGE badge);
 
-    PenguinSprite& getPenguinSprite();
+    QString getColor();
+    QString setColor(QString color);
 
-    PenguinPaper& getPenguinPaper();
+    PenguinSprite* getPenguinSprite();
+
+    PenguinPaper* getPenguinPaper();
+
+    Player& operator=(const Player&) = delete;
+    Player& operator=(Player&&) = delete;
 
 private:
+    Player();
+    ~Player();
+
     QString username = "";
 
     int id = -1;
+
+    QString color = "";
 
     PENGUIN::BADGE badge = PENGUIN::BADGE::PLAYER;
 
     QList<int> friendList;
     QList<int> ignoreList;
+    QList<int> ownedItems;
 
-    PenguinSprite* penguinSprite;
+    PenguinSprite* penguinSprite = nullptr;
 
-    std::unique_ptr<PenguinPaper> penguinPaper;
+    PenguinPaper* penguinPaper = nullptr;
+
+    friend class PlayerFactory;
 
 };
 

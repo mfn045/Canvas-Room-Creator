@@ -12,6 +12,21 @@ GridContainer::GridContainer(QRectF parentRect) {
     }
 }
 
+GridContainer::~GridContainer(){
+    for(auto i = map.begin(); i != map.end(); i++){
+        QGraphicsItem* item = i.value();
+        if(item){
+            delete item;
+        }
+        CELL_PROPERTIES* properties = i.key();
+        if(properties){
+            delete properties;
+        }
+    }
+    map.clear();
+    qDebug() << "DELETED GRID CONTAINER!!";
+}
+
 bool GridContainer::locationOccupied(int row, int col){
     for(auto i = map.begin(); i != map.end(); i++){
         if(i.key()->col == col && i.key()->row == row){

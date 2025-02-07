@@ -17,28 +17,28 @@
 class Interface
 {
 public:
-    static Interface* getInstance();
     Scene* getScene();
     Scene* setScene(Scene* scene);
 
     bool loadItems();
     bool loadFonts();
-    bool loadPenguin();
+    bool addToScene(AbstractCanvasObject* obj);
     bool loadHUD();
     bool loadPlayerCard();
 
     PlayerCard* getPlayerCard();
 
-    PenguinSprite* getActivePenguin();
+    Interface& operator =(const Interface&) = delete;
+    Interface& operator =(Interface&&) = delete;
 
 private:
-    Interface() = default;
-    static Interface* instance;
+    Interface();
+
     Scene* scene = nullptr;
+
     PlayerCard* playercard = nullptr;
 
-    PenguinSprite* activePenguin = nullptr;
-    QList<PenguinSprite*> penguins;
+    friend Interface* createInterface();
 };
 
 #endif // INTERFACE_H

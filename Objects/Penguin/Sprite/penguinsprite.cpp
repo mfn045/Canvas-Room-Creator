@@ -1,9 +1,6 @@
 #include "penguinsprite.h"
 
-PenguinSprite::PenguinSprite(Scene* parent) : parent(parent) {
-    parent->installEventFilter(this);
-    connect(parent,SIGNAL(mouseMoved(QPointF)),this,SLOT(sceneMouseMoved(QPointF)));
-    connect(parent,SIGNAL(mousePressed(QPointF)),this,SLOT(sceneMousePressed(QPointF)));
+PenguinSprite::PenguinSprite() {
     setFlag(GraphicsItemFlag::ItemIsSelectable);
     setFlag(GraphicsItemFlag::ItemStacksBehindParent);
 
@@ -19,12 +16,29 @@ PenguinSprite::PenguinSprite(Scene* parent) : parent(parent) {
 
     setCurrentSprite(DIRECTION::S,STATE::STANDING);
     setFrame(getCurrentFrame());
-    setOrigin(QPointF(32.5,32.5));
+    setOrigin(QPointF(50,50));
 
     changeColor("#660000");
 
 }
 
+void PenguinSprite::initializeEvents(Scene* parent){
+    this->parent = parent;
+    parent->installEventFilter(this);
+    connect(parent,SIGNAL(mouseMoved(QPointF)),this,SLOT(sceneMouseMoved(QPointF)));
+    connect(parent,SIGNAL(mousePressed(QPointF)),this,SLOT(sceneMousePressed(QPointF)));
+}
+
+void PenguinSprite::uninitializeEvents(){
+    parent->removeEventFilter(this);
+    disconnect(parent,SIGNAL(mouseMoved(QPointF)),this,SLOT(sceneMouseMoved(QPointF)));
+    disconnect(parent,SIGNAL(mousePressed(QPointF)),this,SLOT(sceneMousePressed(QPointF)));
+    this->parent = nullptr;
+}
+
+PenguinSprite::~PenguinSprite(){
+
+}
 
 void PenguinSprite::sendChatBubble(QString msg){
     if(bubble == nullptr){
@@ -90,6 +104,13 @@ void PenguinSprite::sceneMouseMoved(QPointF scenePos){
     }
 }
 
+
+void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event) {
+    if(!isTransparentPixel(event->pos())){
+        emit clickedPenguin();
+    }
+
+}
 
 void PenguinSprite::sceneMousePressed(QPointF posTemp){
     setIsMouseTrackable(false);
@@ -327,41 +348,9 @@ void PenguinSprite::changeColor(QString color){
 PenguinSpriteClothing* PenguinSprite::loadItem(int id){
     PenguinSpriteClothing* item = new PenguinSpriteClothing(this);
     QString directory = "C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/sprite_export/output/" + QString::number(id) + "/";
-
-    /*item->initializeFrames(directory+"1",DIRECTION::S,STATE::STANDING);
-    item->initializeFrames(directory+"2",DIRECTION::SW,STATE::STANDING);
-    item->initializeFrames(directory+"3",DIRECTION::W,STATE::STANDING);
-    item->initializeFrames(directory+"4",DIRECTION::NW,STATE::STANDING);
-    item->initializeFrames(directory+"5",DIRECTION::N,STATE::STANDING);
-    item->initializeFrames(directory+"6",DIRECTION::NE,STATE::STANDING);
-    item->initializeFrames(directory+"7",DIRECTION::E,STATE::STANDING);
-    item->initializeFrames(directory+"8",DIRECTION::SE,STATE::STANDING);
-
-    item->initializeFrames(directory+"9",DIRECTION::S,STATE::WALKING);
-    item->initializeFrames(directory+"10",DIRECTION::SW,STATE::WALKING);
-    item->initializeFrames(directory+"11",DIRECTION::W,STATE::WALKING);
-    item->initializeFrames(directory+"12",DIRECTION::NW,STATE::WALKING);
-    item->initializeFrames(directory+"13",DIRECTION::N,STATE::WALKING);
-    item->initializeFrames(directory+"14",DIRECTION::NE,STATE::WALKING);
-    item->initializeFrames(directory+"15",DIRECTION::E,STATE::WALKING);
-    item->initializeFrames(directory+"16",DIRECTION::SE,STATE::WALKING);
-
-    item->initializeFrames(directory+"17",DIRECTION::S,STATE::SITTING);
-    item->initializeFrames(directory+"18",DIRECTION::SW,STATE::SITTING);
-    item->initializeFrames(directory+"19",DIRECTION::W,STATE::SITTING);
-    item->initializeFrames(directory+"20",DIRECTION::NW,STATE::SITTING);
-    item->initializeFrames(directory+"21",DIRECTION::N,STATE::SITTING);
-    item->initializeFrames(directory+"22",DIRECTION::NE,STATE::SITTING);
-    item->initializeFrames(directory+"23",DIRECTION::E,STATE::SITTING);
-    item->initializeFrames(directory+"24",DIRECTION::SE,STATE::SITTING);
-
-    item->initializeFrames(directory+"25",DIRECTION::S,STATE::WAVING);
-    item->initializeFrames(directory+"26",DIRECTION::S,STATE::DANCING);
-
-*/
+    item->initFrames(directory);
     item->setCurrentSprite(getCurrentDirection(),getCurrentState());
     item->setFrame(getCurrentFrame());
-
     return item;
 }
 
@@ -449,16 +438,6 @@ void PenguinSprite::setFeet(int feetId){
     }
     feet->setZValue(2);
     qDebug() << "feet IS " << feet;
-}
-
-void PenguinSprite::keyPressEvent(QKeyEvent *event){
-    int key = event->key();
-    return QGraphicsItem::keyPressEvent(event);
-}
-
-void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event){
-
-    return QGraphicsItem::mousePressEvent(event);
 }
 
 bool PenguinSprite::eventFilter(QObject *watched, QEvent *event){

@@ -1,11 +1,10 @@
 #include "interface.h"
 
+Interface::Interface(){}
 
-Interface* Interface::getInstance(){
-    if(instance == nullptr){
-        instance = new Interface();
-    }
-    return instance;
+
+Interface* createInterface() {
+    return new Interface();
 }
 
 Scene* Interface::getScene(){
@@ -46,21 +45,16 @@ bool Interface::loadFonts(){
     return true;
 }
 
-bool Interface::loadPenguin(){
+bool Interface::addToScene(AbstractCanvasObject* obj){
     if(!scene) return false;
-    activePenguin = new PenguinSprite(scene);
-    //w.getItems().append(penguin);
-    activePenguin->setID(scene->getUniqueID());
-    activePenguin->setPos(QPointF(0,0));
-    scene->addItem(activePenguin);
-    //w.updateLayers();
-    //w.update();
+    scene->addItem(obj);
     return true;
 }
 
 bool Interface::loadPlayerCard(){
     if(playercard != nullptr) return false;
     playercard = new PlayerCard(scene);
+    playercard->hide();
     playercard->setID(scene->getUniqueID());
     scene->addItem(playercard);
     return true;
@@ -147,10 +141,3 @@ bool Interface::loadHUD(){
     container->updateLayout();
     return true;
 }
-
-
-PenguinSprite* Interface::getActivePenguin(){
-    return activePenguin;
-}
-
-Interface* Interface::instance = nullptr;

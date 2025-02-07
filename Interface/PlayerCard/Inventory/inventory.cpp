@@ -1,9 +1,9 @@
 #include "inventory.h"
 
 Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
-    for(int i = 1; i < 500; i++){
+    /*for(int i = 1; i < 500; i++){
         ownedItems.append(i);
-    }
+    }*/
     PROPERTIES* invProperties = new PROPERTIES();
     invProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/inventory/inventory.svg";
     setFlag(GraphicsItemFlag::ItemStacksBehindParent,true);
@@ -227,6 +227,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
 }
 
 void Inventory::loadInventoryPage(int page, SORT sort){
+    if(player == nullptr) return;
     if(page < 1){
         page = 1;
         currentInventoryPage = page;
@@ -235,6 +236,7 @@ void Inventory::loadInventoryPage(int page, SORT sort){
 
     QList<int> appropriateIds = {};
     Items* instance = Items::getInstance();
+    QList<int> ownedItems = player->getOwnedItems();
     for(auto items = ownedItems.begin(); items != ownedItems.end(); items++){
         if(!instance->exists(*items)){ qDebug() << "ITEM DONT EXIST SKIPPING " << *items; continue; } else { qDebug() << "ITEM EXISTS " << *items; }
         if(instance->getType(*items) == sort || sort == SORT::ALL){
@@ -261,37 +263,37 @@ void Inventory::loadInventoryPage(int page, SORT sort){
                 Items* items = Items::getInstance();
                 int type = items->getType(itemId);
                 if(type == Clothes::TYPE::HEAD){
-                    penguin_paper->setHead(itemId);
-                    penguin->setHead(itemId);
+                    player->getPenguinPaper()->setHead(itemId);
+                    player->getPenguinSprite()->setHead(itemId);
                     qDebug() << "Head";
                 }else if(type == Clothes::TYPE::FACE){
-                    penguin_paper->setFace(itemId);
-                    penguin->setFace(itemId);
+                    player->getPenguinPaper()->setFace(itemId);
+                    player->getPenguinSprite()->setFace(itemId);
                     qDebug() << "face";
                 }else if(type == Clothes::TYPE::NECK){
-                    penguin_paper->setNeck(itemId);
-                    penguin->setNeck(itemId);
+                    player->getPenguinPaper()->setNeck(itemId);
+                    player->getPenguinSprite()->setNeck(itemId);
                     qDebug() << "neck";
                 }else if(type == Clothes::TYPE::BODY){
-                    penguin_paper->setBody(itemId);
-                    penguin->setBody(itemId);
+                    player->getPenguinPaper()->setBody(itemId);
+                    player->getPenguinSprite()->setBody(itemId);
                     qDebug() << "body";
                 }else if(type == Clothes::TYPE::HAND){
-                    penguin_paper->setHand(itemId);
-                    penguin->setHand(itemId);
+                    player->getPenguinPaper()->setHand(itemId);
+                    player->getPenguinSprite()->setHand(itemId);
                     qDebug() << "hand";
                 }else if(type == Clothes::TYPE::FEET){
-                    penguin_paper->setFeet(itemId);
-                    penguin->setFeet(itemId);
+                    player->getPenguinPaper()->setFeet(itemId);
+                    player->getPenguinSprite()->setFeet(itemId);
                     qDebug() << "feeet";
                 }else if(type == Clothes::TYPE::PIN){
-                    penguin_paper->setPin(itemId);
+                    player->getPenguinPaper()->setPin(itemId);
                     qDebug() << "pin";
                 }else if(type == Clothes::TYPE::BACKGROUND){
-                    penguin_paper->setBackground(itemId);
+                    player->getPenguinPaper()->setBackground(itemId);
                     qDebug() << "bg";
                 }else if(type == Clothes::TYPE::COLOR){
-                    penguin_paper->setColor(itemId);
+                    player->getPenguinPaper()->setColor(itemId);
                 }
             });
         } else {
@@ -303,15 +305,10 @@ void Inventory::loadInventoryPage(int page, SORT sort){
     }
 }
 
-
-PenguinPaper* Inventory::setPenguinPaper(PenguinPaper* penguin_paper){
-    this->penguin_paper = penguin_paper;
-    return this->penguin_paper;
-}
-
-PenguinSprite* Inventory::setPenguin(PenguinSprite* penguin){
-    this->penguin = penguin;
-    return this->penguin;
+Player* Inventory::setPlayer(Player* player){
+    this->player = player;
+    loadInventoryPage(1);
+    return this->player;
 }
 
 Inventory::SORT Inventory::sortItemsBy(SORT sort){

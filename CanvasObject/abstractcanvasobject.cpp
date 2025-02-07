@@ -60,6 +60,7 @@ void AbstractCanvasObject::hoverEnterEvent(QGraphicsSceneHoverEvent *event){
 }
 
 void AbstractCanvasObject::hoverMoveEvent(QGraphicsSceneHoverEvent *event){
+    qDebug() << isTransparentPixel(event->pos());
     if(containsActionFlag(CANVAS::ACTION::CLICKABLE) && !isTransparentPixel(event->pos())){
         setCursor(Qt::PointingHandCursor);
         emit hoverMove(event->pos());

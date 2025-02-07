@@ -85,6 +85,9 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         CanvasObject/Multi/Masked/maskedmulticanvasobject.h CanvasObject/Multi/Masked/maskedmulticanvasobject.cpp
         Objects/Player/playerfactory.h Objects/Player/playerfactory.cpp
         Objects/Player/player.h Objects/Player/player.cpp
+        Game/game.h Game/game.cpp
+        SoundManager/soundmanager.h SoundManager/soundmanager.cpp
+        InputManager/inputmanager.h InputManager/inputmanager.cpp
 
 
     )

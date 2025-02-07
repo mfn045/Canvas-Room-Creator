@@ -4,6 +4,7 @@ PlayerCard::PlayerCard(Scene* scene) {
     if(scene != nullptr){
         this->scene = scene;
     }
+    hide();
     qDebug() << "PLAYER CARD IS BEING SET!!!";
     setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/rectbuttonstripes/rectbuttonstripes.svg");
     setPos(QPointF(100,100));
@@ -27,7 +28,7 @@ PlayerCard::PlayerCard(Scene* scene) {
     container->setTopMargin(10);
     container->setVerticalSpacing(5);
 
-    badge = new Badge(container,PENGUIN::BADGE::MEMBER_4);
+    badge = new Badge(container,PENGUIN::BADGE::NONE);
     badge->setZValue(1);
     GridContainer::CELL_PROPERTIES* badge_CP = container->addGridItem(badge,0,0);
     badge_CP->horizontalAlignment = GridContainer::HorizontalAlignment::LEFT;
@@ -38,7 +39,7 @@ PlayerCard::PlayerCard(Scene* scene) {
     font.setBold(true);
     username->getInput()->setFont(font);
     username->setTextLimit(13);
-    username->setText("WOWTHSIISALONGASDAK");
+    username->setText("");
     username->setMaximumWidth(110);
     username->setMaximumHeight(container->getMaxHeight(0));
     container->addGridItem(username,0,1);
@@ -47,8 +48,11 @@ PlayerCard::PlayerCard(Scene* scene) {
     xButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/close/close.svg");
     GridContainer::CELL_PROPERTIES* xButton_CP = container->addGridItem(xButton,0,2);
     xButton_CP->horizontalAlignment = GridContainer::HorizontalAlignment::RIGHT;
+    connect(xButton,&CircleButton::clicked,[this](){
+        hide();
+    });
 
-    MultiCanvasObject* bg = new MultiCanvasObject();
+    bg = new MultiCanvasObject();
     PROPERTIES* bg_properties = new PROPERTIES();
     bg_properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/background.svg";
     bg->initFrames(bg_properties->filePath,bg_properties);
@@ -57,16 +61,9 @@ PlayerCard::PlayerCard(Scene* scene) {
     bg->setZValue(0);
     container->addGridItem(bg,1,0,3,1);
 
-    penguin_paper = new PenguinPaper(bg);
-
-    penguin_paper->changeColor("#fff");
     //417 403 443 413 474
     //penguin_paper->setFace(133);
     //penguin_paper->setHead(417);
-
-    float pp_centerX = (bg->boundingRect().width()-penguin_paper->boundingRect().width())/2;
-    float pp_centerY = (bg->boundingRect().height()-penguin_paper->boundingRect().height())-10;
-    penguin_paper->setPos(QPointF(pp_centerX, pp_centerY));
 
 
     GridContainer* buttonsContainer = new GridContainer(container);
@@ -121,7 +118,55 @@ PlayerCard::PlayerCard(Scene* scene) {
 
 
     inventory = new Inventory(this);
-    inventory->setPenguinPaper(penguin_paper);
+}
+
+/* CENTER PAPER
+    float pp_centerX = (bg->boundingRect().width()-penguin_paper->boundingRect().width())/2;
+    float pp_centerY = (bg->boundingRect().height()-penguin_paper->boundingRect().height())-10;
+    penguin_paper->setPos(QPointF(pp_centerX, pp_centerY));
+*/
+
+MultiCanvasObject* PlayerCard::getBackground(){
+    return this->bg;
+}
+
+
+Player* PlayerCard::setPlayer(Player* player){
+    this->player = player;
+
+    badge->setBadge(player->getBadge());
+
+    QFont font = username->getInput()->font();
+    font.setPointSize(11);
+    font.setBold(true);
+    username->getInput()->setFont(font);
+    username->setTextLimit(13);
+    username->setText(player->getUsername());
+    username->setMaximumWidth(110);
+    username->setMaximumHeight(container->getMaxHeight(0));
+
+    PenguinPaper* paper = this->player->getPenguinPaper();
+
+    paper->setParentItem(bg);
+    float pp_centerX = (bg->boundingRect().width()-paper->boundingRect().width())/2;
+    float pp_centerY = (bg->boundingRect().height()-paper->boundingRect().height())-10;
+    paper->setPos(QPointF(pp_centerX, pp_centerY));
+
+    container->setMaxWidth(0,badge->sceneBoundingRect().width());
+    container->setMaxWidth(1,206-badge->sceneBoundingRect().width()-25);
+    container->setMaxWidth(2,25);
+    container->setMaxHeight(0,25);
+
+    container->updateLayout();
+
+    if(inventory != nullptr){
+        inventory->setPlayer(player);
+    }
+    return player;
+}
+
+Player* PlayerCard::currentPlayer(){
+    return player;
 }
 
 Inventory* PlayerCard::getInventory(){

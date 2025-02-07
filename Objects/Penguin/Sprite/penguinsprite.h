@@ -13,7 +13,6 @@
 #include "penguinspritebase.h"
 #include "../../../widgets/scene.h"
 #include "Clothing/penguinspriteclothing.h"
-#include "../../Constants/constants.h"
 #include "../../../Interface/ChatBubble/chatbubble.h"
 
 class PenguinSprite : public PenguinSpriteBase
@@ -21,7 +20,11 @@ class PenguinSprite : public PenguinSpriteBase
     Q_OBJECT
 public:
 
-    explicit PenguinSprite(Scene* parent = nullptr);
+    explicit PenguinSprite();
+    ~PenguinSprite();
+
+    void initializeEvents(Scene* scene);
+    void uninitializeEvents();
 
     void sendChatBubble(QString msg);
 
@@ -70,9 +73,11 @@ public slots:
 
 
 protected:
-    bool eventFilter(QObject *watched, QEvent *event) override;
-    void keyPressEvent(QKeyEvent *event) override;
     void mousePressEvent(QGraphicsSceneMouseEvent *event) override;
+    bool eventFilter(QObject *watched, QEvent *event) override;
+
+signals:
+    void clickedPenguin();
 };
 
 #endif // PENGUINSPRITE_H

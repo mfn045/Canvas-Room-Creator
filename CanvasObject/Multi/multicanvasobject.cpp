@@ -9,14 +9,8 @@ MultiCanvasObject::MultiCanvasObject(MultiCanvasObject* parent) : AbstractCanvas
 }
 
 MultiCanvasObject::~MultiCanvasObject(){
-    for(auto i = getFrames().begin(); i != getFrames().end(); i++){
-        for(auto j = i.value().begin(); j != i.value().end(); j++){
-            QByteArray* arr = *j;
-            delete arr;
-        }
-        i.value().clear();
-        delete i.key();
-    }
+    clearFrames();
+    qDebug() << "DELETED CANVAS!";
 }
 
 void MultiCanvasObject::refresh(){
@@ -102,6 +96,28 @@ void MultiCanvasObject::initFrames(QString filePath,PROPERTIES* properties){
         }
         frames.insert(properties,arrays);
     }
+}
+
+
+void MultiCanvasObject::clearFrames(){
+    for(auto i = frames.begin(); i != frames.end(); i++){
+        PROPERTIES* properties = i.key();
+        QList<QByteArray*> arrs = i.value();
+        for(auto j = arrs.begin(); j != arrs.end(); j++){
+            QByteArray* byte = *j;
+            byte->clear();
+            delete byte;
+        }
+        arrs.clear();
+        delete properties;
+    }
+    frames.clear();
+    currentFrames.clear();
+    currentProperties = nullptr;
+    currentFrame = 0;
+    setPos(0,0);
+    renderer()->load(QByteArray("<svg width=\"0px\" height=\"0px\"></svg>"));
+    setElementId("");
 }
 
 QList<QByteArray*>& MultiCanvasObject::setCurrentFrames(PROPERTIES* paramProperties){
