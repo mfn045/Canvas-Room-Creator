@@ -14,7 +14,6 @@ Interface* Game::getInterface(){
     return this->interface;
 }
 
-
 PlayerFactory* Game::getPlayerFactory(){
     if(this->playerFactory == nullptr){
         this->playerFactory = createPlayerFactory();

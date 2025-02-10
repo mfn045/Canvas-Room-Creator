@@ -24,6 +24,16 @@ QPointF AbstractCanvasObject::setOrigin(QPointF origin){
     return this->origin;
 }
 
+
+bool AbstractCanvasObject::independentFromParent(){
+    return this->independent;
+}
+
+bool AbstractCanvasObject::setIndependentFromParent(bool independent){
+    this->independent = independent;
+    return this->independent;
+}
+
 bool AbstractCanvasObject::isFramePaused(){
     if(framePauses.contains(currentFrame)){
         return true;

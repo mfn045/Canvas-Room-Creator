@@ -1,60 +1,36 @@
 #ifndef GRIDCONTAINER_H
 #define GRIDCONTAINER_H
 
+#include "../../ThreadPoolManager/threadpoolmanager.h"
 #include "../../CanvasObject/Multi/multicanvasobject.h"
+#include "../../Objects/Constants/constants.h"
+#include <QMutex>
+
 
 class GridContainer : public MultiCanvasObject
 {
+    Q_OBJECT
 public:
-    enum class VerticalAlignment {
-        TOP,
-        CENTER,
-        BOTTOM,
-    };
-    enum class HorizontalAlignment {
-        LEFT,
-        CENTER,
-        RIGHT,
-    };
-    struct CELL_PROPERTIES {
-        int row = 0;
-        int col = 0;
-
-        int verticalSpan = 1;
-        int horizontalSpan = 1;
-
-        VerticalAlignment verticalAlignment = VerticalAlignment::CENTER;
-        HorizontalAlignment horizontalAlignment = HorizontalAlignment::CENTER;
-
-        bool operator==(CELL_PROPERTIES& properties){
-            if(properties.col == col && properties.row == row){
-                return true;
-            }
-            return false;
-        }
-    };
     explicit GridContainer(MultiCanvasObject* parent = nullptr);
     explicit GridContainer(QRectF parentRect = QRectF(0,0,0,0));
     ~GridContainer();
 
-    CELL_PROPERTIES* addGridItem(MultiCanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
-    CELL_PROPERTIES* addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
+    GRIDCONTAINER::CELL_PROPERTIES* addGridItem(MultiCanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
+    GRIDCONTAINER::CELL_PROPERTIES* addGridItem(QGraphicsItem* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
 
-    int setHorizontalSpacing(int horizontalSpacing);
-    int getHorizontalSpacing();
+    GRIDCONTAINER::CELL_PROPERTIES* getCellProperties(MultiCanvasObject* object);
+    GRIDCONTAINER::CELL_PROPERTIES* getCellProperties(int row, int column);
 
-    int setVerticalSpacing(int verticalSpacing);
-    int getVerticalSpacing();
+    float getWidth() const;
+    float getHeight() const;
 
-    CELL_PROPERTIES* getCellProperties(MultiCanvasObject* object);
-    CELL_PROPERTIES* getCellProperties(int row, int column);
+    void updateMaximums();
+    void updateLayout();  // Updates the position of the whole layout from the QMap
 
-
-    HorizontalAlignment setHorizontalAlignment(HorizontalAlignment hAlignment);
-    HorizontalAlignment getHorizontalAlignment();
-
-    VerticalAlignment setVerticalAlignment(VerticalAlignment vAlignment);
-    VerticalAlignment getVerticalAlignment();
+    float setMaxWidth(int column, float maxWidth);
+    float getMaxWidth(int column);
+    float setMaxHeight(int row, float maxHeight);
+    float getMaxHeight(int row);
 
     void setMargins(float top, float right, float bottom, float left);
     float setTopMargin(float top);
@@ -66,19 +42,23 @@ public:
     float setLeftMargin(float left);
     float getLeftMargin();
 
-    float setMaxWidth(int column, float maxWidth);
-    float getMaxWidth(int column);
-    float setMaxHeight(int row, float maxHeight);
-    float getMaxHeight(int row);
+    int setHorizontalSpacing(int horizontalSpacing);
+    int getHorizontalSpacing();
 
-    float getWidth() const;
-    float getHeight() const;
+    int setVerticalSpacing(int verticalSpacing);
+    int getVerticalSpacing();
 
-    void updateMaximums();
+    GRIDCONTAINER::HorizontalAlignment setHorizontalAlignment(GRIDCONTAINER::HorizontalAlignment hAlignment);
+    GRIDCONTAINER::HorizontalAlignment getHorizontalAlignment();
+
+    GRIDCONTAINER::VerticalAlignment setVerticalAlignment(GRIDCONTAINER::VerticalAlignment vAlignment);
+    GRIDCONTAINER::VerticalAlignment getVerticalAlignment();
 
     bool locationOccupied(int row, int col);
 
-    void updateLayout(); // Updates the position of the whole layout from the QMap
+    void addCallbackFunction(std::function<void()> func);
+
+    bool isContainerBusy();
 
     QRectF boundingRect() const override;
 
@@ -100,10 +80,23 @@ private:
     float leftMargin = 0;
     float rightMargin = 0;
 
-    VerticalAlignment verticalAlignment = VerticalAlignment::TOP;
-    HorizontalAlignment horizontalAlignment = HorizontalAlignment::LEFT;
+    GRIDCONTAINER::VerticalAlignment verticalAlignment = GRIDCONTAINER::VerticalAlignment::TOP;
+    GRIDCONTAINER::HorizontalAlignment horizontalAlignment = GRIDCONTAINER::HorizontalAlignment::LEFT;
 
-    QMap<CELL_PROPERTIES*,QGraphicsItem*> map; // The location position of each MultiCanvasObject to update the layout.
+    QMap<GRIDCONTAINER::CELL_PROPERTIES*,QGraphicsItem*> map; // The location position of each MultiCanvasObject to update the layout.
+    QList<std::function<void()>> callbackFunctions;
+
+    QMutex mutex;
+    bool containerBusy = false;
+
+public slots:
+    void onSetPosition(QGraphicsItem* item, QPointF pos);
+    void onTriggerCallbackFunctions();
+
+signals:
+    void setPosition(QGraphicsItem* item,QPointF pos);
+    void triggerCallbackFunctions();
+
 };
 
 #endif // GRIDCONTAINER_H

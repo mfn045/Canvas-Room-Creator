@@ -32,7 +32,7 @@ int Notification::setNumber(int number){
             setCurrentFrames(oneDigitProperties);
             setFrame(0);
             QFont font = digitLabel->font();
-            font.setFamily("cpBurbankSmallBold");
+            font.setFamily("Burbank Small Bold");
             font.setBold(true);
             font.setPointSize(10);
             digitLabel->getInput()->setFont(font);
@@ -48,7 +48,7 @@ int Notification::setNumber(int number){
             setCurrentFrames(twoDigitProperties);
             setFrame(0);
             QFont font = digitLabel->font();
-            font.setFamily("cpBurbankSmallBold");
+            font.setFamily("Burbank Small Bold");
             font.setBold(true);
             font.setPointSize(10);
             digitLabel->getInput()->setFont(font);

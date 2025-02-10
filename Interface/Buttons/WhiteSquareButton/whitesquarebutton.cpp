@@ -14,6 +14,7 @@ WhiteSquareButton::WhiteSquareButton(MultiCanvasObject* parent, SIZE size) : Abs
     QString upButton = path + type + "up.svg";
     QString overButton = path + type + "over.svg";
     QString downButton = path + type + "down.svg";
+    QString disabledButton = path + type + "disabled.svg";
 
     setIsHoverable(true);
     setIsClickable(true);
@@ -21,6 +22,7 @@ WhiteSquareButton::WhiteSquareButton(MultiCanvasObject* parent, SIZE size) : Abs
     setUp(upButton);
     setDown(downButton);
     setOver(overButton);
+    setDisabled(disabledButton);
 }
 
 MultiCanvasObject* WhiteSquareButton::setIcon(QString filePath){

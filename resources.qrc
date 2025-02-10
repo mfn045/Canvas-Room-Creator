@@ -1,6 +1,17 @@
 <RCC>
     <qresource prefix="/resources">
         <file>Resources/logo.png</file>
+        <file>Font/latest/Arial Bold.ttf</file>
+        <file>Font/latest/Arial Italic.ttf</file>
+        <file>Font/latest/Arial Narrow Bold.ttf</file>
+        <file>Font/latest/Arial.ttf</file>
+        <file>Font/latest/Burbank Big Wide Bold.ttf</file>
+        <file>Font/latest/Burbank Small Black.ttf</file>
+        <file>Font/latest/Burbank Small Medium.ttf</file>
+        <file>Font/latest/CCComicrazy Italic.ttf</file>
+        <file>Font/latest/CCComicrazy Regular.ttf</file>
+        <file>Font/latest/Sans Serif.ttf</file>
+        <file>Font/latest/Burbank Small Bold.ttf</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/9_cpBurbankBgWdBold.ttf</file>

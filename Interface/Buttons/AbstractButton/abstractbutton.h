@@ -12,7 +12,8 @@ public:
     enum STATE {
         UP,
         OVER,
-        DOWN
+        DOWN,
+        DISABLED
     };
 
     struct BUTTONPROPERTIES : public PROPERTIES {
@@ -24,6 +25,8 @@ public:
     void setUp(QString filePath);
     void setDown(QString filePath);
     void setOver(QString filePath);
+    void setDisabled(QString filePath);
+    void setDisabled(bool disabled);
 
     MultiCanvasObject* getIcon();
 

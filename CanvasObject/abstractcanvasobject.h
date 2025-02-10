@@ -46,6 +46,8 @@ public:
     bool setHasAnimationLoop(bool animationLoop);
     bool isAnimationOn();
     bool setIsAnimationOn(bool animationOn);
+    bool independentFromParent();
+    bool setIndependentFromParent(bool independent);
 
     virtual bool isTransparentPixel(QPointF pos);
 
@@ -54,6 +56,7 @@ public:
 protected:
     bool animationLoop = false;
     bool animationOn = true;
+    bool independent = false;
     int currentFrame = 0;
 
     bool isImageLatest = false;

@@ -26,7 +26,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     items->setRightMargin(5);
     items->setVerticalSpacing(5);
     items->setHorizontalSpacing(5);
-    items->setHorizontalAlignment(GridContainer::HorizontalAlignment::RIGHT);
+    items->setHorizontalAlignment(GRIDCONTAINER::HorizontalAlignment::RIGHT);
     items->setScale(0.975);
 
     int i = 0;
@@ -112,7 +112,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     pinFlagSort->connect(pinFlagSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Pins/Flags");
-        sortItemsBy(SORT::PIN);
+        sortItemsBy(INVENTORY::SORT::PIN);
     });
 
     WhiteRectButton* awardsSort = new WhiteRectButton();
@@ -121,7 +121,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     awardsSort->connect(awardsSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Awards");
-        sortItemsBy(SORT::AWARD);
+        sortItemsBy(INVENTORY::SORT::AWARD);
     });
 
     WhiteRectButton* backgroundSort = new WhiteRectButton();
@@ -130,14 +130,17 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     backgroundSort->connect(backgroundSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Background");
-        sortItemsBy(SORT::BACKGROUND);
+        sortItemsBy(INVENTORY::SORT::BACKGROUND);
+    });
+
+    otherCategory->addCallbackFunction([otherSort,otherCategory,categories_verticalSpacing](){
+        float otherCategory_centerX = otherSort->boundingRect().width()+categories_verticalSpacing;
+        float otherCategory_centerY = (otherCategory->getHeight()-otherSort->boundingRect().height())/2;
+        otherCategory->setPos(QPointF(otherCategory_centerX,-otherCategory_centerY));
     });
 
     otherCategory->updateLayout();
 
-    float otherCategory_centerX = otherSort->boundingRect().width()+categories_verticalSpacing;
-    float otherCategory_centerY = (otherCategory->getHeight()-otherSort->boundingRect().height())/2;
-    otherCategory->setPos(QPointF(otherCategory_centerX,-otherCategory_centerY));
     //--------
     otherSort->connect(otherSort,&WhiteRectButton::clicked,[otherCategory](){
         if(otherCategory != nullptr){
@@ -155,7 +158,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     headSort->connect(headSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Head");
-        sortItemsBy(SORT::HEAD);
+        sortItemsBy(INVENTORY::SORT::HEAD);
     });
 
     WhiteRectButton* faceSort = new WhiteRectButton();
@@ -164,7 +167,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     faceSort->connect(faceSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Head");
-        sortItemsBy(SORT::FACE);
+        sortItemsBy(INVENTORY::SORT::FACE);
     });
 
     WhiteRectButton* neckSort = new WhiteRectButton();
@@ -173,7 +176,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     neckSort->connect(neckSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Neck");
-        sortItemsBy(SORT::NECK);
+        sortItemsBy(INVENTORY::SORT::NECK);
     });
 
     WhiteRectButton* bodySort = new WhiteRectButton();
@@ -182,7 +185,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     bodySort->connect(bodySort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Body");
-        sortItemsBy(SORT::BODY);
+        sortItemsBy(INVENTORY::SORT::BODY);
     });
 
     WhiteRectButton* handSort = new WhiteRectButton();
@@ -191,7 +194,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     handSort->connect(handSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Hand");
-        sortItemsBy(SORT::HAND);
+        sortItemsBy(INVENTORY::SORT::HAND);
     });
 
     WhiteRectButton* feetSort = new WhiteRectButton();
@@ -200,7 +203,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     feetSort->connect(feetSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Feet");
-        sortItemsBy(SORT::FEET);
+        sortItemsBy(INVENTORY::SORT::FEET);
     });
 
     WhiteRectButton* colorSort = new WhiteRectButton();
@@ -209,7 +212,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     colorSort->connect(colorSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("Color");
-        sortItemsBy(SORT::COLOR);
+        sortItemsBy(INVENTORY::SORT::COLOR);
     });
 
     WhiteRectButton* allSort = new WhiteRectButton();
@@ -218,15 +221,21 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     allSort->connect(allSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
         hideAllCategories();
         category->getButton()->setText("All");
-        sortItemsBy(SORT::ALL);
+        sortItemsBy(INVENTORY::SORT::ALL);
     });
 
+    categories->addCallbackFunction([category,categories](){
+        if(category && categories){
+            float category_centerX = (category->boundingRect().width()-categories->getWidth())/2;
+            categories->setPos(QPointF(category_centerX,-categories->getHeight()));
+        }
+    });
+
+
     categories->updateLayout();
-    float category_centerX = (category->boundingRect().width()-categories->getWidth())/2;
-    categories->setPos(QPointF(category_centerX,-categories->getHeight()));
 }
 
-void Inventory::loadInventoryPage(int page, SORT sort){
+void Inventory::loadInventoryPage(int page, INVENTORY::SORT sort){
     if(player == nullptr) return;
     if(page < 1){
         page = 1;
@@ -239,8 +248,15 @@ void Inventory::loadInventoryPage(int page, SORT sort){
     QList<int> ownedItems = player->getOwnedItems();
     for(auto items = ownedItems.begin(); items != ownedItems.end(); items++){
         if(!instance->exists(*items)){ qDebug() << "ITEM DONT EXIST SKIPPING " << *items; continue; } else { qDebug() << "ITEM EXISTS " << *items; }
-        if(instance->getType(*items) == sort || sort == SORT::ALL){
+        if(instance->getType(*items) == sort || sort == INVENTORY::SORT::ALL){
             appropriateIds.append(*items);
+        }
+    }
+    for(int k = 0; k < 12; k++){
+        WhiteSquareButton* button = inventoryItems.value(k);
+        button->setDisabled(true);
+        if(button->getIcon()){
+            button->getIcon()->clearFrames();
         }
     }
     if(appropriateIds.empty()) return;
@@ -250,12 +266,13 @@ void Inventory::loadInventoryPage(int page, SORT sort){
         currentInventoryPage = page;
     }
     int initialIndex = 0+((page-1)*12);
-    for(int itemIndex = initialIndex; itemIndex < initialIndex+12; itemIndex++){
+    for(int itemIndex = initialIndex; itemIndex <= initialIndex+12; itemIndex++){
         if(i == 12) break;
-        if((appropriateIds.size()-1) > itemIndex){
+        if((appropriateIds.size()) > itemIndex){
             qDebug() << "Item Index " << itemIndex << (appropriateIds.size()-1);
             int itemId = appropriateIds[itemIndex];
             WhiteSquareButton* button = inventoryItems.value(i);
+            button->setDisabled(false);
             button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Clothings/1-499/items/" + QString::number(itemId) + "/icon/1.svg");
             button->disconnect();
             button->connect(button, &WhiteSquareButton::clicked, [=](){
@@ -299,7 +316,9 @@ void Inventory::loadInventoryPage(int page, SORT sort){
         } else {
             WhiteSquareButton* button = inventoryItems.value(i);
             button->disconnect();
-            button->setIcon("");
+            if(button->getIcon()){
+                button->getIcon()->clearFrames();
+            }
         }
         i++;
     }
@@ -311,7 +330,7 @@ Player* Inventory::setPlayer(Player* player){
     return this->player;
 }
 
-Inventory::SORT Inventory::sortItemsBy(SORT sort){
+INVENTORY::SORT Inventory::sortItemsBy(INVENTORY::SORT sort){
     this->sort = sort;
     this->currentInventoryPage = 1;
     loadInventoryPage(currentInventoryPage,sort);

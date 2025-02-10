@@ -88,6 +88,12 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Game/game.h Game/game.cpp
         SoundManager/soundmanager.h SoundManager/soundmanager.cpp
         InputManager/inputmanager.h InputManager/inputmanager.cpp
+        Interface/Loading/loadingbar.h Interface/Loading/loadingbar.cpp
+        Interface/Loading/loading.h Interface/Loading/loading.cpp
+        ThreadPoolManager/LoadingBarWorker/loadingbarworker.h ThreadPoolManager/LoadingBarWorker/loadingbarworker.cpp
+        ThreadPoolManager/PenguinSpriteMoveWorker/penguinspritemoveworker.h ThreadPoolManager/PenguinSpriteMoveWorker/penguinspritemoveworker.cpp
+        ThreadPoolManager/threadpoolmanager.h ThreadPoolManager/threadpoolmanager.cpp
+
 
 
     )

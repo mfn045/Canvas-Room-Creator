@@ -28,7 +28,7 @@ ChatHistory_Message::ChatHistory_Message(MultiCanvasObject* parent) : MultiCanva
     textLabel->getInput()->setMinimumSize(QSize(boundingRect().width(),boundingRect().height()));
     textLabel->getInput()->setStyleSheet("background-color:transparent; border: none; margin: 0; padding: 0; padding-left: 5; color:black;");
     QFont font(textLabel->font());
-    font.setFamily("Burbank Small");
+    font.setFamily("Burbank Small Medium");
     textLabel->setFont(font);
     textLabel->setText("");
     textLabel->getInput()->setAlignment(Qt::AlignVCenter | Qt::AlignLeft);

@@ -9,6 +9,7 @@ public:
     explicit MaskedMultiCanvasObject(MultiCanvasObject* parent = nullptr);
 
     void setMask(QString filePath);
+    void setMask(QRegion region);
 
     QRegion& getRegion();
 

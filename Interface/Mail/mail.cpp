@@ -28,7 +28,7 @@ void Mail::animationIn(){
     const float referenceY = currentPos.y();
     currentPos.setY(initialY);
     setPos(currentPos);
-    show();
+    show();/*
     animationThread = QThread::create([=](){
         QPointF currentPos = pos();
         float sum = 0;
@@ -51,7 +51,7 @@ void Mail::animationIn(){
         }
         animationThread->terminate();
     });
-    animationThread->start();
+    animationThread->start();*/
 }
 
 

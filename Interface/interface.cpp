@@ -24,22 +24,26 @@ bool Interface::loadItems(){
 }
 
 bool Interface::loadFonts(){
-    int id = QFontDatabase::addApplicationFont("://Font/141_Burbank Small.ttf");
+    int id = QFontDatabase::addApplicationFont(":/resources/Font/latest/Burbank Small Medium.ttf");
     QString family = QFontDatabase::applicationFontFamilies(id).at(0);
     qDebug() << id << family;
 
-    id = QFontDatabase::addApplicationFont("://Font/1_sans.ttf");
+    id = QFontDatabase::addApplicationFont(":/resources/Font/latest/Sans Serif.ttf");
     family = QFontDatabase::applicationFontFamilies(id).at(0);
     qDebug() << id << family;
 
-    id = QFontDatabase::addApplicationFont("://Font/294_Arial Narrow Bold.ttf");
+    id = QFontDatabase::addApplicationFont(":/resources/Font/latest/Arial Narrow Bold.ttf");
     family = QFontDatabase::applicationFontFamilies(id).at(0);
     qDebug() << id << family;
-    id = QFontDatabase::addApplicationFont("://Font/94_Arial.ttf");
+    id = QFontDatabase::addApplicationFont(":/resources/Font/latest/Arial.ttf");
     family = QFontDatabase::applicationFontFamilies(id).at(0);
     qDebug() << id << family;
 
-    id = QFontDatabase::addApplicationFont("://Font/22_cpBurbankSmallBold.ttf");
+    id = QFontDatabase::addApplicationFont(":/resources/Font/latest/Burbank Small Bold.ttf");
+    family = QFontDatabase::applicationFontFamilies(id).at(0);
+    qDebug() << id << family;
+
+    id = QFontDatabase::addApplicationFont(":/resources/Font/latest/Burbank Small Medium.ttf");
     family = QFontDatabase::applicationFontFamilies(id).at(0);
     qDebug() << id << family;
     return true;

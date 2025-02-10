@@ -7,13 +7,13 @@
 #include <QCursor>
 #include <QGraphicsScene>
 #include <QGraphicsView>
-#include <QThread>
 #include <QObject>
-#include "../../../CanvasObject/Atlas/atlascanvasobject.h"
 #include "penguinspritebase.h"
 #include "../../../widgets/scene.h"
 #include "Clothing/penguinspriteclothing.h"
 #include "../../../Interface/ChatBubble/chatbubble.h"
+#include "../../../ThreadPoolManager/threadpoolmanager.h"
+
 
 class PenguinSprite : public PenguinSpriteBase
 {
@@ -27,6 +27,9 @@ public:
     void uninitializeEvents();
 
     void sendChatBubble(QString msg);
+
+    QPointF getDestination();
+    QPointF setDestination(QPointF destination);
 
     void walkTo(QPointF pos);
 
@@ -44,7 +47,7 @@ public:
     PenguinSpriteClothing* loadItem(int id);
 
 private:
-    QThread* thread = nullptr;
+    QPointF destination;
 
     double velocity = 0;
 
@@ -78,6 +81,7 @@ protected:
 
 signals:
     void clickedPenguin();
+    void changedDestination();
 };
 
 #endif // PENGUINSPRITE_H

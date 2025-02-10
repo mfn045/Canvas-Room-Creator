@@ -31,8 +31,8 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
 
     GridContainer* container = new GridContainer(historyBox);
     container->setVerticalSpacing(5);
-    container->setHorizontalAlignment(GridContainer::HorizontalAlignment::CENTER);
-    container->setVerticalAlignment(GridContainer::VerticalAlignment::CENTER);
+    container->setHorizontalAlignment(GRIDCONTAINER::HorizontalAlignment::CENTER);
+    container->setVerticalAlignment(GRIDCONTAINER::VerticalAlignment::CENTER);
 
     for(int i = 0; i < 15; i++){
         ChatHistory_Message* msg = new ChatHistory_Message(historyBox);

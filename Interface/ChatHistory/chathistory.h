@@ -19,6 +19,9 @@ public:
             QString storedMessage = msg;
             for(int i = pastMessages.size()-1; i >= 0; i--){
                 TextLabel* label = pastMessages.at(i)->getLabel();
+                QFont font = label->font();
+                font.setFamily("Burbank Small Medium");
+                label->setFont(font);
                 QString oldLabel = label->getCurrentText();
                 label->setText(storedMessage);
                 storedMessage = oldLabel;

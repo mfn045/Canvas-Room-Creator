@@ -15,6 +15,7 @@
 #include "widgets/canvas.h"
 #include "CanvasObject/Multi/multicanvasobject.h"
 #include "CanvasObject/Atlas/atlascanvasobject.h"
+#include "ThreadPoolManager/threadpoolmanager.h"
 #include <QInputDialog>
 #include <QMouseEvent>
 
@@ -68,16 +69,18 @@ private slots:
 
 private:
     Ui::RoomCanvas *ui;
-    QThread* thread;
-    QTimer* timer;
-    //QList<CanvasObject*> items;
+
     Scene* scene;
     Canvas* canvas;
     Layers* layers;
+
     bool attemptingUpdate = false;
     bool updatingSelection = false;
+
     QList<Qt::Key> pressedKeys;
+
     int id_increment = 0;
+
     QGraphicsItem* selectingOrigin = nullptr;
 
 protected:

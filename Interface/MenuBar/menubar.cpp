@@ -21,6 +21,9 @@ MenuBar::MenuBar(Scene *parent)
     GridContainer* container = new GridContainer(this);
     container->setHorizontalSpacing(5);
     container->setVerticalSpacing(5);
+    container->setHorizontalAlignment(GRIDCONTAINER::HorizontalAlignment::CENTER);
+    container->setVerticalAlignment(GRIDCONTAINER::VerticalAlignment::CENTER);
+    container->setTopMargin(12);
 
     puffleTricks_Button = new CircleButton();
     //QRectF buttonSize = safeChat_Button->boundingRect();
@@ -66,7 +69,7 @@ MenuBar::MenuBar(Scene *parent)
     //chatInput->setTextWidth(chat->boundingRect().width()-40);
     //chatInput->setTextInteractionFlags(Qt::TextEditorInteraction);
     QFont font = chatInput->font();
-    font.setFamily("Burbank Small");
+    font.setFamily("Burbank Small Medium");
     font.setPointSize(9);
     chatInput->setFont(font);
     chatInput->setPos(QPointF(30,2.5));
@@ -100,16 +103,8 @@ MenuBar::MenuBar(Scene *parent)
     settings_Button->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/settings/settings.svg");
     container->addGridItem(settings_Button,0,8);
 
-    qDebug() << chat->boundingRect() << chat->pos();
-    container->updateLayout();
-    qDebug() << container->pos();
-    float centerX = (boundingRect().width()-container->getWidth())/2;
-    float centerY = (boundingRect().height()-container->getHeight())/2;
-    qDebug() << "MENU BARR X >> " << boundingRect().width() << container->getWidth() << centerX;
-    qDebug() << "MENU BARR Y >> " << boundingRect().height() << container->getHeight() << centerY;
-    container->setPos(QPointF(centerX,13));
 
-    qDebug() << container->pos();
+    container->updateLayout();
 }
 
 

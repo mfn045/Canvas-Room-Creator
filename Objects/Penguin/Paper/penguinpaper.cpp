@@ -8,6 +8,33 @@ PenguinPaper::PenguinPaper(MultiCanvasObject* parent) : MultiCanvasObject(parent
     setFrame(0);
 }
 
+PenguinPaper::~PenguinPaper(){
+    if(head){
+        delete head;
+    }
+    if(face){
+        delete face;
+    }
+    if(neck){
+        delete neck;
+    }
+    if(body){
+        delete body;
+    }
+    if(hand){
+        delete hand;
+    }
+    if(feet){
+        delete feet;
+    }
+    if(pin){
+        delete pin;
+    }
+    if(background){
+        delete background;
+    }
+}
+
 void PenguinPaper::changeColor(QString color){
     QDomDocument doc;
     for(auto it = getFrames().begin(); it != getFrames().end(); it++){

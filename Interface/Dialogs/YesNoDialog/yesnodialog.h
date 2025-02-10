@@ -4,7 +4,6 @@
 #include "../abstractdialog.h"
 #include "../../Buttons/AbstractButton/abstractbutton.h"
 #include "../../Buttons/BlueButton/bluebutton.h"
-#include "../../SvgGridContainer/gridcontainer.h"
 #include "../../Buttons/OrangeButton/orangebutton.h"
 #include <QGraphicsView>
 

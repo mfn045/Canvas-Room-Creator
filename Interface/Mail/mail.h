@@ -15,7 +15,6 @@ public:
 
 private:
     Notification* notification = nullptr;
-    QThread* animationThread = nullptr;
 };
 
 #endif // MAP_H

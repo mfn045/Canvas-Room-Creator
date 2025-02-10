@@ -31,7 +31,7 @@ void OvalButton::setText(QString text){
         label->setMaximumSize(boundingRect().size());
     }
     QFont font(label->font());
-    font.setFamily("Arial");
+    font.setFamily("Burbank Small Medium");
     font.setPointSize(10);
     label->getInput()->setFont(font);
     label->getInput()->setText(text);

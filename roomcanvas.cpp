@@ -38,13 +38,13 @@ RoomCanvas::RoomCanvas(QWidget *parent)
 
     canvas->setScene(scene);
 
-    thread = QThread::create([this](){
+    ThreadPoolManager* tpm = ThreadPoolManager::getInstance();
+    tpm->start([this](){
         while(true){
             QMetaObject::invokeMethod(this,"nextFrame", Qt::QueuedConnection);
             QThread::msleep(40);
         }
     });
-    thread->start();
 }
 
 RoomCanvas::~RoomCanvas()

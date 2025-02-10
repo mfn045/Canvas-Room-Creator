@@ -23,18 +23,19 @@ PlayerCard::PlayerCard(Scene* scene) {
     body->setPos(QPointF(centerX,this->boundingRect().height()-6));
 
     container = new GridContainer(body);
-    container->setVerticalAlignment(GridContainer::VerticalAlignment::TOP);
-    container->setHorizontalAlignment(GridContainer::HorizontalAlignment::CENTER);
+    container->setVerticalAlignment(GRIDCONTAINER::VerticalAlignment::TOP);
+    container->setHorizontalAlignment(GRIDCONTAINER::HorizontalAlignment::CENTER);
     container->setTopMargin(10);
     container->setVerticalSpacing(5);
 
     badge = new Badge(container,PENGUIN::BADGE::NONE);
     badge->setZValue(1);
-    GridContainer::CELL_PROPERTIES* badge_CP = container->addGridItem(badge,0,0);
-    badge_CP->horizontalAlignment = GridContainer::HorizontalAlignment::LEFT;
+    GRIDCONTAINER::CELL_PROPERTIES* badge_CP = container->addGridItem(badge,0,0);
+    badge_CP->horizontalAlignment = GRIDCONTAINER::HorizontalAlignment::LEFT;
 
     username = new TextLabel();
     QFont font = username->getInput()->font();
+    font.setFamily("Burbank Small Medium");
     font.setPointSize(11);
     font.setBold(true);
     username->getInput()->setFont(font);
@@ -46,8 +47,8 @@ PlayerCard::PlayerCard(Scene* scene) {
 
     CircleButton* xButton = new CircleButton();
     xButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/close/close.svg");
-    GridContainer::CELL_PROPERTIES* xButton_CP = container->addGridItem(xButton,0,2);
-    xButton_CP->horizontalAlignment = GridContainer::HorizontalAlignment::RIGHT;
+    GRIDCONTAINER::CELL_PROPERTIES* xButton_CP = container->addGridItem(xButton,0,2);
+    xButton_CP->horizontalAlignment = GRIDCONTAINER::HorizontalAlignment::RIGHT;
     connect(xButton,&CircleButton::clicked,[this](){
         hide();
     });
@@ -137,6 +138,7 @@ Player* PlayerCard::setPlayer(Player* player){
     badge->setBadge(player->getBadge());
 
     QFont font = username->getInput()->font();
+    font.setFamily("Burbank Small Medium");
     font.setPointSize(11);
     font.setBold(true);
     username->getInput()->setFont(font);

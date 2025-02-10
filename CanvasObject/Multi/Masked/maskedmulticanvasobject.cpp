@@ -17,7 +17,13 @@ void MaskedMultiCanvasObject::setMask(QString filePath){
         }
     }
     qDebug() << r;
-    region = r;
+    this->region = r;
+
+}
+
+void MaskedMultiCanvasObject::setMask(QRegion region){
+    this->region = region;
+    return;
 }
 
 QRegion& MaskedMultiCanvasObject::getRegion(){

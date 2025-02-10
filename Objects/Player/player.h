@@ -1,6 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
+#include "../../ThreadPoolManager/PenguinSpriteMoveWorker/penguinspritemoveworker.h"
 #include "../Penguin/Sprite/penguinsprite.h"
 #include "../Penguin/Paper/penguinpaper.h"
 #include "../Constants/constants.h"
@@ -57,6 +58,9 @@ private:
     PenguinSprite* penguinSprite = nullptr;
 
     PenguinPaper* penguinPaper = nullptr;
+
+public slots:
+    void addToMoveWorker();
 
     friend class PlayerFactory;
 

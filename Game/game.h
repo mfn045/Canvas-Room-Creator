@@ -34,6 +34,9 @@ private:
 
     SoundManager* soundManager = nullptr;
 
+public slots:
+    void addToMoveWorker(PenguinSprite* sprite);
+
 };
 
 #endif // GAME_H

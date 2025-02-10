@@ -79,7 +79,6 @@ void MultiCanvasObject::initFrames(QString filePath,PROPERTIES* properties){
         QCollator collator;
         collator.setNumericMode(true);
         std::sort(list.begin(), list.end(), collator);
-
         for(QString fileName : list){
             QFile file(filePath + "/" + fileName);
             if (file.open(QIODevice::ReadOnly)){
@@ -157,19 +156,23 @@ void MultiCanvasObject::nextFrame(bool loop, bool force){
         currentFrame++;
         renderer()->load(*currentFrames.at(currentFrame));
         setElementId("");
+        isImageLatest = false;
         QList<QGraphicsItem*> children = childItems();
         if(children.size() > 0){
             for(QGraphicsItem* child : children){
                 if(auto obj = dynamic_cast<MultiCanvasObject*>(child)){
-                    if(currentFrame < obj->currentFrames.size()) {
-                        obj->currentFrame = currentFrame;
-                        obj->renderer()->load(*obj->currentFrames.at(currentFrame));
-                        obj->setElementId("");
+                    if(obj->independentFromParent()){
+                        obj->nextFrame(loop,force);
+                    }else{
+                        if(currentFrame < obj->currentFrames.size()) {
+                            obj->currentFrame = currentFrame;
+                            obj->renderer()->load(*obj->currentFrames.at(currentFrame));
+                            obj->setElementId("");
+                        }
                     }
                 }
             }
         }
-        isImageLatest = false;
     }else{
         if(loop){
             currentFrame=0;
@@ -179,10 +182,14 @@ void MultiCanvasObject::nextFrame(bool loop, bool force){
             if(children.size() > 0){
                 for(QGraphicsItem* child : children){
                     if(auto obj = dynamic_cast<MultiCanvasObject*>(child)){
-                        if(currentFrame < obj->currentFrames.size()) {
-                            obj->currentFrame = currentFrame;
-                            obj->renderer()->load(*obj->currentFrames.at(currentFrame));
-                            obj->setElementId("");
+                        if(obj->independentFromParent()){
+                            obj->nextFrame(loop,force);
+                        }else{
+                            if(currentFrame < obj->currentFrames.size()) {
+                                obj->currentFrame = currentFrame;
+                                obj->renderer()->load(*obj->currentFrames.at(currentFrame));
+                                obj->setElementId("");
+                            }
                         }
                     }
                 }
@@ -229,10 +236,14 @@ void MultiCanvasObject::prevFrame(bool loop, bool force){
         if(children.size() > 0){
             for(QGraphicsItem* child : children){
                 if(auto obj = dynamic_cast<MultiCanvasObject*>(child)){
-                    if(currentFrame < obj->currentFrames.size()) {
-                        obj->currentFrame = currentFrame;
-                        obj->renderer()->load(*obj->currentFrames.at(currentFrame));
-                        obj->setElementId("");
+                    if(obj->independentFromParent()){
+                        obj->nextFrame(loop,force);
+                    }else{
+                        if(currentFrame < obj->currentFrames.size()) {
+                            obj->currentFrame = currentFrame;
+                            obj->renderer()->load(*obj->currentFrames.at(currentFrame));
+                            obj->setElementId("");
+                        }
                     }
                 }
             }
@@ -247,11 +258,14 @@ void MultiCanvasObject::prevFrame(bool loop, bool force){
             if(children.size() > 0){
                 for(QGraphicsItem* child : children){
                     if(auto obj = dynamic_cast<MultiCanvasObject*>(child)){
-                        if(currentFrame < obj->currentFrames.size()) {
-                            obj->currentFrame = currentFrame;
-                            obj->renderer()->load(*obj->currentFrames.at(currentFrame));
-                            obj->update();
-                            obj->setElementId("");
+                        if(obj->independentFromParent()){
+                            obj->nextFrame(loop,force);
+                        }else{
+                            if(currentFrame < obj->currentFrames.size()) {
+                                obj->currentFrame = currentFrame;
+                                obj->renderer()->load(*obj->currentFrames.at(currentFrame));
+                                obj->setElementId("");
+                            }
                         }
                     }
                 }

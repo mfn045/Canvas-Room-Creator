@@ -19,7 +19,6 @@ protected:
 
 private:
     QOpenGLFunctions f;
-    QTimer* timer = nullptr;
 };
 
 #endif // OPENGLWIDGET_H

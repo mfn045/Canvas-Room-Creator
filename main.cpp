@@ -5,6 +5,7 @@
 #include "CanvasObject/Atlas/atlascanvasobject.h"
 #include "Objects/Penguin/Sprite/penguinsprite.h"
 #include "Interface/Dialogs/YesNoDialog/yesnodialog.h"
+#include "Interface/Loading/loading.h"
 #include <QRect>
 #include <QException>
 #include <QFontDatabase>
@@ -16,20 +17,33 @@ int main(int argc, char *argv[])
     QApplication a(argc, argv);
 
 
-    RoomCanvas w;
-    w.setWindowTitle("Clubpenguin Room Creator");
-    w.setWindowIcon(QIcon(":/resources/Resources/logo.png"));
-    w.show();
+    RoomCanvas* w = new RoomCanvas();
+    w->setWindowTitle("Clubpenguin Room Creator");
+    w->setWindowIcon(QIcon(":/resources/Resources/logo.png"));
+    w->show();
 
     Game* game = Game::getInstance();
 
     PlayerFactory* factory = game->getPlayerFactory();
 
     Interface* interface = game->getInterface();
-    interface->setScene(w.getScene());
+    interface->setScene(w->getScene());
+/*
+    Loading* loading = new Loading();
+    interface->addToScene(loading);
+    loading->addStep("Loading Items...");
+    loading->addStep("Loading fonts...");
+    loading->addStep("Loading HUD...");
+    loading->addStep("Loading players...");
+    loading->addStep("Loading player card...");
+    loading->startLoading();*/
+
     interface->loadItems();
+   // loading->incrementStep();
     interface->loadFonts();
+   // loading->incrementStep();
     interface->loadHUD();
+    //loading->incrementStep();
 
     Player* player1 = factory->createPlayer();
     player1->setUsername("Username1");
@@ -37,7 +51,7 @@ int main(int argc, char *argv[])
     player1->setID(1);
     factory->setActivePlayer(player1);
     PenguinSprite* player1_sprite = player1->getPenguinSprite();
-    player1_sprite->initializeEvents(w.getScene());
+    player1_sprite->initializeEvents(w->getScene());
     interface->addToScene(player1_sprite);
     QObject::connect(player1->getPenguinSprite(),&PenguinSprite::clickedPenguin, [interface,player1](){
         PlayerCard* pc = interface->getPlayerCard();
@@ -48,9 +62,9 @@ int main(int argc, char *argv[])
             pc->show();
         }
     });
-    for(int i = 25; i < 50; i++){
-        player1->getOwnedItems().append(i);
-    }
+    player1->getOwnedItems().append(1);
+    player1->getOwnedItems().append(2);
+    player1->getOwnedItems().append(212);
 
     Player* player2 = factory->createPlayer();
     player2->setUsername("Username2");
@@ -69,8 +83,15 @@ int main(int argc, char *argv[])
     for(int i = 0; i < 500; i++){
         player2->getOwnedItems().append(i);
     }
+    //loading->incrementStep();
 
     interface->loadPlayerCard();
+    //loading->incrementStep();
+    //interface->getScene()->removeItem(loading);
+
+    /*for(int i = 25; i < 50; i++){
+        player1->getOwnedItems().append(i);
+    }*/
 
     /*YesNoDialog* dialog = new YesNoDialog(w.getScene(),YesNoDialog::TYPE::ORANGE);
     dialog->insertText("Hello there! Are you enjoying CP?");

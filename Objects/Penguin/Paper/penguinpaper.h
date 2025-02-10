@@ -9,6 +9,7 @@ class PenguinPaper : public MultiCanvasObject
 {
 public:
     explicit PenguinPaper(MultiCanvasObject* parent = nullptr);
+    ~PenguinPaper();
 
     void changeColor(QString color);
 

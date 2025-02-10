@@ -31,7 +31,10 @@ private:
 
     Player* activePlayer = nullptr;
 
+    PenguinSpriteMoveWorker* moveWorker = nullptr;
+
     friend PlayerFactory* createPlayerFactory();
+
 };
 
 #endif // PLAYERFACTORY_H

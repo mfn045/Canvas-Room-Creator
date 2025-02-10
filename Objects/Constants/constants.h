@@ -98,6 +98,21 @@ enum TYPE {
     AWARD
 };
 }
+namespace INVENTORY {
+enum SORT {
+    COLOR=1,
+    HEAD,
+    FACE,
+    NECK,
+    BODY,
+    HAND,
+    FEET,
+    PIN,
+    BACKGROUND,
+    AWARD,
+    ALL
+};
+}
 namespace CANVAS {
 enum ACTION {
     CLICKABLE = 1,
@@ -111,6 +126,37 @@ enum ACTION {
     int ymax = 0;
     QDomDocument r;
 };*/
+}
+namespace GRIDCONTAINER {
+enum class VerticalAlignment {
+    TOP,
+    CENTER,
+    BOTTOM,
+    INVALID
+};
+enum class HorizontalAlignment {
+    LEFT,
+    CENTER,
+    RIGHT,
+    INVALID
+};
+struct CELL_PROPERTIES {
+    int row = 0;
+    int col = 0;
+
+    int verticalSpan = 1;
+    int horizontalSpan = 1;
+
+    GRIDCONTAINER::VerticalAlignment verticalAlignment = GRIDCONTAINER::VerticalAlignment::CENTER;
+    GRIDCONTAINER::HorizontalAlignment horizontalAlignment = GRIDCONTAINER::HorizontalAlignment::CENTER;
+
+    bool operator==(CELL_PROPERTIES& properties){
+        if(properties.col == col && properties.row == row){
+            return true;
+        }
+        return false;
+    }
+};
 }
 
 #endif // CONSTANTS_H

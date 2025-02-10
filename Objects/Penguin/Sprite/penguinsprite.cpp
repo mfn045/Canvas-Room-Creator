@@ -177,6 +177,8 @@ void PenguinSprite::sceneMousePressed(QPointF posTemp){
     }else if(posTemp.y() < 0){
         posTemp.setY(0);
     }
+    //setDestination(posTemp);
+    //emit changedDestination();
     walkTo(posTemp);
 }
 
@@ -249,57 +251,26 @@ double PenguinSprite::setVelocity(double velocity){
     return this->velocity;
 }
 
-void PenguinSprite::walkTo(QPointF toPos){
-    QPointF currentPos = pos();
-    double x_add = 1;
-    double y_add = 1;
-    if(currentPos.x() > toPos.x()){
-        x_add*=-1;
-    }
-    if(currentPos.y() > toPos.y()){
-        y_add*=-1;
-    }
-    if(thread != nullptr){
-        thread->terminate();
-    }
-    thread = QThread::create([this](QPointF before, QPointF after, double x_add, double y_add){
-        double y_diff = after.y() - before.y();
-        double x_diff = after.x() - before.x();
-        double length = sqrt(pow(y_diff,2)+pow(x_diff,2));
-        double normalized_y = y_diff/length;
-        double normalized_x = x_diff/length;
-        double velocity = getVelocity();
-        while(before != after){
-            if(before.x() != after.x()){
-                before.setX(before.x()+normalized_x*velocity);
-                if(x_add == 1){
-                    if(before.x() > after.x()){
-                        before.setX(after.x());
-                    }
-                }else if(x_add == -1){
-                    if(before.x() < after.x()){
-                        before.setX(after.x());
-                    }
-                }
+QPointF PenguinSprite::getDestination(){
+    return this->destination;
+}
+QPointF PenguinSprite::setDestination(QPointF destination){
+    this->destination = destination;
+    return this->destination;
+}
+
+void PenguinSprite::walkTo(QPointF after){
+    ThreadPoolManager* tpm = ThreadPoolManager::getInstance();
+    PenguinSpriteMoveWorker* worker = tpm->getPSMW();
+    worker->addToMovingSprites(this,after);
+    if(!worker->hasStarted()){
+        connect(worker,&PenguinSpriteMoveWorker::finished,[tpm, worker](){
+            if(tpm && worker){
+                tpm->resetPSMW();
             }
-            if(before.y() != after.y()){
-                before.setY(before.y()+normalized_y*velocity);
-                if(y_add == 1){
-                    if(before.y() > after.y()){
-                        before.setY(after.y());
-                    }
-                }else if(y_add == -1){
-                    if(before.y() < after.y()){
-                        before.setY(after.y());
-                    }
-                }
-            }
-            QMetaObject::invokeMethod(this,"setPosition",Qt::QueuedConnection, Q_ARG(QPointF,before));
-            QThread::msleep(5);
-        }
-        QMetaObject::invokeMethod(this,"resetPenguin", Qt::QueuedConnection);
-    }, currentPos, toPos,x_add,y_add);
-    thread->start();
+        });
+        tpm->start(worker);
+    }
 }
 
 void PenguinSprite::resetPenguin(){

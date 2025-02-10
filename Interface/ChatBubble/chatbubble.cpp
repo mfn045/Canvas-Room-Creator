@@ -33,7 +33,7 @@ ChatBubble::ChatBubble(MultiCanvasObject* parent, QString msg) {
     //bubbleTextBox->getInput()->setWordWrapMode(QTextOption::WordWrap);
 
     QFont font(bubbleTextLabel->font());
-    font.setFamily("_sans");
+    font.setFamily("Sans Serif");
     font.setPointSize(fontSize);
     bubbleTextLabel->setFont(font);
 
@@ -84,7 +84,7 @@ void ChatBubble::setText(QString msg){
         chatbubble = chatbubble_large;
     }
     QFont font(bubbleTextLabel->font());
-    font.setFamily("sans");
+    font.setFamily("Sans Serif");
     font.setPointSize(fontSize);
     bubbleTextLabel->setFont(font);
 

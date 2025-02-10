@@ -3,7 +3,6 @@
 
 #include "../../CanvasObject/Multi/multicanvasobject.h"
 #include "../TextLabel/textlabel.h"
-#include <QThread>
 
 class Notification : public MultiCanvasObject
 {
@@ -17,7 +16,6 @@ private:
     PROPERTIES* twoDigitProperties = nullptr;
     TextLabel* digitLabel = nullptr;
     int number = 0;
-    QThread* thread = nullptr;
 };
 
 #endif // NOTIFICATION_H

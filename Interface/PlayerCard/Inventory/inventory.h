@@ -2,6 +2,7 @@
 #define INVENTORY_H
 
 #include "../../../CanvasObject/Multi/multicanvasobject.h"
+#include "../../../Objects/Constants/constants.h"
 #include "../../SvgGridContainer/gridcontainer.h"
 #include "../../Buttons/WhiteSquareButton/whitesquarebutton.h"
 #include "../../Buttons/OvalButton/ovalbutton.h"
@@ -15,31 +16,18 @@
 class Inventory : public MultiCanvasObject
 {
 public:
-    enum SORT {
-        COLOR=1,
-        HEAD,
-        FACE,
-        NECK,
-        BODY,
-        HAND,
-        FEET,
-        PIN,
-        BACKGROUND,
-        AWARD,
-        ALL
-    };
     explicit Inventory(MultiCanvasObject* parent = nullptr);
 
-    SORT sortItemsBy(SORT sort);
+    INVENTORY::SORT sortItemsBy(INVENTORY::SORT sort);
 
     Player* setPlayer(Player* player);
 
 private:
     int currentInventoryPage = 1;
 
-    void loadInventoryPage(int page, SORT sort = SORT::ALL);
+    void loadInventoryPage(int page, INVENTORY::SORT sort = INVENTORY::SORT::ALL);
 
-    SORT sort = SORT::ALL;
+    INVENTORY::SORT sort = INVENTORY::SORT::ALL;
 
     Player* player = nullptr;
 
