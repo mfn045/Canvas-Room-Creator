@@ -1,9 +1,9 @@
 #ifndef GAME_H
 #define GAME_H
 
-#include "../Interface/interface.h"
-#include "../Objects/Player/playerfactory.h"
-#include "../SoundManager/soundmanager.h"
+#include "Interface/interface.h"
+#include "Objects/Player/playerfactory.h"
+#include "SoundManager/soundmanager.h"
 
 Interface* createInterface();
 PlayerFactory* createPlayerFactory();

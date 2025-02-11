@@ -12,6 +12,8 @@
         <file>Font/latest/CCComicrazy Regular.ttf</file>
         <file>Font/latest/Sans Serif.ttf</file>
         <file>Font/latest/Burbank Small Bold.ttf</file>
+        <file>Font/latest/CCComicrazyItalic.ttf</file>
+        <file>Font/latest/CCComicrazyRegular.ttf</file>
     </qresource>
     <qresource prefix="/">
         <file>Font/9_cpBurbankBgWdBold.ttf</file>

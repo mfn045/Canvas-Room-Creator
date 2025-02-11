@@ -3,7 +3,7 @@
 
 #include <QThread>
 #include <QRunnable>
-#include "../../CanvasObject/abstractcanvasobject.h"
+#include "Interface/Common/CanvasObject/abstractcanvasobject.h"
 
 class PenguinSpriteMoveWorker : public QObject, public QRunnable
 {

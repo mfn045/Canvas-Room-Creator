@@ -1,17 +1,18 @@
 #ifndef INTERFACE_H
 #define INTERFACE_H
-#include "../widgets/scene.h"
+
 #include <QFontDatabase>
-#include "../Objects/Penguin/Sprite/penguinsprite.h"
-#include "MenuBar/menubar.h"
-#include "News/news.h"
-#include "Mail/mail.h"
-#include "Map/map.h"
-#include "Friend_Requests/friend_requests.h"
-#include "SvgGridContainer/gridcontainer.h"
-#include "ChatHistory/chathistory.h"
-#include "PlayerCard/playercard.h"
-#include "../Objects/Items/items.h"
+#include "AbstractQtWidgets/scene.h"
+#include "Interface/World/Penguin/Sprite/penguinsprite.h"
+#include "Interface/Widgets/ToolBar/toolbar.h"
+#include "Interface/World/Buttons/News/news.h"
+#include "Interface/World/Buttons/Mail/mail.h"
+#include "Interface/World/Buttons/Map/map.h"
+#include "Interface/World/Buttons/Friend_Requests/friend_requests.h"
+#include "Interface/Common/Containers/GridContainer/gridcontainer.h"
+#include "Interface/World/ChatHistory/chathistory.h"
+#include "Interface/Widgets/PlayerCard/playercard.h"
+#include "Objects/Items/items.h"
 
 
 class Interface

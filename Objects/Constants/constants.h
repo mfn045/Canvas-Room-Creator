@@ -158,5 +158,11 @@ struct CELL_PROPERTIES {
     }
 };
 }
+namespace BACKGROUNDCONTAINER {
+enum COLOR {
+    BLUE,
+    ORANGE
+};
+}
 
 #endif // CONSTANTS_H

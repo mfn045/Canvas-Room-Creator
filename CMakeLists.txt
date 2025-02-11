@@ -17,6 +17,8 @@ find_package(Qt6 REQUIRED COMPONENTS Xml)
 find_package(Qt6 REQUIRED COMPONENTS Core)
 find_package(Qt6 REQUIRED COMPONENTS OpenGLWidgets)
 
+include_directories(${CMAKE_SOURCE_DIR})
+
 set(PROJECT_SOURCES
         main.cpp
         roomcanvas.cpp
@@ -30,69 +32,75 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         ${PROJECT_SOURCES}
 
 
-        widgets/layers.h
-        widgets/layers.cpp
+        AbstractQtWidgets/layers.h
+        AbstractQtWidgets/layers.cpp
         resources.qrc
-        widgets/canvas.h
-        widgets/canvas.cpp
+        AbstractQtWidgets/canvas.h
+        AbstractQtWidgets/canvas.cpp
         Dialogs/propertiesdialog.h Dialogs/propertiesdialog.cpp Dialogs/propertiesdialog.ui
-        Interface/MenuBar/menubar.h Interface/MenuBar/menubar.cpp
-        Interface/Buttons/AbstractButton/abstractbutton.h Interface/Buttons/AbstractButton/abstractbutton.cpp
-        Interface/Buttons/CircleButton/circlebutton.h Interface/Buttons/CircleButton/circlebutton.cpp
-        Interface/Map/map.h Interface/Map/map.cpp
-        Interface/News/news.h Interface/News/news.cpp
-        Interface/Moderator/moderator.h Interface/Moderator/moderator.cpp
-        Interface/Mail/mail.h Interface/Mail/mail.cpp
-        Interface/Friend_Requests/friend_requests.h Interface/Friend_Requests/friend_requests.cpp
-        Interface/TextBox/textbox.h Interface/TextBox/textbox.cpp
-        Interface/ChatBubble/chatbubble.h Interface/ChatBubble/chatbubble.cpp
-        Interface/Dialogs/abstractdialog.h Interface/Dialogs/abstractdialog.cpp
-        widgets/scene.h widgets/scene.cpp
-        Interface/Buttons/OrangeButton/orangebutton.h Interface/Buttons/OrangeButton/orangebutton.cpp
-        Interface/Buttons/BlueButton/bluebutton.h Interface/Buttons/BlueButton/bluebutton.cpp
-        Interface/Dialogs/YesNoDialog/yesnodialog.h Interface/Dialogs/YesNoDialog/yesnodialog.cpp
-        Interface/TextLabel/textlabel.h Interface/TextLabel/textlabel.cpp
-        Interface/TextLabel/textlabelinput.h Interface/TextLabel/textlabelinput.cpp
-        Interface/ChatHistory/chathistory.h Interface/ChatHistory/chathistory.cpp
-        Interface/Buttons/BlueRectButton/bluerectbutton.h Interface/Buttons/BlueRectButton/bluerectbutton.cpp
-        Interface/ChatHistory/chathistory_message.h Interface/ChatHistory/chathistory_message.cpp
+        Interface/Widgets/ToolBar/toolbar.h Interface/Widgets/ToolBar/toolbar.cpp
+        Interface/Widgets/Buttons/AbstractButton/abstractbutton.h Interface/Widgets/Buttons/AbstractButton/abstractbutton.cpp
+        Interface/Widgets/Buttons/CircleButton/circlebutton.h Interface/Widgets/Buttons/CircleButton/circlebutton.cpp
+        Interface/World/Buttons/Map/map.h Interface/World/Buttons/Map/map.cpp
+        Interface/World/Buttons/News/news.h Interface/World/Buttons/News/news.cpp
+        Interface/World/Buttons/Moderator/moderator.h Interface/World/Buttons/Moderator/moderator.cpp
+        Interface/World/Buttons/Mail/mail.h Interface/World/Buttons/Mail/mail.cpp
+        Interface/World/Buttons/Friend_Requests/friend_requests.h Interface/World/Buttons/Friend_Requests/friend_requests.cpp
+        Interface/Common/TextBox/textbox.h Interface/Common/TextBox/textbox.cpp
+        Interface/World/ChatBubble/chatbubble.h Interface/World/ChatBubble/chatbubble.cpp
+        Interface/Widgets/Dialogs/abstractdialog.h Interface/Widgets/Dialogs/abstractdialog.cpp
+        AbstractQtWidgets/scene.h AbstractQtWidgets/scene.cpp
+        Interface/Widgets/Buttons/OrangeButton/orangebutton.h Interface/Widgets/Buttons/OrangeButton/orangebutton.cpp
+        Interface/Widgets/Buttons/BlueButton/bluebutton.h Interface/Widgets/Buttons/BlueButton/bluebutton.cpp
+        Interface/Widgets/Dialogs/YesNoDialog/yesnodialog.h Interface/Widgets/Dialogs/YesNoDialog/yesnodialog.cpp
+        Interface/Common/TextLabel/textlabel.h Interface/Common/TextLabel/textlabel.cpp
+        Interface/Common/TextLabel/textlabelinput.h Interface/Common/TextLabel/textlabelinput.cpp
+        Interface/World/ChatHistory/chathistory.h Interface/World/ChatHistory/chathistory.cpp
+        Interface/Widgets/Buttons/BlueRectButton/bluerectbutton.h Interface/Widgets/Buttons/BlueRectButton/bluerectbutton.cpp
+        Interface/World/ChatHistory/chathistory_message.h Interface/World/ChatHistory/chathistory_message.cpp
 
 
-        Interface/SvgGridContainer/gridcontainer.h Interface/SvgGridContainer/gridcontainer.cpp
-        Interface/Buttons/WhiteSquareButton/whitesquarebutton.h Interface/Buttons/WhiteSquareButton/whitesquarebutton.cpp
+        Interface/Common/Containers/GridContainer/gridcontainer.h Interface/Common/Containers/GridContainer/gridcontainer.cpp
+        Interface/Widgets/Buttons/WhiteSquareButton/whitesquarebutton.h Interface/Widgets/Buttons/WhiteSquareButton/whitesquarebutton.cpp
         Interface/interface.h Interface/interface.cpp
-        Interface/Notification/notification.h Interface/Notification/notification.cpp
-        Interface/PlayerCard/playercard.h Interface/PlayerCard/playercard.cpp
-        Interface/DialogGrid/dialoggrid.h Interface/DialogGrid/dialoggrid.cpp
-        Interface/Buttons/CircleButton/circlebutton.h
-        widgets/openglwidget.h widgets/openglwidget.cpp
-        Objects/Penguin/clothes.h Objects/Penguin/clothes.cpp
-        Objects/Badge/badge.h Objects/Badge/badge.cpp
+        Interface/World/Buttons/Notification/notification.h Interface/World/Buttons/Notification/notification.cpp
+        Interface/Widgets/PlayerCard/playercard.h Interface/Widgets/PlayerCard/playercard.cpp
+        Interface/Widgets/DialogGrid/dialoggrid.h Interface/Widgets/DialogGrid/dialoggrid.cpp
+        Interface/Widgets/Buttons/CircleButton/circlebutton.h
+        AbstractQtWidgets/openglwidget.h AbstractQtWidgets/openglwidget.cpp
+        Interface/World/Penguin/clothes.h Interface/World/Penguin/clothes.cpp
+        Interface/Widgets/PlayerCard/Badge/badge.h Interface/Widgets/PlayerCard/Badge/badge.cpp
 
         Objects/Items/items.h Objects/Items/items.cpp
-        Interface/Buttons/Inventory/CategoryButton/categorybutton.h Interface/Buttons/Inventory/CategoryButton/categorybutton.cpp
-        Interface/Buttons/WhiteRectButton/whiterectbutton.h Interface/Buttons/WhiteRectButton/whiterectbutton.cpp
-        Interface/Buttons/OvalButton/ovalbutton.h Interface/Buttons/OvalButton/ovalbutton.cpp
-        Interface/PlayerCard/Inventory/inventory.h Interface/PlayerCard/Inventory/inventory.cpp
+        Interface/Widgets/Buttons/Inventory/CategoryButton/categorybutton.h Interface/Widgets/Buttons/Inventory/CategoryButton/categorybutton.cpp
+        Interface/Widgets/Buttons/WhiteRectButton/whiterectbutton.h Interface/Widgets/Buttons/WhiteRectButton/whiterectbutton.cpp
+        Interface/Widgets/Buttons/OvalButton/ovalbutton.h Interface/Widgets/Buttons/OvalButton/ovalbutton.cpp
+        Interface/Widgets/PlayerCard/Inventory/inventory.h Interface/Widgets/PlayerCard/Inventory/inventory.cpp
         Objects/Constants/constants.h
-        Objects/Penguin/Sprite/penguinspritebase.h Objects/Penguin/Sprite/penguinspritebase.cpp
-        Objects/Penguin/Sprite/penguinsprite.h Objects/Penguin/Sprite/penguinsprite.cpp
-        Objects/Penguin/Sprite/Clothing/penguinspriteclothing.h Objects/Penguin/Sprite/Clothing/penguinspriteclothing.cpp
-        Objects/Penguin/Paper/penguinpaper.h Objects/Penguin/Paper/penguinpaper.cpp
-        CanvasObject/Atlas/atlascanvasobject.h CanvasObject/Atlas/atlascanvasobject.cpp
-        CanvasObject/abstractcanvasobject.h CanvasObject/abstractcanvasobject.cpp
-        CanvasObject/Multi/multicanvasobject.h CanvasObject/Multi/multicanvasobject.cpp
-        CanvasObject/Multi/Masked/maskedmulticanvasobject.h CanvasObject/Multi/Masked/maskedmulticanvasobject.cpp
+        Interface/World/Penguin/Sprite/penguinspritebase.h Interface/World/Penguin/Sprite/penguinspritebase.cpp
+        Interface/World/Penguin/Sprite/penguinsprite.h Interface/World/Penguin/Sprite/penguinsprite.cpp
+        Interface/World/Penguin/Sprite/Clothing/penguinspriteclothing.h Interface/World/Penguin/Sprite/Clothing/penguinspriteclothing.cpp
+        Interface/World/Penguin/Paper/penguinpaper.h Interface/World/Penguin/Paper/penguinpaper.cpp
+        Interface/Common/CanvasObject/Atlas/atlascanvasobject.h Interface/Common/CanvasObject/Atlas/atlascanvasobject.cpp
+        Interface/Common/CanvasObject/abstractcanvasobject.h Interface/Common/CanvasObject/abstractcanvasobject.cpp
+        Interface/Common/CanvasObject/Multi/multicanvasobject.h Interface/Common/CanvasObject/Multi/multicanvasobject.cpp
+        Interface/Common/CanvasObject/Multi/Masked/maskedmulticanvasobject.h Interface/Common/CanvasObject/Multi/Masked/maskedmulticanvasobject.cpp
         Objects/Player/playerfactory.h Objects/Player/playerfactory.cpp
         Objects/Player/player.h Objects/Player/player.cpp
         Game/game.h Game/game.cpp
         SoundManager/soundmanager.h SoundManager/soundmanager.cpp
         InputManager/inputmanager.h InputManager/inputmanager.cpp
-        Interface/Loading/loadingbar.h Interface/Loading/loadingbar.cpp
-        Interface/Loading/loading.h Interface/Loading/loading.cpp
+        Interface/Screens/LoadingScreen/loadingbar.h Interface/Screens/LoadingScreen/loadingbar.cpp
+        Interface/Screens/LoadingScreen/loading.h Interface/Screens/LoadingScreen/loading.cpp
         ThreadPoolManager/LoadingBarWorker/loadingbarworker.h ThreadPoolManager/LoadingBarWorker/loadingbarworker.cpp
         ThreadPoolManager/PenguinSpriteMoveWorker/penguinspritemoveworker.h ThreadPoolManager/PenguinSpriteMoveWorker/penguinspritemoveworker.cpp
         ThreadPoolManager/threadpoolmanager.h ThreadPoolManager/threadpoolmanager.cpp
+
+
+        Interface/Common/TitleLabel/titlelabel.h Interface/Common/TitleLabel/titlelabel.cpp
+        Interface/Widgets/Settings/settings.h Interface/Widgets/Settings/settings.cpp
+        Interface/Widgets/BackgroundContainer/backgroundcontainer.h Interface/Widgets/BackgroundContainer/backgroundcontainer.cpp
+
 
 
 
@@ -115,6 +123,7 @@ else()
     endif()
 endif()
 
+target_include_directories(Clubpenguin-Room-Creator PRIVATE ${CMAKE_SOURCE_DIR})
 target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
 target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::Svg)
 target_link_libraries(Clubpenguin-Room-Creator PRIVATE Qt6::SvgWidgets)

@@ -46,6 +46,14 @@ bool Interface::loadFonts(){
     id = QFontDatabase::addApplicationFont(":/resources/Font/latest/Burbank Small Medium.ttf");
     family = QFontDatabase::applicationFontFamilies(id).at(0);
     qDebug() << id << family;
+
+    id = QFontDatabase::addApplicationFont(":/resources/Font/latest/CCComicrazyRegular.ttf");
+    family = QFontDatabase::applicationFontFamilies(id).at(0);
+    qDebug() << id << family;
+
+    id = QFontDatabase::addApplicationFont(":/resources/Font/latest/CCComicrazyItalic.ttf");
+    family = QFontDatabase::applicationFontFamilies(id).at(0);
+    qDebug() << id << family;
     return true;
 }
 
@@ -70,7 +78,7 @@ PlayerCard* Interface::getPlayerCard(){
 
 bool Interface::loadHUD(){
     if(!scene) return false;
-    MenuBar* bar = new MenuBar(scene);
+    ToolBar* bar = new ToolBar(scene);
     // w.getItems().append(bar);
     bar->setID(scene->getUniqueID());
     scene->addItem(bar);

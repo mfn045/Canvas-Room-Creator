@@ -1,10 +1,10 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "../../ThreadPoolManager/PenguinSpriteMoveWorker/penguinspritemoveworker.h"
-#include "../Penguin/Sprite/penguinsprite.h"
-#include "../Penguin/Paper/penguinpaper.h"
-#include "../Constants/constants.h"
+#include "ThreadPoolManager/PenguinSpriteMoveWorker/penguinspritemoveworker.h"
+#include "Interface/World/Penguin/Sprite/penguinsprite.h"
+#include "Interface/World/Penguin/Paper/penguinpaper.h"
+#include "Objects/Constants/constants.h"
 
 class Player
 {

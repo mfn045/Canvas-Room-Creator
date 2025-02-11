@@ -1,16 +1,18 @@
-#include "roomcanvas.h"
-#include "Game/game.h"
-#include "Interface/interface.h"
-#include "CanvasObject/Multi/multicanvasobject.h"
-#include "CanvasObject/Atlas/atlascanvasobject.h"
-#include "Objects/Penguin/Sprite/penguinsprite.h"
-#include "Interface/Dialogs/YesNoDialog/yesnodialog.h"
-#include "Interface/Loading/loading.h"
+#include <QApplication>
 #include <QRect>
 #include <QException>
 #include <QFontDatabase>
-
-#include <QApplication>
+#include "roomcanvas.h"
+#include "Game/game.h"
+#include "Interface/interface.h"
+#include "Interface/Common/CanvasObject/Multi/multicanvasobject.h"
+#include "Interface/Common/CanvasObject/Atlas/atlascanvasobject.h"
+#include "Interface/Common/TitleLabel/titlelabel.h"
+#include "Interface/World/Penguin/Sprite/penguinsprite.h"
+#include "Interface/Widgets/BackgroundContainer/backgroundcontainer.h"
+#include "Interface/Widgets/Dialogs/YesNoDialog/yesnodialog.h"
+#include "Interface/Widgets/Settings/settings.h"
+#include "Interface/Screens/LoadingScreen/loading.h"
 
 int main(int argc, char *argv[])
 {
@@ -86,6 +88,7 @@ int main(int argc, char *argv[])
     //loading->incrementStep();
 
     interface->loadPlayerCard();
+
     //loading->incrementStep();
     //interface->getScene()->removeItem(loading);
 

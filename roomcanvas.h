@@ -3,21 +3,21 @@
 
 #include <QMainWindow>
 #include <QGraphicsView>
-#include "widgets/openglwidget.h"
-#include "widgets/scene.h"
 #include <QThread>
 #include <QFileDialog>
 #include <QMessageBox>
 #include <QAbstractButton>
 #include <QSizePolicy>
 #include <QMenu>
-#include "widgets/layers.h"
-#include "widgets/canvas.h"
-#include "CanvasObject/Multi/multicanvasobject.h"
-#include "CanvasObject/Atlas/atlascanvasobject.h"
-#include "ThreadPoolManager/threadpoolmanager.h"
 #include <QInputDialog>
 #include <QMouseEvent>
+#include "AbstractQtWidgets/openglwidget.h"
+#include "AbstractQtWidgets/scene.h"
+#include "AbstractQtWidgets/layers.h"
+#include "AbstractQtWidgets/canvas.h"
+#include "Interface/Common/CanvasObject/Multi/multicanvasobject.h"
+#include "Interface/Common/CanvasObject/Atlas/atlascanvasobject.h"
+#include "ThreadPoolManager/threadpoolmanager.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
