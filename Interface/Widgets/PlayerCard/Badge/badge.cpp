@@ -10,6 +10,7 @@ Badge::~Badge(){
 
 void Badge::setBadge(PENGUIN::BADGE badgeType){
     clearBadge();
+    AssetsManager* am = AssetsManager::getInstance();
     if(badgeType == PENGUIN::BADGE::MEMBER_0
         || badgeType == PENGUIN::BADGE::MEMBER_1
         || badgeType == PENGUIN::BADGE::MEMBER_2
@@ -17,17 +18,17 @@ void Badge::setBadge(PENGUIN::BADGE badgeType){
         || badgeType == PENGUIN::BADGE::MEMBER_4){
         resetTransform();
         backgroundProperties = new PROPERTIES();
-        backgroundProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/background/1.svg";
+        backgroundProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.background");
         initFrames(backgroundProperties->filePath,backgroundProperties);
         setCurrentFrames(backgroundProperties);
         setFrame(0);
 
         flashy = new MaskedMultiCanvasObject(this);
         flashy->setHasAnimationLoop(true);
-        flashy->setMask("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/flashy_mask.svg");
+        flashy->setMask(am->getAssetPath("interface.widgets.playercard.badge.member.flashy_mask"));
         flashy->getRegion().translate(QPoint(323,381));
         PROPERTIES* flashyProperties = new PROPERTIES();
-        flashyProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/flashy";
+        flashyProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.flashy");
         flashy->initFrames(flashyProperties->filePath,flashyProperties);
         flashy->setCurrentFrames(flashyProperties);
         flashy->setFrame(0);
@@ -41,7 +42,7 @@ void Badge::setBadge(PENGUIN::BADGE badgeType){
 
         star = new MultiCanvasObject(this);
         PROPERTIES* starProperties = new PROPERTIES();
-        starProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/star/1.svg";
+        starProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.star");
         star->initFrames(starProperties->filePath,starProperties);
         star->setCurrentFrames(starProperties);
         star->setFrame(0);
@@ -53,7 +54,7 @@ void Badge::setBadge(PENGUIN::BADGE badgeType){
 
         ribbon_front = new MultiCanvasObject(this);
         PROPERTIES* rfProperties = new PROPERTIES();
-        rfProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/ribbon_front/en.svg";
+        rfProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.ribbon_front");
         ribbon_front->initFrames(rfProperties->filePath,rfProperties);
         ribbon_front->setCurrentFrames(rfProperties);
         ribbon_front->setFrame(0);
@@ -64,7 +65,7 @@ void Badge::setBadge(PENGUIN::BADGE badgeType){
         ribbon_back = new MultiCanvasObject(this);
         ribbon_back->setFlag(QGraphicsSvgItem::GraphicsItemFlag::ItemStacksBehindParent);
         PROPERTIES* rbProperties = new PROPERTIES();
-        rbProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/ribbon_back/1.svg";
+        rbProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.ribbon_back");
         ribbon_back->initFrames(rbProperties->filePath,rbProperties);
         ribbon_back->setCurrentFrames(rbProperties);
         ribbon_back->setFrame(0);
@@ -74,18 +75,15 @@ void Badge::setBadge(PENGUIN::BADGE badgeType){
         if(badgeType > PENGUIN::BADGE::MEMBER_0){
             chevron = new MultiCanvasObject(this);
             PROPERTIES* chevronProperties = new PROPERTIES();
-            QString chevronPath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/member/chevron/";
             if(badgeType== PENGUIN::BADGE::MEMBER_1){
-                chevronPath += "member_1";
+                chevronProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.chevron.member_1");
             } else if(badgeType== PENGUIN::BADGE::MEMBER_2){
-                chevronPath += "member_2";
+                chevronProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.chevron.member_2");
             } else if(badgeType== PENGUIN::BADGE::MEMBER_3){
-                chevronPath += "member_3";
+                chevronProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.chevron.member_3");
             } else if(badgeType== PENGUIN::BADGE::MEMBER_4){
-                chevronPath += "member_4";
+                chevronProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.member.chevron.member_4");
             }
-            chevronPath += ".svg";
-            chevronProperties->filePath = chevronPath;
             chevron->initFrames(chevronProperties->filePath,chevronProperties);
             chevron->setCurrentFrames(chevronProperties);
             chevron->setFrame(0);
@@ -95,7 +93,7 @@ void Badge::setBadge(PENGUIN::BADGE badgeType){
         }
     } else if(badgeType == PENGUIN::BADGE::PLAYER){
         backgroundProperties = new PROPERTIES();
-        backgroundProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/badge/player/1.svg";
+        backgroundProperties->filePath = am->getAssetPath("interface.widgets.playercard.badge.player");
         initFrames(backgroundProperties->filePath,backgroundProperties);
         setCurrentFrames(backgroundProperties);
         setFrame(0);

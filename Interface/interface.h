@@ -8,6 +8,7 @@
 #include "Interface/World/Buttons/News/news.h"
 #include "Interface/World/Buttons/Mail/mail.h"
 #include "Interface/World/Buttons/Map/map.h"
+#include "Interface/World/Buttons/Moderator/moderator.h"
 #include "Interface/World/Buttons/Friend_Requests/friend_requests.h"
 #include "Interface/Common/Containers/GridContainer/gridcontainer.h"
 #include "Interface/World/ChatHistory/chathistory.h"

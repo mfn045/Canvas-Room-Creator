@@ -37,10 +37,12 @@ protected:
         point.setX(boundingRect().width()+centerX);
         if(point.y() < 0+boundingRect().height()){
             point.setY(0+boundingRect().height());
-            setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/arrows/up.svg");
+            AssetsManager* am = AssetsManager::getInstance();
+            setIcon(am->getAssetPath("interface.icons.arrows.up"));
         }else if(point.y() > maxHeight){
             point.setY(maxHeight);
-            setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/arrows/down.svg");
+            AssetsManager* am = AssetsManager::getInstance();
+            setIcon(am->getAssetPath("interface.icons.arrows.up"));
         }
         return point;
     }

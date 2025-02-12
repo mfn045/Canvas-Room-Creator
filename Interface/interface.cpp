@@ -127,8 +127,8 @@ bool Interface::loadHUD(){
     //w.update();
 
 
-    Map* map2 = new Map();
-    container->addGridItem(map2,0,4);
+    Moderator* mod = new Moderator();
+    container->addGridItem(mod,0,4);
 
     Map* map = new Map();
     container->addGridItem(map,2,0);

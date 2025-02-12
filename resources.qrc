@@ -8,29 +8,14 @@
         <file>Font/latest/Burbank Big Wide Bold.ttf</file>
         <file>Font/latest/Burbank Small Black.ttf</file>
         <file>Font/latest/Burbank Small Medium.ttf</file>
-        <file>Font/latest/CCComicrazy Italic.ttf</file>
-        <file>Font/latest/CCComicrazy Regular.ttf</file>
         <file>Font/latest/Sans Serif.ttf</file>
         <file>Font/latest/Burbank Small Bold.ttf</file>
         <file>Font/latest/CCComicrazyItalic.ttf</file>
         <file>Font/latest/CCComicrazyRegular.ttf</file>
     </qresource>
     <qresource prefix="/">
-        <file>Font/9_cpBurbankBgWdBold.ttf</file>
         <file>Font/22_cpBurbankSmallBold.ttf</file>
         <file>Font/29_cpwonderboy.ttf</file>
-        <file>Font/141_Burbank Small.ttf</file>
-        <file>Font/170_Arial Bold.ttf</file>
-        <file>Font/188_Arial.ttf</file>
-        <file>Font/201_Burbank Small Bold.ttf</file>
-        <file>Font/208_Burbank Small Black.ttf</file>
-        <file>Font/292_Arial Narrow.ttf</file>
-        <file>Font/294_Arial Narrow Bold.ttf</file>
-        <file>Font/298_Arial Italic.ttf</file>
-        <file>Font/472_Burbank Big Regular Bold.ttf</file>
-        <file>Font/575_CCComicrazy Italic.ttf</file>
-        <file>Font/1_sans.ttf</file>
-        <file>Font/94_Arial.ttf</file>
         <file>Resources/items.json</file>
     </qresource>
 </RCC>

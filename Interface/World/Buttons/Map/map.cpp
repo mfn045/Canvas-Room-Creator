@@ -1,16 +1,13 @@
 #include "map.h"
 
 Map::Map(MultiCanvasObject* parent) : AbstractButton(parent) {
-    QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/map/up.svg";
-    QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/map/over.svg";
-    QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/map/down.svg";
-
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
+    AssetsManager* am = AssetsManager::getInstance();
+    setUp(am->getAssetPath("interface.world.buttons.map.up"));
+    setDown(am->getAssetPath("interface.world.buttons.map.down"));
+    setOver(am->getAssetPath("interface.world.buttons.map.over"));
 
     notification = new Notification(this);
     notification->setPos(QPointF(25,-5));

@@ -4,22 +4,24 @@ BlueButton::BlueButton(MultiCanvasObject* parent, SIZE size) : AbstractButton(pa
     if(parent != nullptr){
         setParentItem(parent);
     }
-    QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/dialogs/buttons/blue/";
-
-    if(size == SIZE::SMALL){
-        path += "small";
-    }else if(size == SIZE::MEDIUM){
-        path += "medium";
-    }else if(size == SIZE::LARGE){
-        path += "large";
-    }
 
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(path+"/up.svg");
-    setDown(path+"/down.svg");
-    setOver(path+"/over.svg");
+    AssetsManager* am = AssetsManager::getInstance();
+    if(size == SIZE::SMALL){
+        setUp(am->getAssetPath("interface.widgets.buttons.bluebutton.small.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.bluebutton.small.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.bluebutton.small.over"));
+    }else if(size == SIZE::MEDIUM){
+        setUp(am->getAssetPath("interface.widgets.buttons.bluebutton.medium.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.bluebutton.medium.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.bluebutton.medium.over"));
+    }else if(size == SIZE::LARGE){
+        setUp(am->getAssetPath("interface.widgets.buttons.bluebutton.large.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.bluebutton.large.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.bluebutton.large.over"));
+    }
 
     if(text == nullptr){
         text = new QGraphicsProxyWidget(this);

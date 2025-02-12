@@ -2,16 +2,15 @@
 
 BlueRectButton::BlueRectButton(MultiCanvasObject* parent) : AbstractButton(parent)
 {
-    QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/bluerectbutton/up.svg";
-    QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/bluerectbutton/over.svg";
-    QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/bluerectbutton/down.svg";
+    AssetsManager* am = AssetsManager::getInstance();
 
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
+
+    setUp(am->getAssetPath("interface.widgets.buttons.bluerectbutton.up"));
+    setDown(am->getAssetPath("interface.widgets.buttons.bluerectbutton.down"));
+    setOver(am->getAssetPath("interface.widgets.buttons.bluerectbutton.over"));
 }
 
 MultiCanvasObject* BlueRectButton::setIcon(QString filePath){

@@ -5,8 +5,8 @@ PlayerCard::PlayerCard(Scene* scene) {
         this->scene = scene;
     }
     hide();
-    qDebug() << "PLAYER CARD IS BEING SET!!!";
-    setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/rectbuttonstripes/rectbuttonstripes.svg");
+    AssetsManager* am = AssetsManager::getInstance();
+    setIcon(am->getAssetPath("interface.icons.rectbuttonstripes"));
     setPos(QPointF(100,100));
     setFlag(GraphicsItemFlag::ItemIsMovable, true);
     setIsClickable(true);
@@ -46,7 +46,7 @@ PlayerCard::PlayerCard(Scene* scene) {
     container->addGridItem(username,0,1);
 
     CircleButton* xButton = new CircleButton();
-    xButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/close/close.svg");
+    xButton->setIcon(am->getAssetPath("interface.icons.close"));
     GRIDCONTAINER::CELL_PROPERTIES* xButton_CP = container->addGridItem(xButton,0,2);
     xButton_CP->horizontalAlignment = GRIDCONTAINER::HorizontalAlignment::RIGHT;
     connect(xButton,&CircleButton::clicked,[this](){
@@ -55,7 +55,7 @@ PlayerCard::PlayerCard(Scene* scene) {
 
     bg = new MultiCanvasObject();
     PROPERTIES* bg_properties = new PROPERTIES();
-    bg_properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/background.svg";
+    bg_properties->filePath = am->getAssetPath("interface.widgets.playercard.penguinpaper_background");
     bg->initFrames(bg_properties->filePath,bg_properties);
     bg->setCurrentFrames(bg_properties);
     bg->setFrame(0);
@@ -72,31 +72,31 @@ PlayerCard::PlayerCard(Scene* scene) {
     buttonsContainer->setHorizontalSpacing(5);
 
     CircleButton* friendButton = new CircleButton();
-    friendButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/friend/friend.svg");
+    friendButton->setIcon(am->getAssetPath("interface.icons.friend.friend_enabled"));
     buttonsContainer->addGridItem(friendButton,0,0);
 
     CircleButton* findButton = new CircleButton();
-    findButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/help/help.svg");
+    findButton->setIcon(am->getAssetPath("interface.icons.help.help_enabled"));
     buttonsContainer->addGridItem(findButton,0,1);
 
     CircleButton* iglooButton = new CircleButton();
-    iglooButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/igloo/igloo_disabled.svg");
+    iglooButton->setIcon(am->getAssetPath("interface.icons.igloo.igloo_enabled"));
     buttonsContainer->addGridItem(iglooButton,0,2);
 
     CircleButton* mailButton = new CircleButton();
-    mailButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/mail/mail.svg");
+    mailButton->setIcon(am->getAssetPath("interface.icons.mail.mail_enabled"));
     buttonsContainer->addGridItem(mailButton,0,3);
 
     CircleButton* stampButton = new CircleButton();
-    stampButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/stamp/stamp.svg");
+    stampButton->setIcon(am->getAssetPath("interface.icons.stamp.stamp_enabled"));
     buttonsContainer->addGridItem(stampButton,0,4);
 
     CircleButton* ignoreButton = new CircleButton();
-    ignoreButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/ignore/ignore.svg");
+    ignoreButton->setIcon(am->getAssetPath("interface.icons.ignore.ignore_enabled"));
     buttonsContainer->addGridItem(ignoreButton,0,5);
 
     CircleButton* reportButton = new CircleButton();
-    reportButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/moderator/moderator.svg");
+    reportButton->setIcon(am->getAssetPath("interface.icons.moderator.moderator_enabled"));
     buttonsContainer->addGridItem(reportButton,0,6);
     buttonsContainer->updateLayout();
 

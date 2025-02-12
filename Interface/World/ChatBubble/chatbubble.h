@@ -22,9 +22,9 @@ public:
     void setText(QString msg);
 
 private:
-    const QString chatbubble_small = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chatbubble/1.svg";
-    const QString chatbubble_medium = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chatbubble/2.svg";
-    const QString chatbubble_large = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chatbubble/3.svg";
+    const QString chatbubble_small = AssetsManager::getInstance()->getAssetPath("interface.world.chatbubble.1");
+    const QString chatbubble_medium = AssetsManager::getInstance()->getAssetPath("interface.world.chatbubble.2");
+    const QString chatbubble_large = AssetsManager::getInstance()->getAssetPath("interface.world.chatbubble.3");
 
     TextLabel* bubbleTextLabel = nullptr;
 

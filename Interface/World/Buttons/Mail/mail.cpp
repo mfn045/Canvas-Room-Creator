@@ -1,17 +1,15 @@
 #include "mail.h"
 
 Mail::Mail(MultiCanvasObject* parent) : AbstractButton(parent) {
-    QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_up.svg";
-    QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_over.svg";
-    QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/mail/mail_down.svg";
     setIsHoverable(true);
     setIsClickable(true);
 
     setConstPosition(CONST_POSITION::BOTTOM);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
+    AssetsManager* am = AssetsManager::getInstance();
+    setUp(am->getAssetPath("interface.world.buttons.mail.up"));
+    setDown(am->getAssetPath("interface.world.buttons.mail.down"));
+    setOver(am->getAssetPath("interface.world.buttons.mail.over"));
 
     notification = new Notification(this);
     notification->setPos(QPointF(25,-5));

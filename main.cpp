@@ -3,6 +3,8 @@
 #include <QException>
 #include <QFontDatabase>
 #include "roomcanvas.h"
+#include "LocalizationManager/localizationmanager.h"
+#include "AssetsManager/assetsmanager.h"
 #include "Game/game.h"
 #include "Interface/interface.h"
 #include "Interface/Common/CanvasObject/Multi/multicanvasobject.h"
@@ -23,6 +25,13 @@ int main(int argc, char *argv[])
     w->setWindowTitle("Clubpenguin Room Creator");
     w->setWindowIcon(QIcon(":/resources/Resources/logo.png"));
     w->show();
+
+    LocalizationManager* lm = LocalizationManager::getInstance();
+    lm->setLocale(LocalizationManager::LOCALE::DE);
+    lm->loadLocaleFile();
+
+    AssetsManager* am = AssetsManager::getInstance();
+    am->loadAssetsFile();
 
     Game* game = Game::getInstance();
 
@@ -88,6 +97,13 @@ int main(int argc, char *argv[])
     //loading->incrementStep();
 
     interface->loadPlayerCard();
+
+    BackgroundContainer* bc = new BackgroundContainer();
+    bc->setColor(BACKGROUNDCONTAINER::ORANGE);
+    bc->setWidth(500);
+    bc->setHeight(500);
+    bc->init();
+    interface->getScene()->addItem(bc);
 
     //loading->incrementStep();
     //interface->getScene()->removeItem(loading);

@@ -1,8 +1,9 @@
 #include "categorybutton.h"
 
 CategoryButton::CategoryButton(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
+    AssetsManager* am = AssetsManager::getInstance();
     PROPERTIES* properties = new PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/inventory/categorybutton/1.svg";
+    properties->filePath = am->getAssetPath("interface.widgets.buttons.inventory.categorybutton");
 
     initFrames(properties->filePath,properties);
     setCurrentFrames(properties);

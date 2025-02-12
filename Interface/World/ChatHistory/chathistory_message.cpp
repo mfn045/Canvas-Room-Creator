@@ -5,14 +5,15 @@ ChatHistory_Message::ChatHistory_Message(MultiCanvasObject* parent) : MultiCanva
         setParentItem(parent);
     }
 
+    AssetsManager* am = AssetsManager::getInstance();
     properties = new PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chathistory/chathistory_highlight.svg";
+    properties->filePath = am->getAssetPath("interface.widgets.chathistory.chathistory_highlight");
     initFrames(properties->filePath, properties);
     setCurrentFrames(properties);
     setFrame(0);
 
     emptyProperties = new PROPERTIES();
-    emptyProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chathistory/chathistory_nonhighlight.svg";
+    emptyProperties->filePath = am->getAssetPath("interface.widgets.chathistory.chathistory_nonhighlight");
     initFrames(emptyProperties->filePath, emptyProperties);
 
 

@@ -1,7 +1,7 @@
 #include "settings.h"
 
 Settings::Settings(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
-    DialogGrid* grid = new DialogGrid();
+    BackgroundContainer* grid = new BackgroundContainer();
     grid->setWidth(300);
     grid->setHeight(300);
     grid->init();

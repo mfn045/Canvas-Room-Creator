@@ -4,9 +4,8 @@ PenguinSprite::PenguinSprite() {
     setFlag(GraphicsItemFlag::ItemIsSelectable);
     setFlag(GraphicsItemFlag::ItemStacksBehindParent);
 
-    QString directory = "C:/Users/mfn45/OneDrive/Desktop/penguin_old_export/output";
-
-    initFrames(directory);
+    AssetsManager* am = AssetsManager::getInstance();
+    initFrames(am->getAssetPath("interface.world.penguin.penguinsprite"));
 
     setVelocity(3);
 

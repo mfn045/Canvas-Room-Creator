@@ -26,70 +26,29 @@ AbstractDialog::TYPE AbstractDialog::getType(){
 
 AbstractDialog::TYPE AbstractDialog::setType(TYPE type){
     this->type = type;
-    const QString prefix = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/dialogs/grid";
 
-    QString path_top = prefix;
-    QString path_top_left = prefix;
-    QString path_top_right = prefix;
-    QString path_left = prefix;
-    QString path_bottom = prefix;
-    QString path_bottom_left = prefix;
-    QString path_bottom_right = prefix;
-    QString path_right = prefix;
-    QString path_center = prefix;
-
+    AssetsManager* am = AssetsManager::getInstance();
     if(type == TYPE::BLUE){
-        path_top += "/blue";
-        path_top_left += "/blue";
-        path_top_right += "/blue";
-        path_left += "/blue";
-        path_bottom += "/blue";
-        path_bottom_left += "/blue";
-        path_bottom_right += "/blue";
-        path_right += "/blue";
-        path_center += "/blue";
+        this->path_top_left = am->getAssetPath("interface.widgets.dialogs.grid.blue.top_left");
+        this->path_top = am->getAssetPath("interface.widgets.dialogs.grid.blue.top");
+        this->path_top_right = am->getAssetPath("interface.widgets.dialogs.grid.blue.top_right");
+        this->path_bottom_left = am->getAssetPath("interface.widgets.dialogs.grid.blue.bottom_left");
+        this->path_bottom = am->getAssetPath("interface.widgets.dialogs.grid.blue.bottom");
+        this->path_bottom_right = am->getAssetPath("interface.widgets.dialogs.grid.blue.bottom_right");
+        this->path_left = am->getAssetPath("interface.widgets.dialogs.grid.blue.left");
+        this->path_center = am->getAssetPath("interface.widgets.dialogs.grid.blue.center");
+        this->path_right = am->getAssetPath("interface.widgets.dialogs.grid.blue.right");
     }else if(type == TYPE::ORANGE){
-        path_top += "/orange";
-        path_top_left += "/orange";
-        path_top_right += "/orange";
-        path_left += "/orange";
-        path_bottom += "/orange";
-        path_bottom_left += "/orange";
-        path_bottom_right += "/orange";
-        path_right += "/orange";
-        path_center += "/orange";
+        this->path_top_left = am->getAssetPath("interface.widgets.dialogs.grid.orange.top_left");
+        this->path_top = am->getAssetPath("interface.widgets.dialogs.grid.orange.top");
+        this->path_top_right = am->getAssetPath("interface.widgets.dialogs.grid.orange.top_right");
+        this->path_bottom_left = am->getAssetPath("interface.widgets.dialogs.grid.orange.bottom_left");
+        this->path_bottom = am->getAssetPath("interface.widgets.dialogs.grid.orange.bottom");
+        this->path_bottom_right = am->getAssetPath("interface.widgets.dialogs.grid.orange.bottom_right");
+        this->path_left = am->getAssetPath("interface.widgets.dialogs.grid.orange.left");
+        this->path_center = am->getAssetPath("interface.widgets.dialogs.grid.orange.center");
+        this->path_right = am->getAssetPath("interface.widgets.dialogs.grid.orange.right");
     }
-    const QString top_suffix = "/top.svg";
-    const QString top_left_suffix = "/top_left.svg";
-    const QString top_right_suffix = "/top_right.svg";
-    const QString left_suffix = "/left.svg";
-    const QString bottom_suffix = "/bottom.svg";
-    const QString bottom_left_suffix = "/bottom_left.svg";
-    const QString bottom_right_suffix = "/bottom_right.svg";
-    const QString right_suffix = "/right.svg";
-    const QString center_suffix = "/center.svg";
-
-    path_top += top_suffix;
-    path_top_left += top_left_suffix;
-    path_top_right += top_right_suffix;
-    path_left += left_suffix;
-    path_bottom += bottom_suffix;
-    path_bottom_left += bottom_left_suffix;
-    path_bottom_right += bottom_right_suffix;
-    path_right += right_suffix;
-    path_center += center_suffix;
-
-    this->path_top = path_top;
-    this->path_top_left = path_top_left;
-    this->path_top_right = path_top_right;
-
-    this->path_bottom = path_bottom;
-    this->path_bottom_left = path_bottom_left;
-    this->path_bottom_right = path_bottom_right;
-
-    this->path_center = path_center;
-    this->path_left = path_left;
-    this->path_right = path_right;
 
     return this->type;
 }

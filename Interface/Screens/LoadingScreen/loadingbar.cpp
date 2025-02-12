@@ -1,8 +1,9 @@
 #include "loadingbar.h"
 
 LoadingBar::LoadingBar(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
+    AssetsManager* am = AssetsManager::getInstance();
     MultiCanvasObject::PROPERTIES* bgProperties = new MultiCanvasObject::PROPERTIES();
-    bgProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/loadingscreen/loadingbar/background.svg";
+    bgProperties->filePath = am->getAssetPath("interface.screens.loadingscreen.loadingbar.background");
     initFrames(bgProperties->filePath,bgProperties);
     setCurrentFrames(bgProperties);
     setFrame(0);
@@ -10,7 +11,7 @@ LoadingBar::LoadingBar(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
 
     bar = new MaskedMultiCanvasObject(this);
     MaskedMultiCanvasObject::PROPERTIES* barProperties = new MaskedMultiCanvasObject::PROPERTIES();
-    barProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/loadingscreen/loadingbar/bar.svg";
+    barProperties->filePath = am->getAssetPath("interface.screens.loadingscreen.loadingbar.bar");
     bar->initFrames(barProperties->filePath,barProperties);
     bar->setCurrentFrames(barProperties);
     bar->setFrame(0);
@@ -20,7 +21,7 @@ LoadingBar::LoadingBar(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     spinner = new MultiCanvasObject(this);
     spinner->setIndependentFromParent(true);
     MultiCanvasObject::PROPERTIES* spinnerProperties = new MultiCanvasObject::PROPERTIES();
-    spinnerProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/loadingscreen/loadingbar/spinner";
+    spinnerProperties->filePath = am->getAssetPath("interface.screens.loadingscreen.loadingbar.spinner");
     spinner->initFrames(spinnerProperties->filePath,spinnerProperties);
     spinner->setCurrentFrames(spinnerProperties);
     spinner->setFrame(0);

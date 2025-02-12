@@ -1,8 +1,9 @@
 #include "loading.h"
 
 Loading::Loading(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
+    AssetsManager* am = AssetsManager::getInstance();
     PROPERTIES* properties = new PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/loadingscreen/loadingbar/screen/screen.svg";
+    properties->filePath = am->getAssetPath("interface.screens.loadingscreen.screen");
     initFrames(properties->filePath,properties);
     setCurrentFrames(properties);
     setFrame(0);
@@ -18,11 +19,11 @@ Loading::Loading(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     srand(time(0));
     int r = (rand() % 3)+1;
     if(r == 1){
-        animationProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/loadingscreen/loadinganimation/cartsurfer";
+        animationProperties->filePath = am->getAssetPath("interface.screens.loadingscreen.loadinganimation.cartsurfer");
     } else if(r == 2){
-        animationProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/loadingscreen/loadinganimation/pizzatoss";
+        animationProperties->filePath = am->getAssetPath("interface.screens.loadingscreen.loadinganimation.pizzatoss");
     } else if(r == 3){
-        animationProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/loadingscreen/loadinganimation/snowshovel";
+        animationProperties->filePath = am->getAssetPath("interface.screens.loadingscreen.loadinganimation.snowshovel");
     }
     animation->initFrames(animationProperties->filePath,animationProperties);
     animation->setCurrentFrames(animationProperties);

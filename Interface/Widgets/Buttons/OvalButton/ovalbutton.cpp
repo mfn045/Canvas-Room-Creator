@@ -2,25 +2,19 @@
 
 OvalButton::OvalButton(MultiCanvasObject* parent, COLOR color) : AbstractButton(parent)
 {
-    QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/ovalbutton/";
-    QString colorStr = "";
-
-    if(color == COLOR::WHITE){
-        colorStr = "white/";
-    }else if(color == COLOR::BLUE){
-        colorStr = "blue/";
-    }
-
-    QString upButton = path + colorStr + "up.svg";
-    QString overButton = path + colorStr + "over.svg";
-    QString downButton = path + colorStr + "down.svg";
-
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
+    AssetsManager* am = AssetsManager::getInstance();
+    if(color == COLOR::WHITE){
+        setUp(am->getAssetPath("interface.widgets.buttons.ovalbutton.white.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.ovalbutton.white.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.ovalbutton.white.over"));
+    }else if(color == COLOR::BLUE){
+        setUp(am->getAssetPath("interface.widgets.buttons.ovalbutton.blue.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.ovalbutton.blue.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.ovalbutton.blue.over"));
+    }
 }
 
 void OvalButton::setText(QString text){

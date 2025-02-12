@@ -55,7 +55,8 @@ QVariant MultiCanvasObject::itemChange(GraphicsItemChange change, const QVariant
 void MultiCanvasObject::initFrames(QString filePath,PROPERTIES* properties){
     if(filePath.isEmpty()) return;
     if(!QFile(filePath).exists()){
-        filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/unknown/1.svg";
+        AssetsManager* am = AssetsManager::getInstance();
+        filePath = am->getAssetPath("interface.unknown");
         properties->filePath = filePath;
     }
     QList<QByteArray*> arrays;

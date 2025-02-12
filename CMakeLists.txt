@@ -100,6 +100,8 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Interface/Common/TitleLabel/titlelabel.h Interface/Common/TitleLabel/titlelabel.cpp
         Interface/Widgets/Settings/settings.h Interface/Widgets/Settings/settings.cpp
         Interface/Widgets/BackgroundContainer/backgroundcontainer.h Interface/Widgets/BackgroundContainer/backgroundcontainer.cpp
+        LocalizationManager/localizationmanager.h LocalizationManager/localizationmanager.cpp
+        AssetsManager/assetsmanager.h AssetsManager/assetsmanager.cpp
 
 
 

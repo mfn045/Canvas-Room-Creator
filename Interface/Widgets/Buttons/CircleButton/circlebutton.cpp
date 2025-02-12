@@ -2,22 +2,20 @@
 
 CircleButton::CircleButton(MultiCanvasObject* parent, COLOR color) : AbstractButton(parent)
 {
-    QString colorPath = "";
-    if(color == COLOR::BLUE){
-        colorPath = "bluecirclebutton";
-    }else if(color == COLOR::WHITE){
-        colorPath = "whitecirclebutton";
-    }
-    QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/" + colorPath + "/up.svg";
-    QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/" + colorPath + "/over.svg";
-    QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/" + colorPath + "/down.svg";
 
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
+    AssetsManager* am = AssetsManager::getInstance();
+    if(color == COLOR::BLUE){
+        setUp(am->getAssetPath("interface.widgets.buttons.bluecirclebutton.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.bluecirclebutton.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.bluecirclebutton.over"));
+    }else if(color == COLOR::WHITE){
+        setUp(am->getAssetPath("interface.widgets.buttons.whitecirclebutton.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.whitecirclebutton.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.whitecirclebutton.over"));
+    }
 
     setScale(1.2);
 }

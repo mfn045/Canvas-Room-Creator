@@ -1,21 +1,18 @@
 #include "news.h"
 
 News::News(MultiCanvasObject* parent) : AbstractButton(parent) {
-    QString upButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/up.svg";
-    QString overButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/over.svg";
-    QString downButton = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/down.svg";
-
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
+    AssetsManager* am = AssetsManager::getInstance();
+    setUp(am->getAssetPath("interface.world.buttons.news.up"));
+    setDown(am->getAssetPath("interface.world.buttons.news.down"));
+    setOver(am->getAssetPath("interface.world.buttons.news.over"));
 
     notification = new MultiCanvasObject();
     notification->setParentItem(this);
     PROPERTIES* properties = new PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/news/notification.svg";
+    properties->filePath = am->getAssetPath("interface.world.buttons.news.notification");
     notification->initFrames(properties->filePath,properties);
     notification->setCurrentFrames(properties);
     notification->setFrame(0);

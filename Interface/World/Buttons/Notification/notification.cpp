@@ -1,12 +1,13 @@
 #include "notification.h"
 
 Notification::Notification(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
+    AssetsManager* am = AssetsManager::getInstance();
     oneDigitProperties = new PROPERTIES();
-    oneDigitProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/notification/onedigit.svg";
+    oneDigitProperties->filePath = am->getAssetPath("interface.world.buttons.notification.onedigit");
     initFrames(oneDigitProperties->filePath,oneDigitProperties);
 
     twoDigitProperties = new PROPERTIES();
-    twoDigitProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/notification/twodigit.svg";
+    twoDigitProperties->filePath = am->getAssetPath("interface.world.buttons.notification.twodigit");
     initFrames(twoDigitProperties->filePath,twoDigitProperties);
 
     digitLabel = new TextLabel(this);

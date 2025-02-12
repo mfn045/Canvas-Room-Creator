@@ -2,27 +2,21 @@
 
 WhiteSquareButton::WhiteSquareButton(MultiCanvasObject* parent, SIZE size) : AbstractButton(parent)
 {
-    QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/whitesquarebutton/";
-    QString type = "";
-
-    if(size == SIZE::SMALL){
-        type = "small/";
-    }else if(size == SIZE::MEDIUM){
-        type = "medium/";
-    }
-
-    QString upButton = path + type + "up.svg";
-    QString overButton = path + type + "over.svg";
-    QString downButton = path + type + "down.svg";
-    QString disabledButton = path + type + "disabled.svg";
-
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
-    setDisabled(disabledButton);
+    AssetsManager* am = AssetsManager::getInstance();
+    if(size == SIZE::SMALL){
+        setUp(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.small.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.small.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.small.over"));
+        setDisabled(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.small.disabled"));
+    }else if(size == SIZE::MEDIUM){
+        setUp(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.medium.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.medium.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.medium.over"));
+        setDisabled(am->getAssetPath("interface.widgets.buttons.whitesquarebutton.medium.disabled"));
+    }
 }
 
 MultiCanvasObject* WhiteSquareButton::setIcon(QString filePath){

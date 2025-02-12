@@ -4,22 +4,26 @@ OrangeButton::OrangeButton(MultiCanvasObject* parent, SIZE size) : AbstractButto
     if(parent != nullptr){
         setParentItem(parent);
     }
-    QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/dialogs/buttons/orange/";
-
-    if(size == SIZE::SMALL){
-        path += "small";
-    }else if(size == SIZE::MEDIUM){
-        path += "medium";
-    }else if(size == SIZE::LARGE){
-        path += "large";
-    }
 
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(path+"/up.svg");
-    setDown(path+"/down.svg");
-    setOver(path+"/over.svg");
+
+    AssetsManager* am = AssetsManager::getInstance();
+    if(size == SIZE::SMALL){
+        setUp(am->getAssetPath("interface.widgets.buttons.orangebutton.small.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.orangebutton.small.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.orangebutton.small.over"));
+    }else if(size == SIZE::MEDIUM){
+        setUp(am->getAssetPath("interface.widgets.buttons.orangebutton.medium.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.orangebutton.medium.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.orangebutton.medium.over"));
+    }else if(size == SIZE::LARGE){
+        setUp(am->getAssetPath("interface.widgets.buttons.orangebutton.large.up"));
+        setDown(am->getAssetPath("interface.widgets.buttons.orangebutton.large.down"));
+        setOver(am->getAssetPath("interface.widgets.buttons.orangebutton.large.over"));
+    }
+
 
     if(text == nullptr){
         text = new QGraphicsProxyWidget(this);

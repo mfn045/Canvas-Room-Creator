@@ -1,11 +1,9 @@
 #include "inventory.h"
 
 Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
-    /*for(int i = 1; i < 500; i++){
-        ownedItems.append(i);
-    }*/
+    AssetsManager* am = AssetsManager::getInstance();
     PROPERTIES* invProperties = new PROPERTIES();
-    invProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/inventory/inventory.svg";
+    invProperties->filePath = am->getAssetPath("interface.widgets.playercard.inventory.inventory_background");
     setFlag(GraphicsItemFlag::ItemStacksBehindParent,true);
     initFrames(invProperties->filePath,invProperties);
     setCurrentFrames(invProperties);
@@ -43,7 +41,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
 
     MultiCanvasObject* scrollBar = new MultiCanvasObject();
     PROPERTIES* scrollBarProperties = new PROPERTIES();
-    scrollBarProperties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/whitescrollrect/whitescrollrect.svg";
+    scrollBarProperties->filePath = am->getAssetPath("interface.widgets.playercard.inventory.whitescrollrect");
     scrollBar->initFrames(scrollBarProperties->filePath,scrollBarProperties);
     scrollBar->setCurrentFrames(scrollBarProperties);
     scrollBar->setFrame(0);
@@ -51,14 +49,14 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     items->addGridItem(scrollBar,0,3,1,4);
 
     CircleButton* scrollUpButton = new CircleButton(scrollBar,CircleButton::COLOR::WHITE);
-    scrollUpButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/whitearrows/up/up.svg");
+    scrollUpButton->setIcon(am->getAssetPath("interface.icons.arrows.up"));
     scrollUpButton->setPos(QPointF(0,-(scrollUpButton->boundingRect().height()/2)));
     scrollUpButton->connect(scrollUpButton, &CircleButton::clicked, [this](){
         loadInventoryPage(--currentInventoryPage , sort);
     });
 
     CircleButton* scrollDownButton = new CircleButton(scrollBar,CircleButton::COLOR::WHITE);
-    scrollDownButton->setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/whitearrows/down/down.svg");
+    scrollDownButton->setIcon(am->getAssetPath("interface.icons.arrows.down"));
     scrollDownButton->setPos(QPointF(0,scrollBar->boundingRect().height()-(scrollUpButton->boundingRect().height()/2)));
     scrollDownButton->connect(scrollDownButton, &CircleButton::clicked, [this](){
         loadInventoryPage(++currentInventoryPage, sort);

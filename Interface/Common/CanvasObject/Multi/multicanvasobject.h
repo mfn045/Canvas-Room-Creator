@@ -6,6 +6,7 @@
 #include <QCollator>
 #include <QStyleOptionGraphicsItem>
 #include "Interface/Common/CanvasObject/abstractcanvasobject.h"
+#include "AssetsManager/assetsmanager.h"
 
 
 class MultiCanvasObject : public AbstractCanvasObject

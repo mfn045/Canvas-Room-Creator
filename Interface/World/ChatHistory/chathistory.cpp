@@ -4,9 +4,10 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
     if(scene != nullptr){
         this->scene = scene;
     }
+    AssetsManager* am = AssetsManager::getInstance();
     setFlag(AbstractButton::GraphicsItemFlag::ItemIsMovable);
     setScale(-1);
-    setIcon("C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/icons/arrows/up.svg");
+    setIcon(am->getAssetPath("interface.icons.arrows.up"));
     double centerX = (scene->width()-boundingRect().width())/2;
     double centerY = -5;
     setPos(QPointF(boundingRect().width()+centerX,boundingRect().height()+centerY));
@@ -16,7 +17,7 @@ ChatHistory::ChatHistory(Scene* scene) : BlueRectButton() {
     historyBox->setFlag(GraphicsItemFlag::ItemStacksBehindParent);
     historyBox->setParentItem(this);
     PROPERTIES* properties = new PROPERTIES();
-    properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/chathistory/chathistory.svg";
+    properties->filePath = am->getAssetPath("interface.widgets.chathistory.chathistory_background");
     historyBox->initFrames(properties->filePath,properties);
     historyBox->setCurrentFrames(properties);
     historyBox->setFrame(0);

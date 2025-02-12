@@ -2,32 +2,31 @@
 
 WhiteRectButton::WhiteRectButton(MultiCanvasObject* parent, SIZE size, TYPE type) : AbstractButton(parent)
 {
-    QString path = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/buttons/whiterectbutton/";
-    QString sizeStr = "";
-    QString typeStr = "";
-
-    if(size == SIZE::SMALL){
-        sizeStr = "small/";
-    }else if(size == SIZE::MEDIUM){
-        sizeStr = "medium/";
-    }
-
-    if(type == TYPE::WITHOUT_ARROW){
-        typeStr = "without_arrow/";
-    }else if(type == TYPE::WITH_ARROW){
-        typeStr = "with_arrow/";
-    }
-
-    QString upButton = path + sizeStr + typeStr + "up.svg";
-    QString overButton = path + sizeStr + typeStr + "over.svg";
-    QString downButton = path + sizeStr + typeStr + "down.svg";
-
     setIsHoverable(true);
     setIsClickable(true);
 
-    setUp(upButton);
-    setDown(downButton);
-    setOver(overButton);
+    AssetsManager* am = AssetsManager::getInstance();
+    if(size == SIZE::SMALL){
+        if(type == TYPE::WITHOUT_ARROW){
+            setUp(am->getAssetPath("interface.widgets.buttons.whiterectbutton.small.without_arrow.up"));
+            setDown(am->getAssetPath("interface.widgets.buttons.whiterectbutton.small.without_arrow.down"));
+            setOver(am->getAssetPath("interface.widgets.buttons.whiterectbutton.small.without_arrow.over"));
+        }else if(type == TYPE::WITH_ARROW){
+            setUp(am->getAssetPath("interface.widgets.buttons.whiterectbutton.small.with_arrow.up"));
+            setDown(am->getAssetPath("interface.widgets.buttons.whiterectbutton.small.with_arrow.down"));
+            setOver(am->getAssetPath("interface.widgets.buttons.whiterectbutton.small.with_arrow.over"));
+        }
+    }else if(size == SIZE::MEDIUM){
+        if(type == TYPE::WITHOUT_ARROW){
+            setUp(am->getAssetPath("interface.widgets.buttons.whiterectbutton.medium.without_arrow.up"));
+            setDown(am->getAssetPath("interface.widgets.buttons.whiterectbutton.medium.without_arrow.down"));
+            setOver(am->getAssetPath("interface.widgets.buttons.whiterectbutton.medium.without_arrow.over"));
+        }else if(type == TYPE::WITH_ARROW){
+            setUp(am->getAssetPath("interface.widgets.buttons.whiterectbutton.medium.with_arrow.up"));
+            setDown(am->getAssetPath("interface.widgets.buttons.whiterectbutton.medium.with_arrow.down"));
+            setOver(am->getAssetPath("interface.widgets.buttons.whiterectbutton.medium.with_arrow.over"));
+        }
+    }
 }
 
 void WhiteRectButton::setText(QString text){

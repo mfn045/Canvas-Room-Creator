@@ -1,8 +1,9 @@
 #include "penguinpaper.h"
 
 PenguinPaper::PenguinPaper(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
+    AssetsManager* am = AssetsManager::getInstance();
     PROPERTIES* pp_properties = new PROPERTIES();
-    pp_properties->filePath = "C:/Users/mfn45/OneDrive/Desktop/Interface_SVG/playercard/penguin_paper/penguin_paper.svg";
+    pp_properties->filePath = am->getAssetPath("interface.world.penguin.penguinpaper");
     initFrames(pp_properties->filePath,pp_properties);
     setCurrentFrames(pp_properties);
     setFrame(0);
