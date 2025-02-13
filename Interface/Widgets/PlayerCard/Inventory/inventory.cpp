@@ -49,14 +49,14 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     items->addGridItem(scrollBar,0,3,1,4);
 
     CircleButton* scrollUpButton = new CircleButton(scrollBar,CircleButton::COLOR::WHITE);
-    scrollUpButton->setIcon(am->getAssetPath("interface.icons.arrows.up"));
+    scrollUpButton->setIcon(am->getAssetPath("interface.icons.whitearrows.up"));
     scrollUpButton->setPos(QPointF(0,-(scrollUpButton->boundingRect().height()/2)));
     scrollUpButton->connect(scrollUpButton, &CircleButton::clicked, [this](){
         loadInventoryPage(--currentInventoryPage , sort);
     });
 
     CircleButton* scrollDownButton = new CircleButton(scrollBar,CircleButton::COLOR::WHITE);
-    scrollDownButton->setIcon(am->getAssetPath("interface.icons.arrows.down"));
+    scrollDownButton->setIcon(am->getAssetPath("interface.icons.whitearrows.down"));
     scrollDownButton->setPos(QPointF(0,scrollBar->boundingRect().height()-(scrollUpButton->boundingRect().height()/2)));
     scrollDownButton->connect(scrollDownButton, &CircleButton::clicked, [this](){
         loadInventoryPage(++currentInventoryPage, sort);
@@ -64,8 +64,9 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
 
     items->updateLayout();
 
+    LocalizationManager* lm = LocalizationManager::getInstance();
     CategoryButton* category = new CategoryButton(this);
-    category->getButton()->setText("All");
+    category->getButton()->setText(lm->getText("playercard.all_items"));
     category->setPos(QPointF(boundingRect().width()-212,boundingRect().height()-18.5));
 
     GridContainer* categories = new GridContainer(category);
@@ -87,7 +88,7 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     categories->setBottomMargin(3);
 
     WhiteRectButton* otherSort = new WhiteRectButton(nullptr,WhiteRectButton::SIZE::SMALL,WhiteRectButton::TYPE::WITH_ARROW);
-    otherSort->setText("Other");
+    otherSort->setText(lm->getText("playercard.other_items"));
     categories->addGridItem(otherSort,7,0);
 
     //--------
@@ -105,29 +106,53 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     };
 
     WhiteRectButton* pinFlagSort = new WhiteRectButton();
-    pinFlagSort->setText("Pins/Flags");
+    pinFlagSort->setText(lm->getText("playercard.pins_flags_items"));
     otherCategory->addGridItem(pinFlagSort,0,0);
-    pinFlagSort->connect(pinFlagSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    pinFlagSort->connect(pinFlagSort, &WhiteRectButton::clicked, [otherSort,pinFlagSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Pins/Flags");
+        if(pinFlagSort){
+            pinFlagSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(otherSort){
+            otherSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.pins_flags_items"));
+        }
         sortItemsBy(INVENTORY::SORT::PIN);
     });
 
     WhiteRectButton* awardsSort = new WhiteRectButton();
-    awardsSort->setText("Awards");
+    awardsSort->setText(lm->getText("playercard.award_items"));
     otherCategory->addGridItem(awardsSort,1,0);
-    awardsSort->connect(awardsSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    awardsSort->connect(awardsSort, &WhiteRectButton::clicked, [otherSort,awardsSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Awards");
+        if(awardsSort){
+            awardsSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(otherSort){
+            otherSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.award_items"));
+        }
         sortItemsBy(INVENTORY::SORT::AWARD);
     });
 
     WhiteRectButton* backgroundSort = new WhiteRectButton();
-    backgroundSort->setText("Background");
+    backgroundSort->setText(lm->getText("playercard.background_items"));
     otherCategory->addGridItem(backgroundSort,2,0);
-    backgroundSort->connect(backgroundSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    backgroundSort->connect(backgroundSort, &WhiteRectButton::clicked, [otherSort,backgroundSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Background");
+        if(backgroundSort){
+            backgroundSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(otherSort){
+            otherSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.background_items"));
+        }
         sortItemsBy(INVENTORY::SORT::BACKGROUND);
     });
 
@@ -151,74 +176,114 @@ Inventory::Inventory(MultiCanvasObject* parent) : MultiCanvasObject(parent) {
     });
 
     WhiteRectButton* headSort = new WhiteRectButton();
-    headSort->setText("Head");
+    headSort->setText(lm->getText("playercard.head_items"));
     categories->addGridItem(headSort,0,0);
-    headSort->connect(headSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    headSort->connect(headSort, &WhiteRectButton::clicked, [headSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Head");
+        if(headSort){
+            headSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.head_items"));
+        }
         sortItemsBy(INVENTORY::SORT::HEAD);
     });
 
     WhiteRectButton* faceSort = new WhiteRectButton();
-    faceSort->setText("Face");
+    faceSort->setText(lm->getText("playercard.face_items"));
     categories->addGridItem(faceSort,1,0);
-    faceSort->connect(faceSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    faceSort->connect(faceSort, &WhiteRectButton::clicked, [faceSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Head");
+        if(faceSort){
+            faceSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.face_items"));
+        }
         sortItemsBy(INVENTORY::SORT::FACE);
     });
 
     WhiteRectButton* neckSort = new WhiteRectButton();
-    neckSort->setText("Neck");
+    neckSort->setText(lm->getText("playercard.neck_items"));
     categories->addGridItem(neckSort,2,0);
-    neckSort->connect(neckSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    neckSort->connect(neckSort, &WhiteRectButton::clicked, [neckSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Neck");
+        if(neckSort){
+            neckSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.neck_items"));
+        }
         sortItemsBy(INVENTORY::SORT::NECK);
     });
 
     WhiteRectButton* bodySort = new WhiteRectButton();
-    bodySort->setText("Body");
+    bodySort->setText(lm->getText("playercard.body_items"));
     categories->addGridItem(bodySort,3,0);
-    bodySort->connect(bodySort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    bodySort->connect(bodySort, &WhiteRectButton::clicked, [bodySort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Body");
+        if(bodySort){
+            bodySort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.body_items"));
+        }
         sortItemsBy(INVENTORY::SORT::BODY);
     });
 
     WhiteRectButton* handSort = new WhiteRectButton();
-    handSort->setText("Hand");
+    handSort->setText(lm->getText("playercard.hand_items"));
     categories->addGridItem(handSort,4,0);
-    handSort->connect(handSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    handSort->connect(handSort, &WhiteRectButton::clicked, [handSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Hand");
+        if(handSort){
+            handSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.hand_items"));
+        }
         sortItemsBy(INVENTORY::SORT::HAND);
     });
 
     WhiteRectButton* feetSort = new WhiteRectButton();
-    feetSort->setText("Feet");
+    feetSort->setText(lm->getText("playercard.feet_items"));
     categories->addGridItem(feetSort,5,0);
-    feetSort->connect(feetSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    feetSort->connect(feetSort, &WhiteRectButton::clicked, [feetSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Feet");
+        if(feetSort){
+            feetSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.feet_items"));
+        }
         sortItemsBy(INVENTORY::SORT::FEET);
     });
 
     WhiteRectButton* colorSort = new WhiteRectButton();
-    colorSort->setText("Color");
+    colorSort->setText(lm->getText("playercard.color_items"));
     categories->addGridItem(colorSort,6,0);
-    colorSort->connect(colorSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    colorSort->connect(colorSort, &WhiteRectButton::clicked, [colorSort,lm,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("Color");
+        if(colorSort){
+            colorSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.color_items"));
+        }
         sortItemsBy(INVENTORY::SORT::COLOR);
     });
 
     WhiteRectButton* allSort = new WhiteRectButton();
-    allSort->setText("All");
+    allSort->setText(lm->getText("playercard.all_items"));
     categories->addGridItem(allSort,8,0);
-    allSort->connect(allSort, &WhiteRectButton::clicked, [hideAllCategories,category,this](){
+    allSort->connect(allSort, &WhiteRectButton::clicked, [lm,allSort,hideAllCategories,category,this](){
         hideAllCategories();
-        category->getButton()->setText("All");
+        if(allSort){
+            allSort->setCurrentState(WhiteRectButton::STATE::UP);
+        }
+        if(category && lm){
+            category->getButton()->setText(lm->getText("playercard.all_items"));
+        }
         sortItemsBy(INVENTORY::SORT::ALL);
     });
 

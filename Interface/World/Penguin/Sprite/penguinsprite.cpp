@@ -108,7 +108,6 @@ void PenguinSprite::mousePressEvent(QGraphicsSceneMouseEvent *event) {
     if(!isTransparentPixel(event->pos())){
         emit clickedPenguin();
     }
-
 }
 
 void PenguinSprite::sceneMousePressed(QPointF posTemp){

@@ -1,0 +1,322 @@
+{
+    "interface": {
+        "unknown": "assets/interface/unknown/1.svg",
+        "icons": {
+            "arrows": {
+                "down": "assets/interface/icons/arrows/down.svg",
+                "left": "assets/interface/icons/arrows/left.svg",
+                "right": "assets/interface/icons/arrows/right.svg",
+                "up": "assets/interface/icons/arrows/up.svg"
+            },
+            "box": "assets/interface/icons/box/box.svg",
+            "close": "assets/interface/icons/close/close.svg",
+            "emoticon_tongueOut": "assets/interface/icons/emoticon_tongueOut/emoticon_tongueOut.svg",
+            "friend": {
+                "friend_disabled": "assets/interface/icons/friend/friend_disabled.svg",
+                "friend_enabled": "assets/interface/icons/friend/friend_enabled.svg",
+                "friend_remove": "assets/interface/icons/friend/friend_remove.svg"
+            },
+            "help": {
+                "help_disabled": "assets/interface/icons/help/help_disabled.svg",
+                "help_enabled": "assets/interface/icons/help/help_enabled.svg"
+            },
+            "igloo": {
+                "igloo_disabled": "assets/interface/icons/igloo/igloo_disabled.svg",
+                "igloo_enabled": "assets/interface/icons/igloo/igloo_enabled.svg"
+            },
+            "ignore": {
+                "ignore_enabled": "assets/interface/icons/ignore/ignore_enabled.svg",
+                "ignore_disabled": "assets/interface/icons/ignore/ignore_disabled.svg",
+                "ignore_remove": "assets/interface/icons/ignore/ignore_remove.svg"
+            },
+            "mail": {
+                "mail_enabled": "assets/interface/icons/mail/mail_enabled.svg",
+                "mail_disabled": "assets/interface/icons/mail/mail_disabled.svg"
+            },
+            "moderator": {
+                "moderator_enabled": "assets/interface/icons/moderator/moderator_enabled.svg",
+                "moderator_disabled": "assets/interface/icons/moderator/moderator_disabled.svg"
+            },
+            "penguinstate": "assets/interface/icons/penguinstate/penguinstate.svg",
+            "player": {
+                "band_0": "assets/interface/icons/player/band_0.svg",
+                "band_123": "assets/interface/icons/player/band_123.svg"
+            },
+            "rectbuttonstripes": "assets/interface/icons/rectbuttonstripes/rectbuttonstripes.svg",
+            "safechat": "assets/interface/icons/safechat/safechat.svg",
+            "sendchat": "assets/interface/icons/sendchat/sendchat.svg",
+            "settings": "assets/interface/icons/settings/settings.svg",
+            "snowball": "assets/interface/icons/snowball/snowball.svg",
+            "snowballv2": "assets/interface/icons/snowballv2/snowballv2.svg",
+            "stamp": {
+                "stamp_enabled": "assets/interface/icons/stamp/stamp_enabled.svg",
+                "stamp_disabled": "assets/interface/icons/stamp/stamp_disabled.svg"
+            },
+            "whitearrows": {
+                "down": "assets/interface/icons/whitearrows/down/down.svg",
+                "left": "assets/interface/icons/whitearrows/left/left.svg",
+                "right": "assets/interface/icons/whitearrows/right/right.svg",
+                "up": "assets/interface/icons/whitearrows/up/up.svg"
+            }
+        },
+        "screens": {
+            "loadingscreen": {
+                "loadinganimation": {
+                    "cartsurfer": "assets/interface/screens/loadingscreen/loadinganimation/cartsurfer",
+                    "pizzatoss": "assets/interface/screens/loadingscreen/loadinganimation/pizzatoss",
+                    "snowshovel": "assets/interface/screens/loadingscreen/loadinganimation/snowshovel"
+                },
+                "loadingbar": {
+                    "background": "assets/interface/screens/loadingscreen/loadingbar/background.svg",
+                    "bar": "assets/interface/screens/loadingscreen/loadingbar/bar.svg",
+                    "spinner": "assets/interface/screens/loadingscreen/loadingbar/spinner"
+                },
+                "screen": "assets/interface/screens/loadingscreen/screen.svg"
+            },
+            "loginscreen":{
+                "buttons":{
+                    "ovalbutton":{
+                        "small":{
+                            "up":"assets/interface/screens/loginscreen/buttons/ovalbutton/small/up.svg",
+                            "over":"assets/interface/screens/loginscreen/buttons/ovalbutton/small/over",
+                            "down":"assets/interface/screens/loginscreen/buttons/ovalbutton/small/down.svg"
+                        },
+                        "medium":{
+                            "up":"assets/interface/screens/loginscreen/buttons/ovalbutton/medium/up.svg",
+                            "over":"assets/interface/screens/loginscreen/buttons/ovalbutton/medium/over",
+                            "down":"assets/interface/screens/loginscreen/buttons/ovalbutton/medium/down.svg"
+                        }
+                    }
+                }
+            }
+        },
+        "widgets": {
+            "buttons": {
+                "bluebutton": {
+                    "large": {
+                        "down": "assets/interface/widgets/buttons/bluebutton/large/down.svg",
+                        "over": "assets/interface/widgets/buttons/bluebutton/large/over.svg",
+                        "up": "assets/interface/widgets/buttons/bluebutton/large/up.svg"
+                    },
+                    "medium": {
+                        "down": "assets/interface/widgets/buttons/bluebutton/medium/down.svg",
+                        "over": "assets/interface/widgets/buttons/bluebutton/medium/over.svg",
+                        "up": "assets/interface/widgets/buttons/bluebutton/medium/up.svg"
+                    },
+                    "small": {
+                        "down": "assets/interface/widgets/buttons/bluebutton/small/down.svg",
+                        "over": "assets/interface/widgets/buttons/bluebutton/small/over.svg",
+                        "up": "assets/interface/widgets/buttons/bluebutton/small/up.svg"
+                    }
+                },
+                "orangebutton": {
+                    "large": {
+                        "down": "assets/interface/widgets/buttons/orangebutton/large/down.svg",
+                        "over": "assets/interface/widgets/buttons/orangebutton/large/over.svg",
+                        "up": "assets/interface/widgets/buttons/orangebutton/large/up.svg"
+                    },
+                    "medium": {
+                        "down": "assets/interface/widgets/buttons/orangebutton/medium/down.svg",
+                        "over": "assets/interface/widgets/buttons/orangebutton/medium/over.svg",
+                        "up": "assets/interface/widgets/buttons/orangebutton/medium/up.svg"
+                    },
+                    "small": {
+                        "down": "assets/interface/widgets/buttons/orangebutton/small/down.svg",
+                        "over": "assets/interface/widgets/buttons/orangebutton/small/over.svg",
+                        "up": "assets/interface/widgets/buttons/orangebutton/small/up.svg"
+                    }
+                },
+                "bluecirclebutton": {
+                    "up": "assets/interface/widgets/buttons/bluecirclebutton/up.svg",
+                    "over": "assets/interface/widgets/buttons/bluecirclebutton/over.svg",
+                    "down": "assets/interface/widgets/buttons/bluecirclebutton/down.svg"
+                },
+                "checkboxbutton": {
+                    "up": "assets/interface/widgets/buttons/checkboxbutton/up.svg",
+                    "over": "assets/interface/widgets/buttons/checkboxbutton/over.svg",
+                    "down": "assets/interface/widgets/buttons/checkboxbutton/down.svg",
+                    "check": "assets/interface/widgets/buttons/checkboxbutton/check.svg",
+                    "disabled": "assets/interface/widgets/buttons/checkboxbutton/disabled.svg"
+                },
+                "whitecirclebutton": {
+                    "up": "assets/interface/widgets/buttons/whitecirclebutton/up.svg",
+                    "over": "assets/interface/widgets/buttons/whitecirclebutton/over.svg",
+                    "down": "assets/interface/widgets/buttons/whitecirclebutton/down.svg"
+                },
+                "bluerectbutton": {
+                    "up": "assets/interface/widgets/buttons/bluerectbutton/up.svg",
+                    "over": "assets/interface/widgets/buttons/bluerectbutton/over.svg",
+                    "down": "assets/interface/widgets/buttons/bluerectbutton/down.svg"
+                },
+                "ovalbutton": {
+                    "blue": {
+                        "down": "assets/interface/widgets/buttons/ovalbutton/blue/down.svg",
+                        "over": "assets/interface/widgets/buttons/ovalbutton/blue/over.svg",
+                        "up": "assets/interface/widgets/buttons/ovalbutton/blue/up.svg"
+                    },
+                    "white": {
+                        "down": "assets/interface/widgets/buttons/ovalbutton/white/down.svg",
+                        "over": "assets/interface/widgets/buttons/ovalbutton/white/over.svg",
+                        "up": "assets/interface/widgets/buttons/ovalbutton/white/up.svg"
+                    }
+                },
+                "whiterectbutton": {
+                    "medium":{
+                        "with_arrow": {
+                            "down": "assets/interface/widgets/buttons/whiterectbutton/medium/with_arrow/down.svg",
+                            "over": "assets/interface/widgets/buttons/whiterectbutton/medium/with_arrow/over.svg",
+                            "up": "assets/interface/widgets/buttons/whiterectbutton/medium/with_arrow/up.svg"
+                        },
+                        "without_arrow": {
+                            "down": "assets/interface/widgets/buttons/whiterectbutton/medium/without_arrow/down.svg",
+                            "over": "assets/interface/widgets/buttons/whiterectbutton/medium/without_arrow/over.svg",
+                            "up": "assets/interface/widgets/buttons/whiterectbutton/medium/without_arrow/up.svg"
+                        }
+                    },
+                    "small":{
+                        "with_arrow": {
+                            "down": "assets/interface/widgets/buttons/whiterectbutton/small/with_arrow/down.svg",
+                            "over": "assets/interface/widgets/buttons/whiterectbutton/small/with_arrow/over.svg",
+                            "up": "assets/interface/widgets/buttons/whiterectbutton/small/with_arrow/up.svg"
+                        },
+                        "without_arrow": {
+                            "down": "assets/interface/widgets/buttons/whiterectbutton/small/without_arrow/down.svg",
+                            "over": "assets/interface/widgets/buttons/whiterectbutton/small/without_arrow/over.svg",
+                            "up": "assets/interface/widgets/buttons/whiterectbutton/small/without_arrow/up.svg"
+                        }
+                    }
+                },
+                "whitesquarebutton": {
+                    "medium": {
+                        "down": "assets/interface/widgets/buttons/whitesquarebutton/medium/down.svg",
+                        "over": "assets/interface/widgets/buttons/whitesquarebutton/medium/over.svg",
+                        "up": "assets/interface/widgets/buttons/whitesquarebutton/medium/up.svg",
+                        "disabled": "assets/interface/widgets/buttons/whitesquarebutton/medium/disabled.svg"
+                    },
+                    "small": {
+                        "down": "assets/interface/widgets/buttons/whitesquarebutton/small/down.svg",
+                        "over": "assets/interface/widgets/buttons/whitesquarebutton/small/over.svg",
+                        "up": "assets/interface/widgets/buttons/whitesquarebutton/small/up.svg",
+                        "disabled": "assets/interface/widgets/buttons/whitesquarebutton/small/disabled.svg"
+                    }
+                },
+                "inventory":{
+                    "categorybutton":"assets/interface/widgets/buttons/inventory/categorybutton/1.svg"
+                }
+            },
+            "chathistory": {
+                "chathistory_background": "assets/interface/widgets/chathistory/chathistory_background.svg",
+                "chathistory_highlight": "assets/interface/widgets/chathistory/chathistory_highlight.svg",
+                "chathistory_nonhighlight": "assets/interface/widgets/chathistory/chathistory_nonhighlight.svg"
+            },
+            "dialogs": {
+                "dark_background": "assets/interface/widgets/dialogs/dark_background.svg",
+                "grid": {
+                    "blue": {
+                        "bottom": "assets/interface/widgets/dialogs/grid/blue/bottom.svg",
+                        "bottom_left": "assets/interface/widgets/dialogs/grid/blue/bottom_left.svg",
+                        "bottom_right": "assets/interface/widgets/dialogs/grid/blue/bottom_right.svg",
+                        "center": "assets/interface/widgets/dialogs/grid/blue/center.svg",
+                        "left": "assets/interface/widgets/dialogs/grid/blue/left.svg",
+                        "right": "assets/interface/widgets/dialogs/grid/blue/right.svg",
+                        "top": "assets/interface/widgets/dialogs/grid/blue/top.svg",
+                        "top_left": "assets/interface/widgets/dialogs/grid/blue/top_left.svg",
+                        "top_right": "assets/interface/widgets/dialogs/grid/blue/top_right.svg"
+                    },
+                    "orange": {
+                        "bottom": "assets/interface/widgets/dialogs/grid/orange/bottom.svg",
+                        "bottom_left": "assets/interface/widgets/dialogs/grid/orange/bottom_left.svg",
+                        "bottom_right": "assets/interface/widgets/dialogs/grid/orange/bottom_right.svg",
+                        "center": "assets/interface/widgets/dialogs/grid/orange/center.svg",
+                        "left": "assets/interface/widgets/dialogs/grid/orange/left.svg",
+                        "right": "assets/interface/widgets/dialogs/grid/orange/right.svg",
+                        "top": "assets/interface/widgets/dialogs/grid/orange/top.svg",
+                        "top_left": "assets/interface/widgets/dialogs/grid/orange/top_left.svg",
+                        "top_right": "assets/interface/widgets/dialogs/grid/orange/top_right.svg"
+                    }
+                },
+                "info": "assets/interface/widgets/dialogs/info/info.svg",
+                "warn": "assets/interface/widgets/dialogs/warn/warn.svg"
+            },
+            "playercard": {
+                "badge": {
+                    "member": {
+                        "background": "assets/interface/widgets/playercard/badge/member/background/1.svg",
+                        "chevron": {
+                            "member_1": "assets/interface/widgets/playercard/badge/member/chevron/member_1.svg",
+                            "member_2": "assets/interface/widgets/playercard/badge/member/chevron/member_2.svg",
+                            "member_3": "assets/interface/widgets/playercard/badge/member/chevron/member_3.svg",
+                            "member_4": "assets/interface/widgets/playercard/badge/member/chevron/member_4.svg"
+                        },
+                        "flashy": "assets/interface/widgets/playercard/badge/member/flashy",
+                        "flashy_mask": "assets/interface/widgets/playercard/badge/member/flashy_mask.svg",
+                        "ribbon_back": "assets/interface/widgets/playercard/badge/member/ribbon_back/1.svg",
+                        "ribbon_front": "assets/interface/widgets/playercard/badge/member/ribbon_front/en/1.svg",
+                        "star": "assets/interface/widgets/playercard/badge/member/star/1.svg"
+                    },
+                    "player": "assets/interface/widgets/playercard/badge/player/1.svg"
+                },
+                "inventory": {
+                    "inventory_background": "assets/interface/widgets/playercard/inventory/inventory_background.svg",
+                    "whitescrollrect": "assets/interface/widgets/playercard/inventory/whitescrollrect/whitescrollrect.svg"
+                },
+                "penguinpaper_background": "assets/interface/widgets/playercard/penguinpaper_background.svg"
+            },
+            "toolbar": {
+                "chatbar_input_background": "assets/interface/widgets/toolbar/chatbar_input_background.svg",
+                "toolbar_background": "assets/interface/widgets/toolbar/toolbar_background.svg"
+            }
+        },
+        "world": {
+            "buttons": {
+                "friend_requests": {
+                    "down": "assets/interface/world/buttons/friend_requests/down.svg",
+                    "over": "assets/interface/world/buttons/friend_requests/over.svg",
+                    "up": "assets/interface/world/buttons/friend_requests/up.svg"
+                },
+                "mail": {
+                    "down": "assets/interface/world/buttons/mail/down.svg",
+                    "over": "assets/interface/world/buttons/mail/over.svg",
+                    "up": "assets/interface/world/buttons/mail/up.svg"
+                },
+                "map": {
+                    "down": "assets/interface/world/buttons/map/en/down.svg",
+                    "over": "assets/interface/world/buttons/map/en/over.svg",
+                    "up": "assets/interface/world/buttons/map/en/up.svg"
+                },
+                "moderator": {
+                    "down": "assets/interface/world/buttons/moderator/down.svg",
+                    "over": "assets/interface/world/buttons/moderator/over.svg",
+                    "up": "assets/interface/world/buttons/moderator/up.svg"
+                },
+                "news": {
+                    "down": "assets/interface/world/buttons/news/en/down.svg",
+                    "notification": "assets/interface/world/buttons/news/en/notification.svg",
+                    "over": "assets/interface/world/buttons/news/en/over.svg",
+                    "up": "assets/interface/world/buttons/news/en/up.svg"
+                },
+                "notification": {
+                    "onedigit": "assets/interface/world/buttons/notification/onedigit.svg",
+                    "twodigit": "assets/interface/world/buttons/notification/twodigit.svg"
+                },
+                "quiz": {
+                    "down": "assets/interface/world/buttons/quiz/down.svg",
+                    "over": "assets/interface/world/buttons/quiz/over.svg",
+                    "up": "assets/interface/world/buttons/quiz/up.svg"
+                }
+            },
+            "chatbubble": {
+                "1": "assets/interface/world/chatbubble/1.svg",
+                "2": "assets/interface/world/chatbubble/2.svg",
+                "3": "assets/interface/world/chatbubble/3.svg"
+            },
+            "crosshair": {
+                "crosshair": "assets/interface/world/crosshair/crosshair.svg"
+            },
+            "penguin": {
+                "penguinpaper": "assets/interface/world/penguin/penguinpaper/penguinpaper.svg",
+                "penguinsprite": "assets/interface/world/penguin/penguinsprite"
+            }
+        }
+    }
+}

@@ -15,6 +15,9 @@
 #include "Interface/Widgets/Dialogs/YesNoDialog/yesnodialog.h"
 #include "Interface/Widgets/Settings/settings.h"
 #include "Interface/Screens/LoadingScreen/loading.h"
+#include "Interface/Widgets/Buttons/CheckBoxButton/checkboxbutton.h"
+#include "Interface/Screens/LoginScreen/Buttons/LoginOvalButton/loginovalbutton.h"
+#include "Interface/Screens/LoginScreen/LoginScreen_NewPlayer/loginscreen_newplayer.h"
 
 int main(int argc, char *argv[])
 {
@@ -27,7 +30,7 @@ int main(int argc, char *argv[])
     w->show();
 
     LocalizationManager* lm = LocalizationManager::getInstance();
-    lm->setLocale(LocalizationManager::LOCALE::DE);
+    lm->setLocale(LocalizationManager::LOCALE::EN);
     lm->loadLocaleFile();
 
     AssetsManager* am = AssetsManager::getInstance();
@@ -104,6 +107,19 @@ int main(int argc, char *argv[])
     bc->setHeight(500);
     bc->init();
     interface->getScene()->addItem(bc);
+
+    CheckBoxButton* cbb = new CheckBoxButton();
+    cbb->setPos(QPointF(100,100));
+    interface->getScene()->addItem(cbb);
+
+    LoginOvalButton* ob = new LoginOvalButton(nullptr, LoginOvalButton::MEDIUM);
+    ob->setTransform(QTransform(1.4120483,0,0,1.9999695,0,0));
+    ob->setText(R"(<font color="white">Don't have a penguin?</font><br><font color="black">Create a free account now!</font>)");
+    ob->setPos(QPointF(100,200));
+    interface->getScene()->addItem(ob);
+
+    LoginScreen_NewPlayer* loginScreen = new LoginScreen_NewPlayer();
+    interface->addToScene(loginScreen);
 
     //loading->incrementStep();
     //interface->getScene()->removeItem(loading);

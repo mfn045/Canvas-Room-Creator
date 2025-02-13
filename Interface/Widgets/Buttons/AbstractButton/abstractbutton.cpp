@@ -87,6 +87,30 @@ MultiCanvasObject* AbstractButton::setIcon(QString filePath){
     return icon;
 }
 
+void AbstractButton::removeIcon(){
+    if(icon != nullptr){
+        delete icon;
+    }
+}
+
+
+bool AbstractButton::setToggleMode(bool toggleMode){
+    this->toggleMode = toggleMode;
+    return this->toggleMode;
+}
+bool AbstractButton::setToggleOn(bool toggleOn){
+    this->toggleOn = toggleOn;
+    return this->toggleOn;
+}
+bool AbstractButton::isToggleOn(){
+    return this->toggleOn;
+}
+
+void AbstractButton::setCurrentState(STATE state){
+    setCurrentFrames(state);
+    setFrame(0);
+}
+
 void AbstractButton::setCurrentFrames(STATE state){
     bool changed = false;
     for(PROPERTIES* properties : getFrames().keys()){
@@ -105,8 +129,60 @@ void AbstractButton::setCurrentFrames(STATE state){
 void AbstractButton::mousePressEvent(QGraphicsSceneMouseEvent *event){
     if(currentState != STATE::DISABLED){
         if(boundingRect().contains(event->pos()) && !isTransparentPixel(event->pos())){
+            if(toggleMode){
+                if(toggleOn){
+                    toggleOn = false;
+                    /*int oldHeight = boundingRect().height();
+                    setCurrentFrames(STATE::UP);
+                    setFrame(0);
+                    int newHeight = boundingRect().height();
+                    if(oldHeight != newHeight && getConstPosition() == BOTTOM){
+                        QPointF currentPos = pos();
+                        currentPos.setY(currentPos.y()-(newHeight-oldHeight));
+                        setPos(currentPos);
+                    }*/
+                    emit toggledOff();
+                }else{
+                    toggleOn = true;
+                    /*int oldHeight = boundingRect().height();
+                    setCurrentFrames(STATE::DOWN);
+                    setFrame(0);
+                    int newHeight = boundingRect().height();
+                    if(oldHeight != newHeight && getConstPosition() == BOTTOM){
+                        QPointF currentPos = pos();
+                        currentPos.setY(currentPos.y()-(newHeight-oldHeight));
+                        setPos(currentPos);
+                    }*/
+                    emit toggledOn();
+                }
+            }else{
+                int oldHeight = boundingRect().height();
+                setCurrentFrames(STATE::DOWN);
+                setFrame(0);
+                int newHeight = boundingRect().height();
+                if(oldHeight != newHeight && getConstPosition() == BOTTOM){
+                    QPointF currentPos = pos();
+                    currentPos.setY(currentPos.y()-(newHeight-oldHeight));
+                    setPos(currentPos);
+                }
+            }
+            emit clicked();
+        }
+        return QGraphicsObject::mousePressEvent(event);
+    }
+}
+
+void AbstractButton::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
+    if(currentState != STATE::DISABLED){
+        emit mouseMove(event->scenePos());
+        return QGraphicsObject::mouseMoveEvent(event);
+    }
+}
+void AbstractButton::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
+    if(currentState != STATE::DISABLED){
+        if(boundingRect().contains(event->pos()) && !isTransparentPixel(event->pos())){
             int oldHeight = boundingRect().height();
-            setCurrentFrames(STATE::DOWN);
+            setCurrentFrames(STATE::OVER);
             setFrame(0);
             int newHeight = boundingRect().height();
             if(oldHeight != newHeight && getConstPosition() == BOTTOM){
@@ -114,46 +190,50 @@ void AbstractButton::mousePressEvent(QGraphicsSceneMouseEvent *event){
                 currentPos.setY(currentPos.y()-(newHeight-oldHeight));
                 setPos(currentPos);
             }
-            emit clicked();
         }
+        return QGraphicsObject::mouseReleaseEvent(event);
     }
-    return QGraphicsObject::mousePressEvent(event);
-}
-
-void AbstractButton::mouseMoveEvent(QGraphicsSceneMouseEvent *event){
-    emit mouseMove(event->scenePos());
-    return QGraphicsObject::mouseMoveEvent(event);
-}
-void AbstractButton::mouseReleaseEvent(QGraphicsSceneMouseEvent *event){
-    if(boundingRect().contains(event->pos()) && !isTransparentPixel(event->pos())){
-        int oldHeight = boundingRect().height();
-        setCurrentFrames(STATE::OVER);
-        setFrame(0);
-        int newHeight = boundingRect().height();
-        if(oldHeight != newHeight && getConstPosition() == BOTTOM){
-            QPointF currentPos = pos();
-            currentPos.setY(currentPos.y()-(newHeight-oldHeight));
-            setPos(currentPos);
-        }
-    }
-    return QGraphicsObject::mouseReleaseEvent(event);
 }
 
 void AbstractButton::hoverLeaveEvent(QGraphicsSceneHoverEvent *event){
     if(currentState != STATE::DISABLED){
         if(currentState != STATE::UP){
-            int oldHeight = boundingRect().height();
-            setCurrentFrames(STATE::UP);
-            setFrame(0);
-            int newHeight = boundingRect().height();
-            if(oldHeight != newHeight && getConstPosition() == BOTTOM){
-                QPointF currentPos = pos();
-                currentPos.setY(currentPos.y()-(newHeight-oldHeight));
-                setPos(currentPos);
+            if(toggleMode){
+                if(toggleOn){
+                    int oldHeight = boundingRect().height();
+                    setCurrentFrames(STATE::DOWN);
+                    setFrame(0);
+                    int newHeight = boundingRect().height();
+                    if(oldHeight != newHeight && getConstPosition() == BOTTOM){
+                        QPointF currentPos = pos();
+                        currentPos.setY(currentPos.y()-(newHeight-oldHeight));
+                        setPos(currentPos);
+                    }
+                }else{
+                    int oldHeight = boundingRect().height();
+                    setCurrentFrames(STATE::UP);
+                    setFrame(0);
+                    int newHeight = boundingRect().height();
+                    if(oldHeight != newHeight && getConstPosition() == BOTTOM){
+                        QPointF currentPos = pos();
+                        currentPos.setY(currentPos.y()-(newHeight-oldHeight));
+                        setPos(currentPos);
+                    }
+                }
+            }else{
+                int oldHeight = boundingRect().height();
+                setCurrentFrames(STATE::UP);
+                setFrame(0);
+                int newHeight = boundingRect().height();
+                if(oldHeight != newHeight && getConstPosition() == BOTTOM){
+                    QPointF currentPos = pos();
+                    currentPos.setY(currentPos.y()-(newHeight-oldHeight));
+                    setPos(currentPos);
+                }
             }
         }
+        return QGraphicsObject::hoverLeaveEvent(event);
     }
-    return QGraphicsObject::hoverLeaveEvent(event);
 }
 
 void AbstractButton::hoverEnterEvent(QGraphicsSceneHoverEvent *event){
@@ -169,6 +249,6 @@ void AbstractButton::hoverEnterEvent(QGraphicsSceneHoverEvent *event){
                 setPos(currentPos);
             }
         }
+        return QGraphicsObject::hoverLeaveEvent(event);
     }
-    return QGraphicsObject::hoverLeaveEvent(event);
 }

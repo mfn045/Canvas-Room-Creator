@@ -67,7 +67,11 @@ void LocalizationManager::recurse(QString k, QJsonObject& obj){
 }
 
 QString LocalizationManager::getText(QString key){
-    return this->map.value(key);
+    QString found = this->map.value(key);
+    if(found.isEmpty() || found.isNull()){
+        found = "Undefined";
+    }
+    return found;
 }
 
 LocalizationManager* LocalizationManager::getInstance(){

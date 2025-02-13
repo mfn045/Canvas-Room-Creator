@@ -20,13 +20,17 @@ public:
         STATE state = UP;
     };
 
-    void setCurrentFrames(STATE state);
     virtual MultiCanvasObject* setIcon(QString filePath);
+    void removeIcon();
     void setUp(QString filePath);
     void setDown(QString filePath);
     void setOver(QString filePath);
     void setDisabled(QString filePath);
     void setDisabled(bool disabled);
+    bool setToggleMode(bool toggleMode);
+    bool setToggleOn(bool toggleOn);
+    bool isToggleOn();
+    void setCurrentState(STATE state);
 
     MultiCanvasObject* getIcon();
 
@@ -34,6 +38,9 @@ public:
 
 private:
     STATE currentState = UP;
+    bool toggleMode = false;
+    bool toggleOn = false;
+    void setCurrentFrames(STATE state);
 
 protected:
     bool initialized = false;
@@ -48,6 +55,8 @@ protected:
 
 signals:
     void clicked();
+    void toggledOn();
+    void toggledOff();
 };
 
 #endif // BUTTON_H
