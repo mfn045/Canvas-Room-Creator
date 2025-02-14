@@ -86,11 +86,32 @@
                             "over":"assets/interface/screens/loginscreen/buttons/ovalbutton/medium/over",
                             "down":"assets/interface/screens/loginscreen/buttons/ovalbutton/medium/down.svg"
                         }
+                    },
+                    "bluebutton":{
+                        "up":"assets/interface/screens/loginscreen/buttons/bluebutton/up.svg",
+                        "over":"assets/interface/screens/loginscreen/buttons/bluebutton/over.svg",
+                        "down":"assets/interface/screens/loginscreen/buttons/bluebutton/down.svg"
+                    },
+                    "penguinslotbutton":{
+                        "horizontal":{
+                            "up":"assets/interface/screens/loginscreen/buttons/penguinslotbutton/horizontal/up.svg",
+                            "over":"assets/interface/screens/loginscreen/buttons/penguinslotbutton/horizontal/over.svg",
+                            "down":"assets/interface/screens/loginscreen/buttons/penguinslotbutton/horizontal/down.svg"
+                        },
+                        "vertical":{
+                            "up":"assets/interface/screens/loginscreen/buttons/penguinslotbutton/vertical/up.svg",
+                            "over":"assets/interface/screens/loginscreen/buttons/penguinslotbutton/vertical/over.svg",
+                            "down":"assets/interface/screens/loginscreen/buttons/penguinslotbutton/vertical/down.svg"
+                        }
                     }
-                }
+                },
+                "secretnote": "assets/interface/screens/loginscreen/secretnote/en/1.svg"
             }
         },
         "widgets": {
+            "inputs":{
+                "textinput":"assets/interface/widgets/inputs/textinput/1.svg"
+            },
             "buttons": {
                 "bluebutton": {
                     "large": {

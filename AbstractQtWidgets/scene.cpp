@@ -4,7 +4,7 @@ Scene::Scene(QObject *parent)
     : QGraphicsScene{parent}
 {
     QRectF f;
-    f.setRect(0,0,800,600);
+    f.setRect(0,0,760,480);
     setSceneRect(f);
 }
 

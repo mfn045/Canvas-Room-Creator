@@ -3,7 +3,13 @@
 AbstractButton::AbstractButton(MultiCanvasObject *parent)
 {
     setFlag(GraphicsItemFlag::ItemIsSelectable);
-
+    if(parent != nullptr){
+        setParentItem(parent);
+    }
+}
+AbstractButton::AbstractButton(QGraphicsItem *parent)
+{
+    setFlag(GraphicsItemFlag::ItemIsSelectable);
     if(parent != nullptr){
         setParentItem(parent);
     }

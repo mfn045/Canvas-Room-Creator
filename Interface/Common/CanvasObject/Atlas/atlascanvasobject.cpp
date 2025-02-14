@@ -435,98 +435,26 @@ QPainterPath AtlasCanvasObject::parsePath(QString d){
 }
 
 bool AtlasCanvasObject::isTransparentPixel(QPointF pos){
-    qDebug() << actualBoundingRect << pos;
     if(actualBoundingRect.contains(QRectF(pos.x(),pos.y(),1,1))){
-        qDebug() << "CONTAINS POINT!!!";
         return false;
     }
-    qDebug() << "NOPE";
     return true;
 }
 
 void AtlasCanvasObject::paint(QPainter *painter,
                                     const QStyleOptionGraphicsItem *option,
                                     QWidget *widget){
-    /*QStyleOptionGraphicsItem opts(*option);
-
-    opts.state &= ~QStyle::State_Selected;
-
-    QTransform transform = painter->transform();
-    QImage img(1900,4000,QImage::Format_ARGB32_Premultiplied);
-    img.fill(Qt::transparent);
-
-    QPainter p(&img);
-    renderer()->render(&p);
-    p.end();
-    if(!clipRegion.isNull()){
-        qDebug() << "painting" << clipRegion << transform.map(clipRegion);
-        //painter->setClipRegion(clipRegion);
-    }else{
-        qDebug() << "ITS NULL";
-    }
-    painter->drawImage(QRectF(0,0,1900,4000),img);
-
-    QGraphicsSvgItem::paint(painter,&opts,widget);*/
 
     QStyleOptionGraphicsItem opts(*option);
 
     opts.state &= ~QStyle::State_Selected;
-    /*painter->translate(QPointF(50,50));
-    QPainterPath path;
-    path.moveTo(QPointF(11.35, -7.75));
-    path.quadTo(16.0, -4.55,16,0);
-    path.quadTo(16, 4.55, 11.35, 7.8);
-    path.quadTo(6.65, 11.0, 0, 11.0);
-    path.quadTo(-6.65, 11, -11.3, 7.8);
-    path.quadTo(-16.0, 4.55, -16.0, 0);
-    path.quadTo(-16, -4.55, -11.3, -7.75);
-    path.quadTo(-6.65, -11.0, 0, -11.0);
-    path.quadTo(6.65, -11, 11.35, -7.75);
-    painter->setClipPath(path);
-    painter->translate(QPointF(-50,-50));*/
-    //painter->setClipRect(QRectF(25,25,25,25),Qt::ReplaceClip);
+
     painter->save();
     painter->setBrush(QColor("red"));
     painter->drawRect(actualBoundingRect);
     painter->restore();
     actualBoundingRect = QRectF();
     recursivePaint(painter->transform(),painter,"frame-"+QString::number(currentSprite)+"-"+QString::number(currentFrame+1));
-
-    //QPainterPath path;
-    /*path.moveTo(QPointF(19.375,36.7818));
-    path.lineTo(QPointF(19.375,100.625));
-    path.cubicTo(19.375,102.834,21.1659,104.625,23.375,104.625);
-    path.lineTo(QPointF(87.2181,100.625));
-    path.cubicTo(90.7818,104.625,92.5664,100.316,90.0466,97.7966);
-    path.lineTo(26.2034,33.9534);
-    path.cubicTo(23.6836,31.4336,19.375,33.2182,19.375,36.7818);*/
-    /* RING path.moveTo(QPointF(11.35, -7.75));
-    path.quadTo(16.0, -4.55,16,0);
-    path.quadTo(16, 4.55, 11.35, 7.8);
-    path.quadTo(6.65, 11.0, 0, 11.0);
-    path.quadTo(-6.65, 11, -11.3, 7.8);
-    path.quadTo(-16.0, 4.55, -16.0, 0);
-    path.quadTo(-16, -4.55, -11.3, -7.75);
-    path.quadTo(-6.65, -11.0, 0, -11.0);
-    path.quadTo(6.65, -11, 11.35, -7.75);*/
-    //path.closeSubpath();
-    /*painter->save();
-
-    //QRect rect(0,0,50,50);
-
-    //ainter->setClipRegion(rect);
-    painter->setClipRect(QRectF(25,25,25,25),Qt::ReplaceClip);
-
-    painter->setBrush(QColor("red"));
-    painter->setPen(QColor("white"));
-
-    painter->drawRect(QRectF(0,0,100,100));
-
-    painter->restore();*/
-
-    //painter->translate(QPointF(10,0));
-    //painter->restore();
-    //QGraphicsSvgItem::paint(painter,&opts,widget);
 }
 
 

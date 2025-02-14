@@ -102,6 +102,17 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         Interface/Widgets/BackgroundContainer/backgroundcontainer.h Interface/Widgets/BackgroundContainer/backgroundcontainer.cpp
         LocalizationManager/localizationmanager.h LocalizationManager/localizationmanager.cpp
         AssetsManager/assetsmanager.h AssetsManager/assetsmanager.cpp
+        Interface/Widgets/Buttons/CheckBoxButton/checkboxbutton.h Interface/Widgets/Buttons/CheckBoxButton/checkboxbutton.cpp
+        Interface/Screens/LoginScreen/Buttons/OvalButton/ovalbutton.h Interface/Screens/LoginScreen/Buttons/OvalButton/ovalbutton.cpp
+        Interface/Screens/LoginScreen/NewPlayerPage/newplayerpage.h Interface/Screens/LoginScreen/NewPlayerPage/newplayerpage.cpp
+        Interface/Screens/LoginScreen/Buttons/BlueButton/bluebutton.h Interface/Screens/LoginScreen/Buttons/BlueButton/bluebutton.cpp
+        Interface/Widgets/Inputs/TextInput/textinput.h Interface/Widgets/Inputs/TextInput/textinput.cpp
+        Interface/Common/TextLineEdit/textlineedit.h Interface/Common/TextLineEdit/textlineedit.cpp
+        Interface/Common/TextLineEdit/textlineeditinput.h Interface/Common/TextLineEdit/textlineeditinput.cpp
+        Interface/Screens/LoginScreen/Buttons/PenguinSlotButton/penguinslotbutton.h Interface/Screens/LoginScreen/Buttons/PenguinSlotButton/penguinslotbutton.cpp
+        Interface/Screens/LoginScreen/OldPlayerPage/oldplayerpage.h Interface/Screens/LoginScreen/OldPlayerPage/oldplayerpage.cpp
+        Interface/Screens/LoginScreen/ServerSelectionPage/serverselectionpage.h Interface/Screens/LoginScreen/ServerSelectionPage/serverselectionpage.cpp
+        Interface/Screens/LoginScreen/Buttons/ServerButton/serverbutton.h Interface/Screens/LoginScreen/Buttons/ServerButton/serverbutton.cpp
 
 
 

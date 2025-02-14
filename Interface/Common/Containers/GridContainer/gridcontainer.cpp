@@ -6,6 +6,7 @@ GridContainer::GridContainer(QGraphicsItem* parent) {
     }
     connect(this,&GridContainer::setPosition,this,&GridContainer::onSetPosition);
     connect(this,&GridContainer::triggerCallbackFunctions,this,&GridContainer::onTriggerCallbackFunctions);
+    connect(this,&GridContainer::showGridItem,this,&GridContainer::onShowGridItem);
 }
 
 GridContainer::GridContainer(QRectF parentRect) {
@@ -14,6 +15,16 @@ GridContainer::GridContainer(QRectF parentRect) {
     }
     connect(this,&GridContainer::setPosition,this,&GridContainer::onSetPosition);
     connect(this,&GridContainer::triggerCallbackFunctions,this,&GridContainer::onTriggerCallbackFunctions);
+    connect(this,&GridContainer::showGridItem,this,&GridContainer::onShowGridItem);
+}
+
+GridContainer::GridContainer(QGraphicsScene* scene){
+    if(!parentRect.isNull()){
+        this->parentRect = QRectF(0,0,760,480);
+    }
+    connect(this,&GridContainer::setPosition,this,&GridContainer::onSetPosition);
+    connect(this,&GridContainer::triggerCallbackFunctions,this,&GridContainer::onTriggerCallbackFunctions);
+    connect(this,&GridContainer::showGridItem,this,&GridContainer::onShowGridItem);
 }
 
 GridContainer::~GridContainer(){
@@ -75,12 +86,13 @@ GRIDCONTAINER::CELL_PROPERTIES* GridContainer::addGridItem(QGraphicsItem* gridIt
 }
 
 QRectF GridContainer::boundingRect() const {
-    return QRect(0,0,getWidth(),getHeight());
+    return QRect(pos().x(),pos().y(),getWidth(),getHeight());
 }
 
 GRIDCONTAINER::CELL_PROPERTIES* GridContainer::addGridItem(MultiCanvasObject* gridItem, int row, int col, int horizontalSpan, int verticalSpan){
     if(containerBusy) return nullptr;
     if(locationOccupied(row,col)) return nullptr;
+    gridItem->hide();
     GRIDCONTAINER::CELL_PROPERTIES* cellP = new GRIDCONTAINER::CELL_PROPERTIES();
     cellP->row = row;
     cellP->col = col;
@@ -102,16 +114,16 @@ GRIDCONTAINER::CELL_PROPERTIES* GridContainer::addGridItem(MultiCanvasObject* gr
 float GridContainer::getWidth() const {
     float width = 0;
     if(leftMargin != 0){
-        width+=leftMargin;
+        width+=leftMargin*(1/sceneTransform().m11());
     }
     for(float w : maxWidth){
-        width += w;
+        width += w*sceneTransform().m11();
     }
     if(maxWidth.size() > 1){
-        width += horizontalSpacing*(maxWidth.size()-1);
+        width += horizontalSpacing*(1/sceneTransform().m11())*(maxWidth.size()-1);
     }
     if(rightMargin != 0){
-        width+=rightMargin;
+        width+=rightMargin*(1/sceneTransform().m11());
     }
     return width;
 }
@@ -119,16 +131,16 @@ float GridContainer::getWidth() const {
 float GridContainer::getHeight() const {
     float height = 0;
     if(topMargin != 0){
-        height+=topMargin;
+        height+=topMargin*(1/sceneTransform().m22());
     }
     for(float h : maxHeight){
-        height += h;
+        height += h*sceneTransform().m22();
     }
     if(maxHeight.size() > 1){
-        height += verticalSpacing*(maxHeight.size()-1);
+        height += verticalSpacing*(1/sceneTransform().m22())*(maxHeight.size()-1);
     }
     if(bottomMargin != 0){
-        height+=bottomMargin;
+        height+=bottomMargin*(1/sceneTransform().m22());
     }
     return height;
 }
@@ -245,7 +257,7 @@ void GridContainer::updateMaximums(){
     maxWidth.resize(lastColumn+1);
     maxHeight.resize(lastRow+1);
     for(auto i = map.begin(); i != map.end(); i++){
-        QRectF itemBoundingRect = i.value()->boundingRect();
+        QRectF itemBoundingRect = (i.value()->boundingRect()*i.value()->sceneTransform()).boundingRect();
         if(i.value()){
             if(i.key()->horizontalSpan != 0 && i.key()->horizontalSpan > 1){
                 double horizontalWidth = itemBoundingRect.width()/i.key()->horizontalSpan;
@@ -299,6 +311,12 @@ void GridContainer::updateMaximums(){
     }
 }
 
+void GridContainer::paint(QPainter *painter,
+           const QStyleOptionGraphicsItem *option,
+           QWidget *widget){
+    //painter->fillRect(QRect(0,0,getWidth(),getHeight()),color);
+}
+
 void GridContainer::updateLayout(){
     if(containerBusy) return;
     containerBusy = true;
@@ -345,15 +363,15 @@ void GridContainer::updateLayout(){
 
         int emptyCellWidth = 0;
         if(emptyColumns > 0){
-            emptyCellWidth = (gridWidthLeft/emptyColumns)-(((lastColumn*2)*horizontalSpacing)/emptyColumns);
+            emptyCellWidth = (gridWidthLeft/emptyColumns)-(((lastColumn*2)*horizontalSpacing*(1/sceneTransform().m11()))/emptyColumns);
         }
         int emptyCellHeight = 0;
         if(emptyRows > 0){
-            emptyCellHeight = (gridHeightLeft/emptyRows)-(((lastRow*2)*verticalSpacing)/emptyRows);
+            emptyCellHeight = (gridHeightLeft/emptyRows)-(((lastRow*2)*verticalSpacing*(1/sceneTransform().m22()))/emptyRows);
         }
 
-        int x = leftMargin;
-        int y = topMargin;
+        int x = leftMargin*(1/sceneTransform().m11());
+        int y = topMargin*(1/sceneTransform().m22());
         for(int r = 0; r <= lastRow; r++){
             for(int c = 0; c <= lastColumn; c++){
                 bool foundGridItem = false;
@@ -370,7 +388,7 @@ void GridContainer::updateLayout(){
                                         if(f == i.key()->row+(i.key()->verticalSpan-1)){
                                             verticalHeight += maxHeight[f];
                                         }else{
-                                            verticalHeight += maxHeight[f] + verticalSpacing;
+                                            verticalHeight += maxHeight[f] + (verticalSpacing*(1/i.value()->sceneTransform().m22()));
                                         }
                                     }
                                     offsetY = (verticalHeight-itemBoundingRect.height())/2;
@@ -386,7 +404,7 @@ void GridContainer::updateLayout(){
                                         if(f == i.key()->row+(i.key()->verticalSpan-1)){
                                             verticalHeight += maxHeight[f];
                                         }else{
-                                            verticalHeight += maxHeight[f] + verticalSpacing;
+                                            verticalHeight += maxHeight[f] + (verticalSpacing*(1/i.value()->sceneTransform().m22()));
                                         }
                                     }
                                     offsetY = verticalHeight-itemBoundingRect.height();
@@ -405,7 +423,7 @@ void GridContainer::updateLayout(){
                                         if(f == i.key()->col+(i.key()->horizontalSpan-1)){
                                             horizontalWidth += maxWidth[f];
                                         }else{
-                                            horizontalWidth += maxWidth[f] + horizontalSpacing;
+                                            horizontalWidth += maxWidth[f] + (horizontalSpacing*(1/i.value()->sceneTransform().m11()));
                                         }
                                     }
                                     offsetX = (horizontalWidth-itemBoundingRect.width())/2;
@@ -421,7 +439,7 @@ void GridContainer::updateLayout(){
                                         if(f == i.key()->col+(i.key()->horizontalSpan-1)){
                                             horizontalWidth += maxWidth[f];
                                         }else{
-                                            horizontalWidth += maxWidth[f] + horizontalSpacing;
+                                            horizontalWidth += maxWidth[f] + (horizontalSpacing*(1/i.value()->sceneTransform().m11()));
                                         }
                                     }
                                     offsetX = horizontalWidth-itemBoundingRect.width();
@@ -433,18 +451,19 @@ void GridContainer::updateLayout(){
                             }
                         }
                         emit setPosition(i.value(),QPointF(x,y));
+                        emit showGridItem(i.value());
                         x -= offsetX;
                         y -= offsetY;
                         if(maxWidth[c] != 0){
-                            x += maxWidth[c] + horizontalSpacing;
+                            x += maxWidth[c] + (horizontalSpacing*(1/i.value()->sceneTransform().m11()));
                         } else {
-                            x += itemBoundingRect.width() + horizontalSpacing;
+                            x += itemBoundingRect.width() + (horizontalSpacing*(1/i.value()->sceneTransform().m11()));
                         }
                         if(c == lastColumn){
                             if(maxHeight[r] != 0){
-                                y += maxHeight[r] + verticalSpacing;
+                                y += maxHeight[r] + (verticalSpacing*(1/i.value()->sceneTransform().m22()));
                             }else{
-                                y += itemBoundingRect.width() + verticalSpacing;
+                                y += itemBoundingRect.width() + (verticalSpacing*(1/i.value()->sceneTransform().m22()));
                             }
                         }
                         foundGridItem = true;
@@ -452,52 +471,52 @@ void GridContainer::updateLayout(){
                 }
                 if(!foundGridItem){
                     if(maxWidth[c] != 0){
-                        x += maxWidth[c] + horizontalSpacing;
+                        x += maxWidth[c] + (horizontalSpacing*(1/sceneTransform().m11()));
                     }else{
-                        x += emptyCellWidth + horizontalSpacing;
+                        x += emptyCellWidth + (horizontalSpacing*(1/sceneTransform().m11()));
                     }
                     if(c == lastColumn){
                         if(maxHeight[r] != 0){
-                            y += maxHeight[r] + verticalSpacing;
+                            y += maxHeight[r] + (verticalSpacing*(1/sceneTransform().m22()));
                         }else{
-                            y += emptyCellHeight + verticalSpacing;
+                            y += emptyCellHeight + (verticalSpacing*(1/sceneTransform().m22()));
                         }
                     }
                 }
             }
-            x = leftMargin;
+            x = leftMargin*(1/sceneTransform().m11());
         }
         int posX = 0;
         int posY = 0;
         if(verticalAlignment == GRIDCONTAINER::VerticalAlignment::CENTER){
             if(parentItem()){
-                posY = (parentItem()->sceneBoundingRect().height()-getHeight())/2;
+                posY = (parentItem()->boundingRect().height()-getHeight())/2;
             }else if(!parentRect.isNull()){
                 posY = (parentRect.height()-getHeight())/2;
             }
         }else if(verticalAlignment == GRIDCONTAINER::VerticalAlignment::BOTTOM){
             if(parentItem()){
-                posY = (parentItem()->sceneBoundingRect().height()-getHeight());
+                posY = (parentItem()->boundingRect().height()-getHeight());
             }else if(!parentRect.isNull()){
                 posY = (parentRect.height()-getHeight());
             }
         } else if(verticalAlignment == GRIDCONTAINER::VerticalAlignment::TOP){
-            posY = topMargin;
+            posY = topMargin/sceneTransform().m22();
         }
         if(horizontalAlignment == GRIDCONTAINER::HorizontalAlignment::CENTER){
             if(parentItem()){
-                posX = (parentItem()->sceneBoundingRect().width()-getWidth())/2;
+                posX = (parentItem()->boundingRect().width()-getWidth())/2;
             }else if(!parentRect.isNull()){
                 posX = (parentRect.width()-getWidth())/2;
             }
         }else if(horizontalAlignment == GRIDCONTAINER::HorizontalAlignment::RIGHT){
             if(parentItem()){
-                posX = (parentItem()->sceneBoundingRect().width()-getWidth());
+                posX = (parentItem()->boundingRect().width()-getWidth());
             }else if(!parentRect.isNull()){
                 posX = (parentRect.width()-getWidth());
             }
         } else if(horizontalAlignment == GRIDCONTAINER::HorizontalAlignment::LEFT){
-            posX = leftMargin;
+            posX = leftMargin/sceneTransform().m11();
         }
         emit setPosition(this,QPointF(posX,posY));
         emit triggerCallbackFunctions();
@@ -505,6 +524,7 @@ void GridContainer::updateLayout(){
         mutex.unlock();
     });
 }
+
 
 bool GridContainer::isContainerBusy() {
     return this->containerBusy;
@@ -522,6 +542,11 @@ void GridContainer::onTriggerCallbackFunctions(){
     }
     callbackFunctions.clear();
 }
+
+void GridContainer::onShowGridItem(QGraphicsItem* item){
+    item->show();
+}
+
 void GridContainer::addCallbackFunction(std::function<void()> func){
     callbackFunctions.append(func);
 }

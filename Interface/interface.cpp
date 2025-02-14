@@ -90,7 +90,6 @@ bool Interface::loadHUD(){
     scene->addItem(chistory);
     //w.updateLayers();
     //w.update();
-
     GridContainer* container = new GridContainer(scene->sceneRect());
     //container->setHorizontalAlignment(GridContainer::HorizontalAlignment::CENTER);
     //container->setVerticalAlignment(GridContainer::VerticalAlignment::CENTER);

@@ -2,6 +2,8 @@
 #define GRIDCONTAINER_H
 
 #include <QMutex>
+#include <QGraphicsScene>
+#include <QGraphicsView>
 #include "ThreadPoolManager/threadpoolmanager.h"
 #include "Interface/Common/CanvasObject/Multi/multicanvasobject.h"
 #include "Objects/Constants/constants.h"
@@ -12,7 +14,8 @@ class GridContainer : public MultiCanvasObject
     Q_OBJECT
 public:
     explicit GridContainer(QGraphicsItem* parent = nullptr);
-    explicit GridContainer(QRectF parentRect = QRectF(0,0,0,0));
+    explicit GridContainer(QRectF parentRect);
+    explicit GridContainer(QGraphicsScene* scene);
     ~GridContainer();
 
     GRIDCONTAINER::CELL_PROPERTIES* addGridItem(MultiCanvasObject* gridItem, int row, int col, int horizontalSpan = 1, int verticalSpan = 1);
@@ -62,6 +65,12 @@ public:
 
     QRectF boundingRect() const override;
 
+    void paint(QPainter *painter,
+               const QStyleOptionGraphicsItem *option,
+               QWidget *widget = nullptr) override;
+
+    QColor color = QColor(0,0,0,0);
+
 
 private:
     int lastRow = 0; // Check how big is the grid based on the items highest row
@@ -92,10 +101,13 @@ private:
 public slots:
     void onSetPosition(QGraphicsItem* item, QPointF pos);
     void onTriggerCallbackFunctions();
+    void onShowGridItem(QGraphicsItem* item);
 
 signals:
     void setPosition(QGraphicsItem* item,QPointF pos);
     void triggerCallbackFunctions();
+    void finished();
+    void showGridItem(QGraphicsItem* item);
 
 };
 

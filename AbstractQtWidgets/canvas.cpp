@@ -52,7 +52,7 @@ void Canvas::resizeEvent(QResizeEvent *event){
 void Canvas::paintEvent(QPaintEvent *event){
     if(useOpenGL){
         openglWidget->makeCurrent();
-        openglWidget->getFunctions().glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+        openglWidget->getFunctions().glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
         openglWidget->getFunctions().glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     }
     QGraphicsView::paintEvent(event);

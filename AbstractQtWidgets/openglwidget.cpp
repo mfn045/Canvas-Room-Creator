@@ -12,13 +12,13 @@ void OpenGLWidget::initializeGL(){
 
 
 void OpenGLWidget::paintEvent(QPaintEvent *e){
-    f.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    f.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     f.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     return QOpenGLWidget::paintEvent(e);
 }
 
 void OpenGLWidget::paintGL(){
-    f.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    f.glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
     f.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     context()->swapBuffers(context()->surface());
 }

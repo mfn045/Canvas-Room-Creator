@@ -9,6 +9,7 @@ class AbstractButton : public MultiCanvasObject
     Q_OBJECT
 public:
     explicit AbstractButton(MultiCanvasObject *parent = nullptr);
+    explicit AbstractButton(QGraphicsItem *parent = nullptr);
     enum STATE {
         UP,
         OVER,

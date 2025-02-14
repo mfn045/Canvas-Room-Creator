@@ -64,10 +64,38 @@ BACKGROUNDCONTAINER::COLOR BackgroundContainer::getColor(){
     return this->color;
 }
 
+bool BackgroundContainer::hasBackdrop(){
+    return this->backDrop;
+}
+bool BackgroundContainer::setHasBackdrop(bool backDrop){
+    this->backDrop = backDrop;
+    return this->backDrop;
+}
+
+void BackgroundContainer::setBackdropColor(QColor color){
+    this->backDropColor = color;
+}
+
 void BackgroundContainer::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget) {
     if(!initialized) return;
     painter->setRenderHint(QPainter::Antialiasing,true);
     painter->setRenderHint(QPainter::LosslessImageRendering, true);
+
+
+    if(scene() && backDrop){
+        painter->save();
+        QRectF sceneRect = scene()->sceneRect();
+        QTransform sTransform = painter->deviceTransform();
+        float xScale = sTransform.m11();
+        float yScale = sTransform.m22();
+        QTransform customTransform = QTransform(xScale,0,0,yScale,0,0);
+        QRectF newRect = customTransform.mapRect(sceneRect);
+        painter->setWindow(newRect.toRect());
+        painter->setViewport(newRect.toRect());
+        painter->setTransform(customTransform);
+        painter->fillRect(newRect,QBrush(backDropColor));
+        painter->restore();
+    }
 
     painter->beginNativePainting();
     painter->save();

@@ -16,8 +16,10 @@
 #include "Interface/Widgets/Settings/settings.h"
 #include "Interface/Screens/LoadingScreen/loading.h"
 #include "Interface/Widgets/Buttons/CheckBoxButton/checkboxbutton.h"
-#include "Interface/Screens/LoginScreen/Buttons/LoginOvalButton/loginovalbutton.h"
-#include "Interface/Screens/LoginScreen/LoginScreen_NewPlayer/loginscreen_newplayer.h"
+#include "Interface/Screens/LoginScreen/Buttons/OvalButton/ovalbutton.h"
+#include "Interface/Screens/LoginScreen/NewPlayerPage/newplayerpage.h"
+#include "Interface/Screens/LoginScreen/OldPlayerPage/oldplayerpage.h"
+#include "Interface/Screens/LoginScreen/ServerSelectionPage/serverselectionpage.h"
 
 int main(int argc, char *argv[])
 {
@@ -101,25 +103,47 @@ int main(int argc, char *argv[])
 
     interface->loadPlayerCard();
 
+    //LoginScreen::ServerSelectionPage* sp = new LoginScreen::ServerSelectionPage();
+    //interface->addToScene(sp);
+/*
+    LoginScreen::OldPlayerPage* op = new LoginScreen::OldPlayerPage();
+
+    PenguinPaper* player1Paper = new PenguinPaper();
+    player1Paper->setColor(3);
+    player1Paper->setHead(403);
+    op->addPlayer("Enhanced",player1Paper);
+
+    PenguinPaper* player2Paper = new PenguinPaper();
+    player2Paper->setColor(5);
+    player2Paper->setFace(106);
+    op->addPlayer("Try AgainWfLF",player2Paper);
+
+    /*PenguinPaper* player3Paper = new PenguinPaper();
+    player3Paper->setColor(10);
+    op->addPlayer("Aced",player3Paper);
+
+    PenguinPaper* player4Paper = new PenguinPaper();
+    player4Paper->setColor(14);
+    op->addPlayer("Fourth",player4Paper);
+
+    PenguinPaper* player5Paper = new PenguinPaper();
+    player5Paper->setColor(13);
+    op->addPlayer("tttt",player5Paper);
+
+    op->drawSavedPlayers();
+
+    interface->addToScene(op);*/
+
+/*
     BackgroundContainer* bc = new BackgroundContainer();
     bc->setColor(BACKGROUNDCONTAINER::ORANGE);
     bc->setWidth(500);
     bc->setHeight(500);
     bc->init();
-    interface->getScene()->addItem(bc);
+    interface->getScene()->addItem(bc);*/
 
-    CheckBoxButton* cbb = new CheckBoxButton();
-    cbb->setPos(QPointF(100,100));
-    interface->getScene()->addItem(cbb);
-
-    LoginOvalButton* ob = new LoginOvalButton(nullptr, LoginOvalButton::MEDIUM);
-    ob->setTransform(QTransform(1.4120483,0,0,1.9999695,0,0));
-    ob->setText(R"(<font color="white">Don't have a penguin?</font><br><font color="black">Create a free account now!</font>)");
-    ob->setPos(QPointF(100,200));
-    interface->getScene()->addItem(ob);
-
-    LoginScreen_NewPlayer* loginScreen = new LoginScreen_NewPlayer();
-    interface->addToScene(loginScreen);
+    //LoginScreen_NewPlayer* loginScreen = new LoginScreen_NewPlayer();
+    //interface->addToScene(loginScreen);
 
     //loading->incrementStep();
     //interface->getScene()->removeItem(loading);

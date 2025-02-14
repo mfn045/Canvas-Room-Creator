@@ -2,6 +2,7 @@
 #define BACKGROUNDCONTAINER_H
 
 #include <QGraphicsItem>
+#include <QGraphicsScene>
 #include <QPainter>
 #include "Objects/Constants/constants.h"
 
@@ -19,6 +20,11 @@ public:
     float setHeight(float height);
     float getHeight();
 
+    bool hasBackdrop();
+    bool setHasBackdrop(bool backDrop);
+
+    void setBackdropColor(QColor color);
+
     void init();
 
 
@@ -27,7 +33,7 @@ public:
     QRectF boundingRect() const override;
 
 private:
-    QRectF rect;
+    QRectF rect = QRectF(0,0,0,0);
 
     float width = 0;
     float height = 0;
@@ -41,9 +47,12 @@ private:
 
     QPainterPath createPath(float offset, float additionalBottomRightXYShrink = 0);
 
+    QColor backDropColor = QColor(0,0,0,0);
+
     BACKGROUNDCONTAINER::COLOR color = BACKGROUNDCONTAINER::COLOR::BLUE;
 
     bool initialized = false;
+    bool backDrop = false;
 
 };
 

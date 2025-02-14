@@ -20,8 +20,6 @@ ToolBar::ToolBar(Scene *parent)
     setPos(QPointF(placement_x,sceneRect.bottomLeft().y()-rect.height()));
 
     GridContainer* container = new GridContainer(this);
-    container->setHorizontalSpacing(5);
-    container->setVerticalSpacing(5);
     container->setHorizontalAlignment(GRIDCONTAINER::HorizontalAlignment::CENTER);
     container->setVerticalAlignment(GRIDCONTAINER::VerticalAlignment::CENTER);
     container->setTopMargin(12);
